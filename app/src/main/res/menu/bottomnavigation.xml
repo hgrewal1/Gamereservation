@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_Search"
+        android:icon="@drawable/search"
+        android:title="Search"
+        
+        />
+
+    <item
+        android:id="@+id/action_categories"
+        android:icon="@drawable/category"
+        android:title="Categories"
+        />
+
+    <item
+        android:id="@+id/action_home"
+        android:icon="@drawable/home"
+        android:title="Home"/>
+    <item
+        android:id="@+id/action_locations"
+        android:icon="@drawable/location"
+        android:title="Location"/>
+    <item
+        android:id="@+id/action_availabilties"
+        android:icon="@drawable/available"
+        android:title="Availabiltiy"/>
+
+</menu>
