@@ -22,6 +22,7 @@ public class search extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(false);
         actionBar.setTitle("Search");
         setupNavigationView();
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

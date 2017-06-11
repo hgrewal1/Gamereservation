@@ -55,9 +55,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Login"
+android:onClick="onClick"
             android:textColor="@color/background"
             android:background="@drawable/button"
-            android:onClick="login"/>
+            />
 
         <TextView
             android:id="@+id/textView"
@@ -92,6 +93,7 @@ android:background="@drawable/button"
             android:textColor="@color/background"
             android:textAlignment="center"
             android:layout_height="wrap_content"
-            android:text="Login As Guest User" />
+            android:text="Login As Guest User"
+            />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
