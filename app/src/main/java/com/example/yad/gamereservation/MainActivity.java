@@ -29,9 +29,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
-    TextView textView;
+    EditText username,password;
     StringBuffer response;
     String r,s;
+    String url = null;
     private static final String TAG_SUCCESS = "success";
 
     private ProgressDialog nDialog;
@@ -43,43 +44,42 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        textView = (TextView) findViewById(R.id.textView2);
 
-        EditText username = (EditText) findViewById(R.id.username);
-        EditText password = (EditText) findViewById(R.id.password);
+
+        username = (EditText) findViewById(R.id.username);
+         password = (EditText) findViewById(R.id.password);
         Button button = (Button) findViewById(R.id.login);
-        SharedPreferences sp=getSharedPreferences("Login", 0);
-        SharedPreferences.Editor Ed=sp.edit();
-        Ed.putString("Unm",username.getText().toString() );
-        Ed.putString("Psw",password.getText().toString());
-        Ed.commit();
+
+
     }
 
             public void onClick(View view) {
-
+                r=username.getText().toString();
+                s=password.getText().toString();
+                url="http://144.217.163.57:8080/cegepgim/mobile/tutorials/login&"+r+"&"+s;
                     new MyTask().execute();
                 }
 
 
 
 
-    private class MyTask extends AsyncTask<Void, Void, Void> {
+    private class MyTask extends AsyncTask<String, String, String> {
         String o1, o2, o3, o4,o5,o6,o7,o8;
         JSONObject obj;
 
         @Override
-        protected Void doInBackground(Void... params) {
-            URL url = null;
+        protected String doInBackground(String... params) {
+
 
 
             try {
-                url = new URL("http://144.217.163.57:8080/cegepgim/mobile/tutorials/login&"+r+"&"+s);
+                URL url1 = new URL(url);
 
                 HttpURLConnection client = null;
-                client = (HttpURLConnection) url.openConnection();
+                client = (HttpURLConnection) url1.openConnection();
                 client.setRequestMethod("GET");
                 int responseCode = client.getResponseCode();
-                System.out.println("\n Sending 'GET' request to url:" + url);
+                System.out.println("\n Sending 'GET' request to url:" + url1);
                 System.out.println("\n Response code:" + responseCode);
                 InputStreamReader myInput = new InputStreamReader(client.getInputStream());
                 BufferedReader in = new BufferedReader(myInput);
@@ -92,13 +92,17 @@ public class MainActivity extends AppCompatActivity {
                 in.close();
                 obj = new JSONObject(response.toString());
                 o1 = obj.getString("Status");
-                if(o1.equals("ok")){
+                if(o1.equals("ok")) {
                     o2 = obj.getString("UserId");
                     o3 = obj.getString("FirstName");
                     o4 = obj.getString("LastName");
-                    o5 = obj.getString("Email");}
+                    o5 = obj.getString("Email");
 
+                    Intent intent = new Intent(getApplicationContext(), location.class);
 
+                    startActivity(intent);
+                    finish();
+                }
 
                 else {
                     Log.e(TAG, "Couldn't get json from server.");
@@ -124,17 +128,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(Void result) {
-           if(o1.equals("wrong")){
-                   Intent intent=new Intent(getApplicationContext(),location.class);
+        protected void onPostExecute(String result) {
 
-                   startActivity(intent);
-                finish();}
-                else{
+
                 Toast.makeText(getApplicationContext(),
                         o1, Toast.LENGTH_SHORT).show();
 
-            }
+
 
 
 
