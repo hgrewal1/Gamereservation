@@ -98,7 +98,8 @@ public class MainActivity extends AppCompatActivity {
                     o4 = obj.getString("LastName");
                     o5 = obj.getString("Email");
 
-                    Intent intent = new Intent(getApplicationContext(), location.class);
+                    Intent intent = new Intent(getApplicationContext(), Home.class);
+                    intent.putExtra("username",o3);
 
                     startActivity(intent);
                     finish();
@@ -110,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             Toast.makeText(getApplicationContext(),
-                                    "Couldn't get json from server. Check LogCat for possible errors!",
+                                    "UserName or password incorrect",
                                     Toast.LENGTH_LONG)
                                     .show();
                         }
@@ -131,8 +132,8 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
 
 
-                Toast.makeText(getApplicationContext(),
-                        o1, Toast.LENGTH_SHORT).show();
+
+
 
 
 
