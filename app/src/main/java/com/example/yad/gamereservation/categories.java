@@ -194,8 +194,7 @@ public class categories extends AppCompatActivity {
 
                         // adding each child node to HashMap key => value
                         contact.put("CategoryName", o2);
-                        contact.put("CategoryId", o4);
-                        contact.put("DESCRIPTION", o5);
+
 
 
                         // adding Array values to Array list
@@ -249,8 +248,7 @@ public class categories extends AppCompatActivity {
              * */
             ListAdapter adapter = new SimpleAdapter(
                     categories.this, arylist,
-                    R.layout.list_item, new String[]{"CategoryName", "CategoryId","DESCRIPTION"}, new int[]{R.id.name,
-                    R.id.email,R.id.mobile});
+                    R.layout.list_item, new String[]{"CategoryName"}, new int[]{R.id.name});
 
             lv.setAdapter(adapter);
         }

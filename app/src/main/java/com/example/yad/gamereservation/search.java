@@ -196,9 +196,8 @@ Intent intent=getIntent();
                         HashMap<String, String> contact = new HashMap<>();
 
                         // adding each child node to HashMap key => value
-                        contact.put("GameId", o2);
+
                         contact.put("GameName", o4);
-                        contact.put("GameDescription", o5);
 
 
                         // adding Array values to Array list
@@ -252,8 +251,7 @@ Intent intent=getIntent();
              * */
             ListAdapter adapter = new SimpleAdapter(
                     search.this, arylist,
-                    R.layout.list_item, new String[]{"GameId", "GameName","GameDescription"}, new int[]{R.id.name,
-                    R.id.email,R.id.mobile});
+                    R.layout.list_item, new String[]{"GameName"}, new int[]{R.id.name});
 
             lv.setAdapter(adapter);
         }
