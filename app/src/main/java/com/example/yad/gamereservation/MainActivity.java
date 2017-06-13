@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 r=username.getText().toString();
                 s=password.getText().toString();
-                url="http://10.0.2.2:8080/gameservervation/cegepgim/gamereservation/login&"+r+"&"+s;
+                url="http://192.168.1.14:8080/gameservervation/cegepgim/gamereservation/login&"+r+"&"+s;
                     new MyTask().execute();
                 }
 

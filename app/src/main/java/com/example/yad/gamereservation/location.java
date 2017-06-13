@@ -20,13 +20,8 @@ public class location extends AppCompatActivity {
         setupNavigationView();
         ActionBar actionBar=getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
-        SharedPreferences sp1=getSharedPreferences("grewal",0);
 
-        String a=sp1.getString("UserName", null);
-        String b = sp1.getString("FirstName", null);
-        String c=sp1.getString("LastName", null);
-        String d = sp1.getString("Email", null);
-        actionBar.setTitle(a);
+        actionBar.setTitle("Locations");
         setupNavigationView();
     }
     @Override

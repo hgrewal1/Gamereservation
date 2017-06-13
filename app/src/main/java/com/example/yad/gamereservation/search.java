@@ -2,6 +2,7 @@ package com.example.yad.gamereservation;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
@@ -34,52 +35,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class search extends AppCompatActivity {
-
-    private String TAG = search.class.getSimpleName();
-
-    private ProgressDialog pDialog;
-    private ListView lv;
-
-
-    // URL to get contacts JSON
-
-
-    ArrayList<HashMap<String, String>> arylist;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
-
-        arylist = new ArrayList<>();
-
-        lv = (ListView) findViewById(R.id.list);
-
-        new MyTask().execute();
+        setContentView(R.layout.activity_avialability);
         setupNavigationView();
+        ActionBar actionBar=getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(false);
 
-
-        /**
-         * Listview item click listener
-         * TrackListActivity will be lauched by passing album id
-         * */
-        lv.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> arg0, android.view.View view, int arg2,
-                                    long arg3) {
-                // on selecting a single album
-                // TrackListActivity will be launched to show tracks inside the album
-                Intent i = new Intent(getApplicationContext(), location.class);
-
-                // send album id to tracklist activity to get list of songs under that album
-                String tut_name = ((TextView) view.findViewById(R.id.name)).getText().toString();
-                i.putExtra("tname", tut_name);
-
-                startActivity(i);
-            }
-        });
+        actionBar.setTitle("Search");
+        setupNavigationView();
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -138,126 +104,4 @@ public class search extends AppCompatActivity {
                     }
                 });
     }
-
-
-    private class MyTask extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            // Showing progress dialog
-            pDialog = new ProgressDialog(search.this);
-            pDialog.setMessage("Please wait...");
-            pDialog.setCancelable(false);
-            pDialog.show();
-
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            URL url = null;
-
-Intent intent=getIntent();
-            String r=intent.getStringExtra("name");
-            try {
-                url = new URL("http://10.0.2.2:8080/gameservervation/cegepgim/gamereservation/viewcategory&"+r);
-
-                HttpURLConnection client = null;
-                client = (HttpURLConnection) url.openConnection();
-                client.setRequestMethod("GET");
-                int responseCode = client.getResponseCode();
-                System.out.println("\n Sending 'GET' request to url:" + url);
-                System.out.println("\n Response code:" + responseCode);
-                InputStreamReader myInput = new InputStreamReader(client.getInputStream());
-                BufferedReader in = new BufferedReader(myInput);
-                String inputline;
-                StringBuffer response = new StringBuffer();
-
-
-                while ((inputline = in.readLine()) != null) {
-                    response.append(inputline);
-                }
-                in.close();
-
-
-
-                JSONObject obj = new JSONObject(response.toString());
-                String status=obj.getString("Status");
-                if (status.equals("ok")) {
-                    JSONArray ary = new JSONArray();
-                    ary = obj.getJSONArray("Games");
-                    for (Integer i = 0; i < ary.length(); i++) {
-                        JSONObject obj1 = ary.getJSONObject(i);
-                        String o2 = obj1.getString("GameId");
-                        String o4 = obj1.getString("GameName");
-                        String o5 = obj1.getString("GameDescription");
-
-
-                        HashMap<String, String> contact = new HashMap<>();
-
-                        // adding each child node to HashMap key => value
-
-                        contact.put("GameName", o4);
-
-
-                        // adding Array values to Array list
-                        arylist.add(contact);
-                    }
-                }
-                else {
-                    Log.e(TAG, "Couldn't get json from server.");
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getApplicationContext(),
-                                    "Couldn't get json from server. Check LogCat for possible errors!",
-                                    Toast.LENGTH_LONG)
-                                    .show();
-                        }
-                    });
-
-                }
-            } catch (final JSONException e) {
-                Log.e(TAG, "Json parsing error: " + e.getMessage());
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(),
-                                "Json parsing error: " + e.getMessage(),
-                                Toast.LENGTH_LONG)
-                                .show();
-                    }
-                });
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-            // Dismiss the progress dialog
-            if (pDialog.isShowing())
-                pDialog.dismiss();
-            /**
-             * Updating parsed JSON data into ListView
-             * */
-            ListAdapter adapter = new SimpleAdapter(
-                    search.this, arylist,
-                    R.layout.list_item, new String[]{"GameName"}, new int[]{R.id.name});
-
-            lv.setAdapter(adapter);
-        }
-
-
-    }
-
 }
-

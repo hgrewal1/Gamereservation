@@ -32,8 +32,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class categories extends AppCompatActivity {
-    private String TAG = categories.class.getSimpleName();
+public class gamestation extends AppCompatActivity {
+
+
+    private String TAG = search.class.getSimpleName();
 
     private ProgressDialog pDialog;
     private ListView lv;
@@ -47,15 +49,15 @@ public class categories extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_categories);
-
-        arylist = new ArrayList<>();
-
-        lv = (ListView) findViewById(R.id.list);
+        setContentView(R.layout.activity_gamestation);
         ActionBar actionBar=getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
 
-        actionBar.setTitle("Categories");
+        actionBar.setTitle("GameStations");
+        arylist = new ArrayList<>();
+
+        lv = (ListView) findViewById(R.id.list);
+
         new MyTask().execute();
         setupNavigationView();
 
@@ -70,7 +72,7 @@ public class categories extends AppCompatActivity {
                                     long arg3) {
                 // on selecting a single album
                 // TrackListActivity will be launched to show tracks inside the album
-                Intent i = new Intent(getApplicationContext(), games.class);
+                Intent i = new Intent(getApplicationContext(), gslocation.class);
 
                 // send album id to tracklist activity to get list of songs under that album
                 String tut_name = ((TextView) view.findViewById(R.id.name)).getText().toString();
@@ -93,7 +95,7 @@ public class categories extends AppCompatActivity {
         // Take appropriate action for each action item click
         switch (item.getItemId()) {
             case R.id.account:
-                Intent intent=new Intent(getApplicationContext(),Accounts.class);
+                Intent intent=new Intent(getApplicationContext(),gslocation.class);
                 startActivity(intent);
                 return true;
 
@@ -105,7 +107,7 @@ public class categories extends AppCompatActivity {
     private void setupNavigationView() {
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
         Menu menu = bottomNavigationView.getMenu();
-        MenuItem menuItem=menu.getItem(1);
+        MenuItem menuItem=menu.getItem(0);
         menuItem.setChecked(true);
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(
@@ -147,7 +149,7 @@ public class categories extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             // Showing progress dialog
-            pDialog = new ProgressDialog(categories.this);
+            pDialog = new ProgressDialog(gamestation.this);
             pDialog.setMessage("Please wait...");
             pDialog.setCancelable(false);
             pDialog.show();
@@ -158,9 +160,10 @@ public class categories extends AppCompatActivity {
         protected Void doInBackground(Void... params) {
             URL url = null;
 
-
+            Intent intent=getIntent();
+            String r=intent.getStringExtra("name");
             try {
-                url = new URL("http://192.168.1.14:8080/gameservervation/cegepgim/gamereservation/viewallcategories");
+                url = new URL("http://192.168.1.14:8080/gameservervation/cegepgim/gamereservation/viewgame&"+r);
 
                 HttpURLConnection client = null;
                 client = (HttpURLConnection) url.openConnection();
@@ -185,18 +188,20 @@ public class categories extends AppCompatActivity {
                 String status=obj.getString("Status");
                 if (status.equals("ok")) {
                     JSONArray ary = new JSONArray();
-                    ary = obj.getJSONArray("Categories");
+                    ary = obj.getJSONArray("GameStations");
                     for (Integer i = 0; i < ary.length(); i++) {
                         JSONObject obj1 = ary.getJSONObject(i);
-                        String o2 = obj1.getString("CategoryName");
-                        String o4 = obj1.getString("CategoryId");
-                        String o5 = obj1.getString("DESCRIPTION");
+                        String o2 = obj1.getString("GameStationId");
+                        String o4 = obj1.getString("GameStation");
+                        String o5 = obj1.getString("LocationId");
+                        String o6 = obj1.getString("LocationName");
 
 
                         HashMap<String, String> contact = new HashMap<>();
 
                         // adding each child node to HashMap key => value
-                        contact.put("CategoryName", o2);
+
+                        contact.put("GameStation", o4);
 
 
 
@@ -250,8 +255,8 @@ public class categories extends AppCompatActivity {
              * Updating parsed JSON data into ListView
              * */
             ListAdapter adapter = new SimpleAdapter(
-                    categories.this, arylist,
-                    R.layout.list_item, new String[]{"CategoryName"}, new int[]{R.id.name});
+                    gamestation.this, arylist,
+                    R.layout.list_item, new String[]{"GameStation"}, new int[]{R.id.name});
 
             lv.setAdapter(adapter);
         }
@@ -260,4 +265,3 @@ public class categories extends AppCompatActivity {
     }
 
 }
-

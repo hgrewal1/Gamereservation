@@ -2,6 +2,7 @@ package com.example.yad.gamereservation;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -32,53 +33,31 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class categories extends AppCompatActivity {
-    private String TAG = categories.class.getSimpleName();
+public class gslocation extends AppCompatActivity {
+
+    private String TAG = gslocation.class.getSimpleName();
 
     private ProgressDialog pDialog;
-    private ListView lv;
+    TextView out1,out2,out3,out4,out5;
+    String r,o1,o2,o3,o4,o5;
 
-
-    // URL to get contacts JSON
-
-
-    ArrayList<HashMap<String, String>> arylist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_categories);
-
-        arylist = new ArrayList<>();
-
-        lv = (ListView) findViewById(R.id.list);
+        setContentView(R.layout.activity_gslocation);
+        Intent intent=getIntent();
+       r =intent.getStringExtra("name");
+         out1=(TextView) findViewById(R.id.textView1);
+         out2=(TextView) findViewById(R.id.textView2);
+         out3=(TextView) findViewById(R.id.textView3);
+         out4=(TextView) findViewById(R.id.textView4);
+         out5=(TextView) findViewById(R.id.textView5);
         ActionBar actionBar=getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
-
-        actionBar.setTitle("Categories");
+        actionBar.setTitle(r);
+setupNavigationView();
         new MyTask().execute();
-        setupNavigationView();
-
-
-        /**
-         * Listview item click listener
-         * TrackListActivity will be lauched by passing album id
-         * */
-        lv.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> arg0, android.view.View view, int arg2,
-                                    long arg3) {
-                // on selecting a single album
-                // TrackListActivity will be launched to show tracks inside the album
-                Intent i = new Intent(getApplicationContext(), games.class);
-
-                // send album id to tracklist activity to get list of songs under that album
-                String tut_name = ((TextView) view.findViewById(R.id.name)).getText().toString();
-                i.putExtra("name", tut_name);
-
-                startActivity(i);
-            }
-        });
     }
 
     @Override
@@ -105,7 +84,7 @@ public class categories extends AppCompatActivity {
     private void setupNavigationView() {
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
         Menu menu = bottomNavigationView.getMenu();
-        MenuItem menuItem=menu.getItem(1);
+        MenuItem menuItem=menu.getItem(0);
         menuItem.setChecked(true);
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(
@@ -147,7 +126,7 @@ public class categories extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             // Showing progress dialog
-            pDialog = new ProgressDialog(categories.this);
+            pDialog = new ProgressDialog(gslocation.this);
             pDialog.setMessage("Please wait...");
             pDialog.setCancelable(false);
             pDialog.show();
@@ -160,7 +139,7 @@ public class categories extends AppCompatActivity {
 
 
             try {
-                url = new URL("http://192.168.1.14:8080/gameservervation/cegepgim/gamereservation/viewallcategories");
+                url = new URL("http://192.168.1.14:8080/gameservervation/cegepgim/gamereservation/viewlocation&"+r);
 
                 HttpURLConnection client = null;
                 client = (HttpURLConnection) url.openConnection();
@@ -178,31 +157,15 @@ public class categories extends AppCompatActivity {
                     response.append(inputline);
                 }
                 in.close();
-
-
-
                 JSONObject obj = new JSONObject(response.toString());
                 String status=obj.getString("Status");
                 if (status.equals("ok")) {
-                    JSONArray ary = new JSONArray();
-                    ary = obj.getJSONArray("Categories");
-                    for (Integer i = 0; i < ary.length(); i++) {
-                        JSONObject obj1 = ary.getJSONObject(i);
-                        String o2 = obj1.getString("CategoryName");
-                        String o4 = obj1.getString("CategoryId");
-                        String o5 = obj1.getString("DESCRIPTION");
+                         o1 = obj.getString("LocationName");
+                       o2 = obj.getString("City");
+                         o3 = obj.getString("Postalcode");
+                     o4 = obj.getString("BuildingNumber");
+                     o5 = obj.getString("Country");
 
-
-                        HashMap<String, String> contact = new HashMap<>();
-
-                        // adding each child node to HashMap key => value
-                        contact.put("CategoryName", o2);
-
-
-
-                        // adding Array values to Array list
-                        arylist.add(contact);
-                    }
                 }
                 else {
                     Log.e(TAG, "Couldn't get json from server.");
@@ -242,22 +205,19 @@ public class categories extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
+
             // Dismiss the progress dialog
             if (pDialog.isShowing())
                 pDialog.dismiss();
-            /**
-             * Updating parsed JSON data into ListView
-             * */
-            ListAdapter adapter = new SimpleAdapter(
-                    categories.this, arylist,
-                    R.layout.list_item, new String[]{"CategoryName"}, new int[]{R.id.name});
-
-            lv.setAdapter(adapter);
+            out1.setText(o1);
+            out2.setText(o2);
+            out3.setText(o3);
+            out4.setText(o4);
+            out5.setText(o5);
+            super.onPostExecute(result);
         }
 
 
     }
 
 }
-
