@@ -35,11 +35,15 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         setupNavigationView();
-        Intent intent=getIntent();
-       String user= intent.getStringExtra("username");
+        SharedPreferences sp1=getSharedPreferences("grewal",0);
+
+        String a=sp1.getString("UserName", null);
+        String b = sp1.getString("FirstName", null);
+        String c=sp1.getString("LastName", null);
+        String d = sp1.getString("Email", null);
         ActionBar actionBar=getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
-        actionBar.setTitle(user);
+        actionBar.setTitle(a);
         setupNavigationView();
     }
     @Override
@@ -66,8 +70,10 @@ public class Home extends AppCompatActivity {
     private void setupNavigationView() {
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
         Menu menu = bottomNavigationView.getMenu();
+
         MenuItem menuItem=menu.getItem(2);
         menuItem.setChecked(true);
+        BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override

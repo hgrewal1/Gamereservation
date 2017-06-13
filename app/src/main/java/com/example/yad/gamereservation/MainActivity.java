@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     StringBuffer response;
     String r,s;
     String url = null;
-    private static final String TAG_SUCCESS = "success";
+    String TAG_SUCCESS ;
 
     private ProgressDialog nDialog;
 
@@ -48,7 +48,8 @@ public class MainActivity extends AppCompatActivity {
 
         username = (EditText) findViewById(R.id.username);
          password = (EditText) findViewById(R.id.password);
-        Button button = (Button) findViewById(R.id.login);
+
+
 
 
     }
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 r=username.getText().toString();
                 s=password.getText().toString();
-                url="http://144.217.163.57:8080/cegepgim/mobile/tutorials/login&"+r+"&"+s;
+                url="http://10.0.2.2:8080/gameservervation/cegepgim/gamereservation/login&"+r+"&"+s;
                     new MyTask().execute();
                 }
 
@@ -93,14 +94,21 @@ public class MainActivity extends AppCompatActivity {
                 obj = new JSONObject(response.toString());
                 o1 = obj.getString("Status");
                 if(o1.equals("ok")) {
-                    o2 = obj.getString("UserId");
+                    o2 = obj.getString("UserName");
                     o3 = obj.getString("FirstName");
                     o4 = obj.getString("LastName");
                     o5 = obj.getString("Email");
 
                     Intent intent = new Intent(getApplicationContext(), Home.class);
                     intent.putExtra("username",o3);
+                    SharedPreferences sp=getSharedPreferences("grewal", 0);
+                    SharedPreferences.Editor Ed=sp.edit();
+                    Ed.putString("UserName",o2);
+                    Ed.putString("FirstName",o3);
+                    Ed.putString("LastName",o4 );
+                    Ed.putString("Email",o5);
 
+                    Ed.commit();
                     startActivity(intent);
                     finish();
                 }
@@ -119,28 +127,51 @@ public class MainActivity extends AppCompatActivity {
                 }
 
             } catch (MalformedURLException e) {
+                Log.e(TAG, "Couldn't get json from server.");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(),
+                                "MalformedURLException",
+                                Toast.LENGTH_LONG)
+                                .show();
+                    }
+                });
+
                 e.printStackTrace();
+
             } catch (IOException e) {
+                Log.e(TAG, "Couldn't get json from server.");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(),
+                                "password incorrect",
+                                Toast.LENGTH_LONG)
+                                .show();
+                    }
+                });
                 e.printStackTrace();
             }
             catch (JSONException e)
-            {e.printStackTrace();}
+
+            {Log.e(TAG, "Couldn't get json from server.");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(),
+                                "json error",
+                                Toast.LENGTH_LONG)
+                                .show();
+                    }
+                });
+                ;
+            }
             return null;
         }
 
         @Override
         protected void onPostExecute(String result) {
-
-
-
-
-
-
-
-
-
-
-
 
             super.onPostExecute(result);
 

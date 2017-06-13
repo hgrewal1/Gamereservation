@@ -1,6 +1,7 @@
 package com.example.yad.gamereservation;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.ActionBar;
@@ -19,7 +20,13 @@ public class location extends AppCompatActivity {
         setupNavigationView();
         ActionBar actionBar=getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
-        actionBar.setTitle("Gamestation Locations");
+        SharedPreferences sp1=getSharedPreferences("grewal",0);
+
+        String a=sp1.getString("UserName", null);
+        String b = sp1.getString("FirstName", null);
+        String c=sp1.getString("LastName", null);
+        String d = sp1.getString("Email", null);
+        actionBar.setTitle(a);
         setupNavigationView();
     }
     @Override
@@ -48,6 +55,7 @@ public class location extends AppCompatActivity {
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem=menu.getItem(3);
         menuItem.setChecked(true);
+        BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
