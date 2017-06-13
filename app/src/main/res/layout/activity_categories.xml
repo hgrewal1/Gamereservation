@@ -32,7 +32,6 @@
             android:layout_height="match_parent"
             tools:layout_editor_absoluteX="89dp"
             tools:layout_editor_absoluteY="89dp"
-
             android:layout_weight="0.88" />
 
     </FrameLayout>

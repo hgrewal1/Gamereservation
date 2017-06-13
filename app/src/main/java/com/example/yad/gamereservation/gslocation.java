@@ -47,7 +47,7 @@ public class gslocation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gslocation);
         Intent intent=getIntent();
-       r =intent.getStringExtra("name");
+         r =intent.getStringExtra("name");
          out1=(TextView) findViewById(R.id.textView1);
          out2=(TextView) findViewById(R.id.textView2);
          out3=(TextView) findViewById(R.id.textView3);
@@ -136,7 +136,6 @@ setupNavigationView();
         @Override
         protected Void doInBackground(Void... params) {
             URL url = null;
-
 
             try {
                 url = new URL("http://192.168.1.14:8080/gameservervation/cegepgim/gamereservation/viewlocation&"+r);

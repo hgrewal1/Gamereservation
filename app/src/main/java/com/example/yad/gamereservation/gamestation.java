@@ -2,6 +2,7 @@ package com.example.yad.gamereservation;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -95,7 +96,7 @@ public class gamestation extends AppCompatActivity {
         // Take appropriate action for each action item click
         switch (item.getItemId()) {
             case R.id.account:
-                Intent intent=new Intent(getApplicationContext(),gslocation.class);
+                Intent intent=new Intent(getApplicationContext(),Accounts.class);
                 startActivity(intent);
                 return true;
 
@@ -162,6 +163,7 @@ public class gamestation extends AppCompatActivity {
 
             Intent intent=getIntent();
             String r=intent.getStringExtra("name");
+
             try {
                 url = new URL("http://192.168.1.14:8080/gameservervation/cegepgim/gamereservation/viewgame&"+r);
 
