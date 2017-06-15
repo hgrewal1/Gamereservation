@@ -16,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,12 +36,10 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         setupNavigationView();
-        SharedPreferences sp1=getSharedPreferences("grewal",0);
-
-        String a=sp1.getString("UserName", null);
-        String b = sp1.getString("FirstName", null);
-        String c=sp1.getString("LastName", null);
-        String d = sp1.getString("Email", null);
+        TextView textView=(TextView) findViewById(R.id.firstname);
+        Intent intent=getIntent();
+        String a=intent.getStringExtra("name");
+        textView.setText(a);
         ActionBar actionBar=getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
         actionBar.setTitle(a);

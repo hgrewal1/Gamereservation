@@ -96,9 +96,9 @@ public class signup extends AppCompatActivity {
                 }
             };
 
-    private void showDate(int day, int month, int year) {
-        dob.setText(new StringBuilder().append(day).append("-")
-                .append(month).append("-").append(year));
+    private void showDate(int year, int month, int day) {
+        dob.setText(new StringBuilder().append(year).append("-")
+                .append(month).append("-").append(day));
     }
 
 
@@ -113,7 +113,7 @@ public class signup extends AppCompatActivity {
         y=dob.getText().toString();
 
         url="http://192.168.1.8:8080/gameservervation/cegepgim/gamereservation/signup&"+r+"&"+s+"&"+t+"&"+u+"&"+v+"&"+x+"&"+y;
-       if(validateall()&&validpassword()&&datevalidate(y)&&isValidMobile(v)) {new MyTask().execute();}
+       if(validateEmptyText()&&emailvalidate(u)&&validpassword()&&isValidMobile(v)) {new MyTask().execute();}
     }
     private boolean isValidMobile(String phone) {
         boolean check=true;
@@ -132,12 +132,12 @@ public class signup extends AppCompatActivity {
         String cpass=c_password.getText().toString();
 
         if(!pass.equals(cpass)){
-            Toast.makeText(signup.this,"Password Not matching",Toast.LENGTH_SHORT).show();
+            Toast.makeText(signup.this,"Password didn't match",Toast.LENGTH_SHORT).show();
             temp=false;
         }
         return temp;
     }
-    private boolean validateall() {
+    private boolean validateEmptyText() {
         boolean temp=true;
 
         String f=firstname.getText().toString();
@@ -165,7 +165,7 @@ public class signup extends AppCompatActivity {
 
         return temp;
     }
-    private boolean  datevalidate(String registerdate) {
+    /*private boolean  datevalidate(String registerdate) {
         boolean temp = true;
         String r = "^(0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])[-](19|20)\\d{2}$";
         Matcher matcherObj = Pattern.compile(r).matcher(registerdate);
@@ -176,8 +176,20 @@ public class signup extends AppCompatActivity {
             temp = false;
         }
         return temp;
-    }
+    }*/
 
+private boolean emailvalidate(String email2){
+    boolean temp=true;
+
+    if(android.util.Patterns.EMAIL_ADDRESS.matcher(email2).matches()){
+        temp = true;
+    }
+    else{
+        Toast.makeText(getApplicationContext(),"Not a Valid email",Toast.LENGTH_SHORT).show();
+        temp = false;
+    }
+    return temp;
+}
 
     private class MyTask extends AsyncTask<String, String, String> {
         String o1, o2, o3, o4,o5,o6,o7,o8;
@@ -214,8 +226,8 @@ public class signup extends AppCompatActivity {
                     o4 = obj.getString("LastName");
                     o5 = obj.getString("Email");
 
-                    Intent intent = new Intent(getApplicationContext(), Home.class);
-                    intent.putExtra("username",o3);
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.putExtra("firstname",o3);
                     SharedPreferences sp=getSharedPreferences("grewal", 0);
                     SharedPreferences.Editor Ed=sp.edit();
                     Ed.putString("UserName",o2);
@@ -226,15 +238,16 @@ public class signup extends AppCompatActivity {
                     Ed.commit();
                     startActivity(intent);
                     finish();
+
                 }
 
                 else {
-                    Log.e(TAG, "Couldn't get json from server.");
+                    Log.e(TAG, "UserName and Email Must be Unique");
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             Toast.makeText(getApplicationContext(),
-                                    "please enter all the required fields",
+                                    "UserName and Email Must be Unique",
                                     Toast.LENGTH_LONG)
                                     .show();
                         }
@@ -270,7 +283,7 @@ public class signup extends AppCompatActivity {
             }
             catch (JSONException e)
 
-            {Log.e(TAG, "UserName and Email Must be Unique");
+            {Log.e(TAG, "Couldn't get json from server.");
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

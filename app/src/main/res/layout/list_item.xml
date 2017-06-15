@@ -13,7 +13,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:background="@drawable/shape1"
+            android:background="#43719a"
             android:id="@+id/name"
             android:textAlignment="center"
             android:paddingTop="5dp"

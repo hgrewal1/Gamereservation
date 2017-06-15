@@ -57,10 +57,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 r=username.getText().toString();
                 s=password.getText().toString();
-                url="http://192.168.1.1:8080/gameservervation/cegepgim/gamereservation/login&"+r+"&"+s;
+                url="http://192.168.1.8:8080/gameservervation/cegepgim/gamereservation/login&"+r+"&"+s;
                     new MyTask().execute();
                 }
 
+                public void signup1(View view){
+                    Intent intent=new Intent(this,signup.class);
+                    startActivity(intent);
+                }
 
 
 
@@ -100,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
                     o5 = obj.getString("Email");
 
                     Intent intent = new Intent(getApplicationContext(), Home.class);
-                    intent.putExtra("username",o3);
+                    intent.putExtra("name",o3);
                     SharedPreferences sp=getSharedPreferences("grewal", 0);
                     SharedPreferences.Editor Ed=sp.edit();
                     Ed.putString("UserName",o2);

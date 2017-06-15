@@ -10,6 +10,7 @@ import android.view.Menu;
 
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 public class Accounts extends AppCompatActivity {
 
@@ -21,6 +22,10 @@ public class Accounts extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("Account");
         setupNavigationView();
+    }
+    public void logout(View view){
+        Intent intent=new Intent(this,MainActivity.class);
+        startActivity(intent);
     }
     private void setupNavigationView() {
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
