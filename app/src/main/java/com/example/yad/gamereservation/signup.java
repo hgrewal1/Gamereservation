@@ -26,6 +26,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Calendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class signup extends AppCompatActivity {
 
@@ -63,7 +65,7 @@ public class signup extends AppCompatActivity {
         year=calendar.get(Calendar.YEAR);
         month=calendar.get(Calendar.MONTH);
         day=calendar.get(Calendar.DAY_OF_MONTH);
-        showDate(day,month+1,year);
+        showDate(day,month,year);
     }
     @SuppressWarnings("deprecation")
     public void setDate(View view) {
@@ -85,12 +87,12 @@ public class signup extends AppCompatActivity {
             DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(DatePicker arg0,
-                                      int arg3, int arg2, int arg1) {
+                                      int arg1, int arg2, int arg3) {
                     // TODO Auto-generated method stub
                     // arg1 = year
                     // arg2 = month
                     // arg3 = day
-                    showDate(arg3, arg2+1, arg1);
+                    showDate(arg1, arg2+1, arg3);
                 }
             };
 
@@ -111,9 +113,19 @@ public class signup extends AppCompatActivity {
         y=dob.getText().toString();
 
         url="http://192.168.1.8:8080/gameservervation/cegepgim/gamereservation/signup&"+r+"&"+s+"&"+t+"&"+u+"&"+v+"&"+x+"&"+y;
-       if(validate()) {new MyTask().execute();}
+       if(validateall()&&validpassword()&&datevalidate(y)&&isValidMobile(v)) {new MyTask().execute();}
     }
-    private boolean validate() {
+    private boolean isValidMobile(String phone) {
+        boolean check=true;
+
+            if(phone.length()<10|| phone.length() > 10) {
+
+                check = false;
+                Toast.makeText(signup.this,"phonenumber must contain 10 digits",Toast.LENGTH_SHORT).show();
+            }
+        return check;
+    }
+    private boolean validpassword() {
         boolean temp=true;
 
         String pass=password.getText().toString();
@@ -125,8 +137,46 @@ public class signup extends AppCompatActivity {
         }
         return temp;
     }
+    private boolean validateall() {
+        boolean temp=true;
+
+        String f=firstname.getText().toString();
+        String l=lastname.getText().toString();
+        String e=email.getText().toString();
+        String u=username.getText().toString();
 
 
+        if(f.matches("")){
+            Toast.makeText(signup.this,"Firstname field is empty",Toast.LENGTH_SHORT).show();
+            temp=false;
+        }
+        else if(l.matches("")){
+            Toast.makeText(signup.this,"Lastname field is empty",Toast.LENGTH_SHORT).show();
+            temp=false;
+        }
+        else if(e.matches("")){
+            Toast.makeText(signup.this,"Email field is empty",Toast.LENGTH_SHORT).show();
+            temp=false;
+        }
+        else if(u.matches("")){
+            Toast.makeText(signup.this,"username field is empty",Toast.LENGTH_SHORT).show();
+            temp=false;
+        }
+
+        return temp;
+    }
+    private boolean  datevalidate(String registerdate) {
+        boolean temp = true;
+        String r = "^(0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])[-](19|20)\\d{2}$";
+        Matcher matcherObj = Pattern.compile(r).matcher(registerdate);
+        if (matcherObj.matches()) {
+            temp = true;
+        } else {
+            Toast.makeText(signup.this,"Date must be like DD-MM-YYYY",Toast.LENGTH_SHORT).show();
+            temp = false;
+        }
+        return temp;
+    }
 
 
     private class MyTask extends AsyncTask<String, String, String> {
@@ -220,7 +270,7 @@ public class signup extends AppCompatActivity {
             }
             catch (JSONException e)
 
-            {Log.e(TAG, "Couldn't get json from server.");
+            {Log.e(TAG, "UserName and Email Must be Unique");
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
