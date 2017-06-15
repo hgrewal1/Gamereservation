@@ -165,7 +165,7 @@ public class gamestation extends AppCompatActivity {
             String r=intent.getStringExtra("name");
 
             try {
-                url = new URL("http://192.168.1.14:8080/gameservervation/cegepgim/gamereservation/viewgame&"+r);
+                url = new URL("http://192.168.1.8:8080/gameservervation/cegepgim/gamereservation/viewgame&"+r);
 
                 HttpURLConnection client = null;
                 client = (HttpURLConnection) url.openConnection();

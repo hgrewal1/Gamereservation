@@ -160,7 +160,7 @@ public class categories extends AppCompatActivity {
 
 
             try {
-                url = new URL("http://192.168.1.14:8080/gameservervation/cegepgim/gamereservation/viewallcategories");
+                url = new URL("http://192.168.1.8:8080/gameservervation/cegepgim/gamereservation/viewallcategories");
 
                 HttpURLConnection client = null;
                 client = (HttpURLConnection) url.openConnection();

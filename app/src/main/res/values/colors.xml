@@ -8,4 +8,5 @@
     <color name="textHint">#535151</color>
     <color name="textColorPrimary">#000000</color>
     <color name="edittextcolor">#000000</color>
+    <color name="white">#ffffff</color>
 </resources>

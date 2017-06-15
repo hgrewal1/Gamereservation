@@ -1,21 +1,19 @@
 package com.example.yad.gamereservation;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CalendarView;
+import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -27,13 +25,19 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Calendar;
 
-public class MainActivity extends AppCompatActivity {
-    EditText username,password;
+public class signup extends AppCompatActivity {
+
+    EditText username,password,firstname,lastname,dob,email,c_password,phonenumber;
     StringBuffer response;
-    String r,s;
+    private DatePicker datePicker;
+    private Calendar calendar;
+
+    private int year, month, day;
+    String r,s,t,u,v,x,y,z,a;
     String url = null;
-    String TAG_SUCCESS ;
+
 
     private ProgressDialog nDialog;
 
@@ -41,25 +45,86 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_signup);
 
 
 
 
         username = (EditText) findViewById(R.id.username);
-         password = (EditText) findViewById(R.id.password);
+        password = (EditText) findViewById(R.id.password);
+        firstname = (EditText) findViewById(R.id.firstname);
+        lastname = (EditText) findViewById(R.id.lastname);
+        email = (EditText) findViewById(R.id.email);
+        c_password = (EditText) findViewById(R.id.confrimpassword);
+        phonenumber=(EditText) findViewById(R.id.phonenumber) ;
+        dob = (EditText) findViewById(R.id.dob);
 
+        calendar=Calendar.getInstance();
+        year=calendar.get(Calendar.YEAR);
+        month=calendar.get(Calendar.MONTH);
+        day=calendar.get(Calendar.DAY_OF_MONTH);
+        showDate(day,month+1,year);
+    }
+    @SuppressWarnings("deprecation")
+    public void setDate(View view) {
+        showDialog(999);
+        Toast.makeText(getApplicationContext(), "ca",
+                Toast.LENGTH_SHORT)
+                .show();
+    }
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        // TODO Auto-generated method stub
+        if (id == 999) {
+            return new DatePickerDialog(this,
+                    myDateListener, day, month, year);
+        }
+        return null;
+    }
+    private DatePickerDialog.OnDateSetListener myDateListener = new
+            DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker arg0,
+                                      int arg3, int arg2, int arg1) {
+                    // TODO Auto-generated method stub
+                    // arg1 = year
+                    // arg2 = month
+                    // arg3 = day
+                    showDate(arg3, arg2+1, arg1);
+                }
+            };
 
-
-
+    private void showDate(int day, int month, int year) {
+        dob.setText(new StringBuilder().append(day).append("-")
+                .append(month).append("-").append(year));
     }
 
-            public void onClick(View view) {
-                r=username.getText().toString();
-                s=password.getText().toString();
-                url="http://192.168.1.1:8080/gameservervation/cegepgim/gamereservation/login&"+r+"&"+s;
-                    new MyTask().execute();
-                }
+
+    public void onClick(View view) {
+        r=firstname.getText().toString();
+        s=lastname.getText().toString();
+        t=username.getText().toString();
+        u=email.getText().toString();
+        v=phonenumber.getText().toString();
+        x=password.getText().toString();
+        z=c_password.getText().toString();
+        y=dob.getText().toString();
+
+        url="http://192.168.1.8:8080/gameservervation/cegepgim/gamereservation/signup&"+r+"&"+s+"&"+t+"&"+u+"&"+v+"&"+x+"&"+y;
+       if(validate()) {new MyTask().execute();}
+    }
+    private boolean validate() {
+        boolean temp=true;
+
+        String pass=password.getText().toString();
+        String cpass=c_password.getText().toString();
+
+        if(!pass.equals(cpass)){
+            Toast.makeText(signup.this,"Password Not matching",Toast.LENGTH_SHORT).show();
+            temp=false;
+        }
+        return temp;
+    }
 
 
 
@@ -119,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             Toast.makeText(getApplicationContext(),
-                                    "UserName or password incorrect",
+                                    "please enter all the required fields",
                                     Toast.LENGTH_LONG)
                                     .show();
                         }
@@ -146,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Toast.makeText(getApplicationContext(),
-                                "password incorrect",
+                                "IOException",
                                 Toast.LENGTH_LONG)
                                 .show();
                     }
@@ -183,4 +248,3 @@ public class MainActivity extends AppCompatActivity {
 
 
 }
-

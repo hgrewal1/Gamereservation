@@ -52,7 +52,11 @@
         android:layout_marginBottom="0dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp" />
+        android:layout_marginRight="0dp"
+        app:itemBackground="@color/colorPrimary"
+        app:itemIconTint="#ffffff"
+        android:backgroundTintMode="add"
+        app:itemTextColor="#ffffff"/>
 
 
 </android.support.constraint.ConstraintLayout>

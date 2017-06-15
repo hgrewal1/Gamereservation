@@ -31,9 +31,12 @@
             android:name=".location"
             android:exported="true" />
         <activity android:name=".Home" />
-        <activity android:name=".games" android:parentActivityName=".categories" />
-        <activity android:name=".gamestation" android:parentActivityName=".games"/>
-        <activity android:name=".gslocation" android:exported="true" android:parentActivityName=".gamestation"></activity>
+        <activity android:name=".games" />
+        <activity android:name=".gamestation" />
+        <activity
+            android:name=".gslocation"
+            android:exported="true" />
+        <activity android:name=".signup" android:exported="true"></activity>
     </application>
 
 </manifest>

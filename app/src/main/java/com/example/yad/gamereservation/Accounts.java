@@ -27,6 +27,7 @@ public class Accounts extends AppCompatActivity {
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem=menu.getItem(2);
         menuItem.setChecked(true);
+        menuItem.isEnabled();
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
