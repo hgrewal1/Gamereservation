@@ -1,7 +1,9 @@
 package com.example.yad.gamereservation;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -60,36 +62,11 @@ public class signup extends AppCompatActivity {
         c_password = (EditText) findViewById(R.id.confrimpassword);
         phonenumber=(EditText) findViewById(R.id.phonenumber) ;
         dob = (EditText) findViewById(R.id.dob);
-        onset=(Button)findViewById(R.id.setdate) ;
+        onset=(Button)findViewById(R.id.setdate) ;}
 
-
-        // perform click event on edit text
-        onset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // calender class's instance and get current date , month and year from calender
-                final Calendar c = Calendar.getInstance();
-                int mYear = c.get(Calendar.YEAR); // current year
-                int mMonth = c.get(Calendar.MONTH); // current month
-                int mDay = c.get(Calendar.DAY_OF_MONTH); // current day
-                // date picker dialog
-                datePickerDialog = new DatePickerDialog(signup.this,
-                        new DatePickerDialog.OnDateSetListener() {
-
-                            @Override
-                            public void onDateSet(DatePicker view, int year,
-                                                  int monthOfYear, int dayOfMonth) {
-                                // set day of month , month and year value in the edit text
-                                dob.setText(dayOfMonth + "-"
-                                        + (monthOfYear + 1) + "-" + year);
-
-                            }
-                        }, mYear, mMonth, mDay);
-                datePickerDialog.show();
-
-            }
-        });
-
+    public void showDatePickerDialog(View v) {
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getFragmentManager(), "datePicker");
     }
 
 
@@ -156,7 +133,7 @@ public class signup extends AppCompatActivity {
 
         return temp;
     }
-    /*private boolean  datevalidate(String registerdate) {
+    private boolean  datevalidate(String registerdate) {
         boolean temp = true;
         String r = "^(0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])[-](19|20)\\d{2}$";
         Matcher matcherObj = Pattern.compile(r).matcher(registerdate);
@@ -167,7 +144,7 @@ public class signup extends AppCompatActivity {
             temp = false;
         }
         return temp;
-    }*/
+    }
 
 private boolean emailvalidate(String email2){
     boolean temp=true;
@@ -300,5 +277,27 @@ private boolean emailvalidate(String email2){
 
     }
 
+    public class DatePickerFragment  extends DialogFragment
+            implements DatePickerDialog.OnDateSetListener {
 
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current date as the default date in the picker
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            // Create a new instance of DatePickerDialog and return it
+            return  new DatePickerDialog(getActivity(), AlertDialog.THEME_HOLO_DARK,this,year,month,day);
+        }
+
+        public void onDateSet(DatePicker view, int year,
+                              int monthOfYear, int dayOfMonth) {
+            // set day of month , month and year value in the edit text
+            dob.setText(dayOfMonth + "-"
+                    + (monthOfYear + 1) + "-" + year);
+
+        }
+    }
 }

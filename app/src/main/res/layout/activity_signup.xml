@@ -112,7 +112,7 @@
                 android:layout_height="29dp"
                 android:background="#e3dbdb"
                 android:text="Set Date"
-                android:onClick="setDate"/>
+                android:onClick="showDatePickerDialog"/>
         </LinearLayout>
 
         <EditText
