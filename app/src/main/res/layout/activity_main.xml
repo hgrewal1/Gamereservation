@@ -62,6 +62,7 @@
             android:textColor="@color/background" />
 
         <TextView
+            android:onClick="forgotpassword"
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -90,6 +91,7 @@
             android:textSize="24dp" />
 
         <Button
+            android:onClick="showDatePickerDialog"
             android:id="@+id/guestuser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

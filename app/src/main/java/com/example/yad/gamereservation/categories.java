@@ -149,7 +149,7 @@ public class categories extends AppCompatActivity {
             // Showing progress dialog
             pDialog = new ProgressDialog(categories.this);
             pDialog.setMessage("Please wait...");
-            pDialog.setCancelable(false);
+            pDialog.setCancelable(true);
             pDialog.show();
 
         }

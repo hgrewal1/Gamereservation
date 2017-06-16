@@ -1,5 +1,6 @@
 package com.example.yad.gamereservation;
 
+import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -53,6 +54,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+    public void forgotpassword(View view)
+    {
+        Intent intent=new Intent(this,forgotpassword.class);
+        startActivity(intent);
+    }
 
             public void onClick(View view) {
                 r=username.getText().toString();
@@ -66,7 +72,10 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
 
-
+    public void showDatePickerDialog(View v) {
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getFragmentManager(), "datePicker");
+    }
 
     private class MyTask extends AsyncTask<String, String, String> {
         String o1, o2, o3, o4,o5,o6,o7,o8;

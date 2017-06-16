@@ -33,8 +33,8 @@ public class signup extends AppCompatActivity {
 
     EditText username,password,firstname,lastname,dob,email,c_password,phonenumber;
     StringBuffer response;
-    private DatePicker datePicker;
-    private Calendar calendar;
+    Button onset;
+    DatePickerDialog datePickerDialog;
 
     private int year, month, day;
     String r,s,t,u,v,x,y,z,a;
@@ -60,45 +60,36 @@ public class signup extends AppCompatActivity {
         c_password = (EditText) findViewById(R.id.confrimpassword);
         phonenumber=(EditText) findViewById(R.id.phonenumber) ;
         dob = (EditText) findViewById(R.id.dob);
+        onset=(Button)findViewById(R.id.setdate) ;
 
-        calendar=Calendar.getInstance();
-        year=calendar.get(Calendar.YEAR);
-        month=calendar.get(Calendar.MONTH);
-        day=calendar.get(Calendar.DAY_OF_MONTH);
-        showDate(day,month,year);
-    }
-    @SuppressWarnings("deprecation")
-    public void setDate(View view) {
-        showDialog(999);
-        Toast.makeText(getApplicationContext(), "ca",
-                Toast.LENGTH_SHORT)
-                .show();
-    }
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        // TODO Auto-generated method stub
-        if (id == 999) {
-            return new DatePickerDialog(this,
-                    myDateListener, day, month, year);
-        }
-        return null;
-    }
-    private DatePickerDialog.OnDateSetListener myDateListener = new
-            DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker arg0,
-                                      int arg1, int arg2, int arg3) {
-                    // TODO Auto-generated method stub
-                    // arg1 = year
-                    // arg2 = month
-                    // arg3 = day
-                    showDate(arg1, arg2+1, arg3);
-                }
-            };
 
-    private void showDate(int year, int month, int day) {
-        dob.setText(new StringBuilder().append(year).append("-")
-                .append(month).append("-").append(day));
+        // perform click event on edit text
+        onset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // calender class's instance and get current date , month and year from calender
+                final Calendar c = Calendar.getInstance();
+                int mYear = c.get(Calendar.YEAR); // current year
+                int mMonth = c.get(Calendar.MONTH); // current month
+                int mDay = c.get(Calendar.DAY_OF_MONTH); // current day
+                // date picker dialog
+                datePickerDialog = new DatePickerDialog(signup.this,
+                        new DatePickerDialog.OnDateSetListener() {
+
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+                                // set day of month , month and year value in the edit text
+                                dob.setText(dayOfMonth + "-"
+                                        + (monthOfYear + 1) + "-" + year);
+
+                            }
+                        }, mYear, mMonth, mDay);
+                datePickerDialog.show();
+
+            }
+        });
+
     }
 
 
