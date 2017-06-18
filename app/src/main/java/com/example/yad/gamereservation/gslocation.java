@@ -39,7 +39,7 @@ public class gslocation extends AppCompatActivity {
 
     private ProgressDialog pDialog;
     TextView out1,out2,out3,out4,out5;
-    String r,o1,o2,o3,o4,o5;
+    String r,o1,o2,o3,o4,o5,url1;
 
 
     @Override
@@ -48,6 +48,7 @@ public class gslocation extends AppCompatActivity {
         setContentView(R.layout.activity_gslocation);
         Intent intent=getIntent();
          r =intent.getStringExtra("name");
+
          out1=(TextView) findViewById(R.id.textView1);
          out2=(TextView) findViewById(R.id.textView2);
          out3=(TextView) findViewById(R.id.textView3);

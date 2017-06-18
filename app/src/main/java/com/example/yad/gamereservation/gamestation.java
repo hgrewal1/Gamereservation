@@ -76,7 +76,7 @@ public class gamestation extends AppCompatActivity {
                 Intent i = new Intent(getApplicationContext(), gslocation.class);
 
                 // send album id to tracklist activity to get list of songs under that album
-                String tut_name = ((TextView) view.findViewById(R.id.name)).getText().toString();
+                String tut_name = ((TextView) view.findViewById(R.id.name2)).getText().toString();
                 i.putExtra("name", tut_name);
 
                 startActivity(i);
@@ -204,6 +204,7 @@ public class gamestation extends AppCompatActivity {
                         // adding each child node to HashMap key => value
 
                         contact.put("GameStation", o4);
+                        contact.put("LocationName", o6);
 
 
 
@@ -258,7 +259,7 @@ public class gamestation extends AppCompatActivity {
              * */
             ListAdapter adapter = new SimpleAdapter(
                     gamestation.this, arylist,
-                    R.layout.list_item, new String[]{"GameStation"}, new int[]{R.id.name});
+                    R.layout.list_item2, new String[]{"GameStation","LocationName"}, new int[]{R.id.name,R.id.name2});
 
             lv.setAdapter(adapter);
         }
