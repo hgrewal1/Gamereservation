@@ -33,10 +33,12 @@
             android:name=".location"
             android:exported="true" />
         <activity android:name=".Home" />
-        <activity android:name=".games"
-            android:parentActivityName=".categories"/>
-        <activity android:name=".gamestation"
-            android:parentActivityName=".games"/>
+        <activity
+            android:name=".games"
+            android:parentActivityName=".categories" />
+        <activity
+            android:name=".gamestation"
+            android:parentActivityName=".games" />
         <activity
             android:name=".gslocation"
             android:exported="true" />
@@ -46,7 +48,7 @@
         <activity
             android:name=".forgotpassword"
             android:exported="true" />
-
+        <activity android:name=".grewal"></activity>
     </application>
 
 </manifest>
