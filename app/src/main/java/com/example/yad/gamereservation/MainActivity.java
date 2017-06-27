@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 r=username.getText().toString();
                 s=password.getText().toString();
-                url="http://192.168.1.8:8080/gameservervation/cegepgim/gamereservation/login&"+r+"&"+s;
+                url="http://144.217.163.57:8080/cegepgim/mobile/gamereservation/login&"+r+"&"+s;
                     new MyTask().execute();
                 }
 
@@ -107,19 +107,16 @@ public class MainActivity extends AppCompatActivity {
                 obj = new JSONObject(response.toString());
                 o1 = obj.getString("Status");
                 if(o1.equals("ok")) {
-                    o2 = obj.getString("UserName");
                     o3 = obj.getString("FirstName");
-                    o4 = obj.getString("LastName");
-                    o5 = obj.getString("Email");
 
                     Intent intent = new Intent(getApplicationContext(), Home.class);
                     intent.putExtra("name",o3);
                     SharedPreferences sp=getSharedPreferences("grewal", 0);
                     SharedPreferences.Editor Ed=sp.edit();
-                    Ed.putString("UserName",o2);
+
                     Ed.putString("FirstName",o3);
-                    Ed.putString("LastName",o4 );
-                    Ed.putString("Email",o5);
+                    Ed.putString("username",r);
+                    Ed.putString("password",s);
 
                     Ed.commit();
                     startActivity(intent);

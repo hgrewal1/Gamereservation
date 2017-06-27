@@ -48,7 +48,9 @@
         <activity
             android:name=".forgotpassword"
             android:exported="true" />
-        <activity android:name=".grewal"></activity>
+        <activity android:name=".grewal" />
+        <activity android:name=".viewprofile" />
+        <activity android:name=".updateprofile"></activity>
     </application>
 
 </manifest>

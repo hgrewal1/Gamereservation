@@ -139,7 +139,7 @@ setupNavigationView();
             URL url = null;
 
             try {
-                url = new URL("http://192.168.1.8:8080/gameservervation/cegepgim/gamereservation/viewlocation&"+r);
+                url = new URL("http://144.217.163.57:8080/cegepgim/mobile/gamereservation/viewlocation&"+r);
 
                 HttpURLConnection client = null;
                 client = (HttpURLConnection) url.openConnection();

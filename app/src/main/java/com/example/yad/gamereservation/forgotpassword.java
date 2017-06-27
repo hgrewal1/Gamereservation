@@ -26,48 +26,26 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
- public class forgotpassword extends AppCompatActivity implements OnItemSelectedListener {
+ public class forgotpassword extends AppCompatActivity {
      String a,r;
      EditText s;
      String url;
      private String TAG = MainActivity.class.getSimpleName();
      @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_forgotpassword);
+         super.onCreate(savedInstanceState);
+         setContentView(R.layout.activity_forgotpassword);
 
-        Spinner spinner=(Spinner) findViewById(R.id.spinner);
-        spinner.setOnItemSelectedListener(this);
-        List<String> items= new ArrayList<String>();
-        items.add("Email");
-        items.add("Phonenumber");
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
-dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(dataAdapter);
-    }
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        // On selecting a spinner item
-        String item = parent.getItemAtPosition(position).toString();
-a=parent.getSelectedItem().toString();
-
-        // Showing selected spinner item
-        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
-    }
+     }
     public void onNothingSelected(AdapterView<?> arg0) {
         // TODO Auto-generated method stub
     }
      public void onClick(View view) {
          s=(EditText)  findViewById(R.id.forgot);
          String r=s.getText().toString();
-         if (a.equals("Email")) {
-             url = "http://192.168.1.8:8080/gameservervation/cegepgim/gamereservation/forgotpasswordemail&"+r;
-             new MyTask().execute();
-         }
-         else{
-             url = "http://192.168.1.8:8080/gameservervation/cegepgim/gamereservation/forgotpasswordphone&"+r;
-             new MyTask().execute();
-         }
+
+             url = "http://144.217.163.57:8080/cegepgim/mobile/gamereservation/forgotpasswordemail&"+r;
+
 
      }
 

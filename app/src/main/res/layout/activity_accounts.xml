@@ -33,12 +33,22 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/logout"
                 android:layout_width="163dp"
                 android:layout_height="wrap_content"
                 android:text="LogOut"
                 android:textColor="@color/white"
                 android:onClick="logout"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                android:background="@drawable/button"/>
+            <Button
+                android:id="@+id/profile"
+                android:layout_width="163dp"
+                android:layout_height="wrap_content"
+                android:text="View Profile"
+                android:textColor="@color/white"
+                android:onClick="viewprofile"
                 android:layout_marginTop="20dp"
                 android:layout_gravity="center"
                 android:background="@drawable/button"/>

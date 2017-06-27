@@ -2,6 +2,7 @@ package com.example.yad.gamereservation;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -12,14 +13,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,58 +27,30 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
 
-public class categories extends AppCompatActivity {
-    private String TAG = categories.class.getSimpleName();
-
+public class viewprofile extends AppCompatActivity {
+    private String TAG = gslocation.class.getSimpleName();
+    URL url = null;
     private ProgressDialog pDialog;
-    private ListView lv;
-
-
-    // URL to get contacts JSON
-
-
-    ArrayList<HashMap<String, String>> arylist;
-
+    TextView firstname,lastname,email,phonenumber;
+    String o1,o2,o3,o4,url1,url2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_categories);
-
-        arylist = new ArrayList<>();
-
-        lv = (ListView) findViewById(R.id.list);
+        setContentView(R.layout.activity_viewprofile);
+        setupNavigationView();
         ActionBar actionBar=getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
 
-        actionBar.setTitle("Categories");
-        new MyTask().execute();
+        actionBar.setTitle("Profile");
         setupNavigationView();
+        firstname = (TextView) findViewById(R.id.firstname);
+        lastname = (TextView) findViewById(R.id.lastname);
+        email = (TextView) findViewById(R.id.email);
+        phonenumber=(TextView) findViewById(R.id.phonenumber) ;
 
-
-        /**
-         * Listview item click listener
-         * TrackListActivity will be lauched by passing album id
-         * */
-        lv.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> arg0, android.view.View view, int arg2,
-                                    long arg3) {
-                // on selecting a single album
-                // TrackListActivity will be launched to show tracks inside the album
-                Intent i = new Intent(getApplicationContext(), games.class);
-
-                // send album id to tracklist activity to get list of songs under that album
-                String tut_name = ((TextView) view.findViewById(R.id.name)).getText().toString();
-                i.putExtra("name", tut_name);
-
-                startActivity(i);
-            }
-        });
+        new MyTask().execute();
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -105,7 +75,7 @@ public class categories extends AppCompatActivity {
     private void setupNavigationView() {
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
         Menu menu = bottomNavigationView.getMenu();
-        MenuItem menuItem=menu.getItem(1);
+        MenuItem menuItem=menu.getItem(4);
         menuItem.setChecked(true);
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(
@@ -138,29 +108,39 @@ public class categories extends AppCompatActivity {
                         return false;
                     }
                 });
+
     }
-
-
+    public void edit(View view){
+        Intent intent=new Intent(this,updateprofile.class);
+        intent.putExtra("firstname",firstname.getText().toString());
+        intent.putExtra("lastname",lastname.getText().toString());
+        intent.putExtra("email",email.getText().toString());
+        intent.putExtra("phonenumber",phonenumber.getText().toString());
+        startActivity(intent);
+    }
     private class MyTask extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             // Showing progress dialog
-            pDialog = new ProgressDialog(categories.this);
+            pDialog = new ProgressDialog(viewprofile.this);
             pDialog.setMessage("Please wait...");
-            pDialog.setCancelable(true);
+            pDialog.setCancelable(false);
             pDialog.show();
 
         }
 
         @Override
         protected Void doInBackground(Void... params) {
-            URL url = null;
 
+            SharedPreferences sp1=getSharedPreferences("grewal",0);
+
+            String r=sp1.getString("username", null);
+            String s = sp1.getString("password", null);
 
             try {
-                url = new URL("http://144.217.163.57:8080/cegepgim/mobile/gamereservation/viewallcategories");
+                url = new URL("http://192.168.1.21:8080/gameservervation/cegepgim/gamereservation/viewprofile&"+r+"&"+s);
 
                 HttpURLConnection client = null;
                 client = (HttpURLConnection) url.openConnection();
@@ -178,31 +158,14 @@ public class categories extends AppCompatActivity {
                     response.append(inputline);
                 }
                 in.close();
-
-
-
                 JSONObject obj = new JSONObject(response.toString());
                 String status=obj.getString("Status");
                 if (status.equals("ok")) {
-                    JSONArray ary = new JSONArray();
-                    ary = obj.getJSONArray("Categories");
-                    for (Integer i = 0; i < ary.length(); i++) {
-                        JSONObject obj1 = ary.getJSONObject(i);
-                        String o2 = obj1.getString("CategoryName");
-                        String o4 = obj1.getString("CategoryId");
-                        String o5 = obj1.getString("DESCRIPTION");
+                    o1 = obj.getString("FirstName");
+                    o2 = obj.getString("LastName");
+                    o3 = obj.getString("Email");
+                    o4 = obj.getString("PhoneNumber");
 
-
-                        HashMap<String, String> contact = new HashMap<>();
-
-                        // adding each child node to HashMap key => value
-                        contact.put("CategoryName", o2);
-
-
-
-                        // adding Array values to Array list
-                        arylist.add(contact);
-                    }
                 }
                 else {
                     Log.e(TAG, "Couldn't get json from server.");
@@ -210,7 +173,7 @@ public class categories extends AppCompatActivity {
                         @Override
                         public void run() {
                             Toast.makeText(getApplicationContext(),
-                                    "Couldn't get json from server. Check LogCat for possible errors!",
+                                    "Couldn't get json from server. Check LogCat for possible errors!"+url,
                                     Toast.LENGTH_LONG)
                                     .show();
                         }
@@ -242,22 +205,18 @@ public class categories extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
+
             // Dismiss the progress dialog
             if (pDialog.isShowing())
                 pDialog.dismiss();
-            /**
-             * Updating parsed JSON data into ListView
-             * */
-            ListAdapter adapter = new SimpleAdapter(
-                    categories.this, arylist,
-                    R.layout.list_item, new String[]{"CategoryName"}, new int[]{R.id.name});
-
-            lv.setAdapter(adapter);
+            firstname.setText(o1);
+            lastname.setText(o2);
+            email.setText(o3);
+            phonenumber.setText(o4);
+            super.onPostExecute(result);
         }
 
 
     }
 
 }
-

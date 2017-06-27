@@ -80,7 +80,7 @@ public class signup extends AppCompatActivity {
         z=c_password.getText().toString();
         y=dob.getText().toString();
 
-        url="http://192.168.1.8:8080/gameservervation/cegepgim/gamereservation/signup&"+r+"&"+s+"&"+t+"&"+u+"&"+v+"&"+x+"&"+y;
+        url="http://144.217.163.57:8080/cegepgim/mobile/gamereservation/signup&"+r+"&"+s+"&"+t+"&"+u+"&"+v+"&"+x+"&"+y;
        if(validateEmptyText()&&emailvalidate(u)&&validpassword()&&isValidMobile(v)) {new MyTask().execute();}
     }
     private boolean isValidMobile(String phone) {
@@ -189,20 +189,14 @@ private boolean emailvalidate(String email2){
                 obj = new JSONObject(response.toString());
                 o1 = obj.getString("Status");
                 if(o1.equals("ok")) {
-                    o2 = obj.getString("UserName");
+
                     o3 = obj.getString("FirstName");
-                    o4 = obj.getString("LastName");
-                    o5 = obj.getString("Email");
 
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     intent.putExtra("firstname",o3);
                     SharedPreferences sp=getSharedPreferences("grewal", 0);
                     SharedPreferences.Editor Ed=sp.edit();
-                    Ed.putString("UserName",o2);
                     Ed.putString("FirstName",o3);
-                    Ed.putString("LastName",o4 );
-                    Ed.putString("Email",o5);
-
                     Ed.commit();
                     startActivity(intent);
                     finish();

@@ -100,7 +100,7 @@ public class avialability extends AppCompatActivity implements AdapterView.OnIte
 
     }
 public  void available(View view){
-    url="http://192.168.1.8:8080/gameservervation/cegepgim/gamereservation/viewavailability"+r+"&"+a+"&"+b;
+    url="http://http://144.217.163.57:8080/cegepgim/mobile/gamereservation/cegepgim/gamereservation/viewavailability"+r+"&"+a+"&"+b;
     new MyTask2().execute();
 }
 
@@ -203,7 +203,7 @@ if (spinner3.getId()==R.id.spinner3){
             String r=intent.getStringExtra("name");
 
             try {
-                url = new URL("http://192.168.1.8:8080/gameservervation/cegepgim/gamereservation/viewallgamestation");
+                url = new URL("//http://144.217.163.57:8080/cegepgim/mobile/gamereservation/viewallgamestation");
 
                 HttpURLConnection client = null;
                 client = (HttpURLConnection) url.openConnection();

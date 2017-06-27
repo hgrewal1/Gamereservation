@@ -163,7 +163,7 @@ public class location extends AppCompatActivity {
             Intent intent=getIntent();
             String r=intent.getStringExtra("name");
             try {
-                url = new URL("http://192.168.1.8:8080/gameservervation/cegepgim/gamereservation/viewalllocations");
+                url = new URL("http://144.217.163.57:8080/cegepgim/mobile/gamereservation/viewalllocations");
 
                 HttpURLConnection client = null;
                 client = (HttpURLConnection) url.openConnection();

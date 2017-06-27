@@ -168,7 +168,7 @@ public class games extends AppCompatActivity {
 
 
             try {
-                url = new URL("http://192.168.1.8:8080/gameservervation/cegepgim/gamereservation/viewcategory&"+r);
+                url = new URL("http://144.217.163.57:8080/cegepgim/mobile/gamereservation/viewcategory&"+r);
 
                 HttpURLConnection client = null;
                 client = (HttpURLConnection) url.openConnection();
