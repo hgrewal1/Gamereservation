@@ -33,9 +33,13 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+
+import static android.R.attr.path;
 
 public class availability extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -58,21 +62,25 @@ public class availability extends AppCompatActivity implements AdapterView.OnIte
         spinner3=(Spinner) findViewById(R.id.spinner3);
         spinner4=(Spinner) findViewById(R.id.spinner4);
         editText=(EditText) findViewById(R.id.date);
-         date1=editText.getText().toString();
+        spinner1.setOnItemSelectedListener(this);
+        spinner2.setOnItemSelectedListener(this);
+        spinner3.setOnItemSelectedListener(this);
+        spinner4.setOnItemSelectedListener(this);
+
 
         actionBar.setTitle("Reservation");
         setupNavigationView();
         List<String> items= new ArrayList<String>();
-        items.add("9:00 am");
-        items.add("10:00 am");
-        items.add("11:00 am");
-        items.add("12:00 pm");
-        items.add("1:00 pm");
-        items.add("2:00 pm");
-        items.add("3:00 pm");
-        items.add("4:00 pm");
-        items.add("5:00 pm");
-        items.add("6:00 pm");
+        items.add("9:00");
+        items.add("10:00");
+        items.add("11:00");
+        items.add("12:00");
+        items.add("13:00");
+        items.add("14:00");
+        items.add("15:00");
+        items.add("16:00");
+        items.add("17:00");
+        items.add("18:00");
         List<String> items2= new ArrayList<String>();
         items2.add("FOOTABLL GROUND 1");
         items2.add("FOOTBALL GROUND 2");
@@ -113,11 +121,11 @@ public class availability extends AppCompatActivity implements AdapterView.OnIte
         spinner3.setAdapter(dataAdapter);
 
         ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items2);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner1.setAdapter(dataAdapter2);
 
         ArrayAdapter<String> dataAdapter3 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items3);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dataAdapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner4.setAdapter(dataAdapter3);
 
         editText.setOnClickListener(new View.OnClickListener() {
@@ -141,13 +149,10 @@ public class availability extends AppCompatActivity implements AdapterView.OnIte
         spinner2=(Spinner)parent;
         spinner3=(Spinner)parent;
         spinner4=(Spinner)parent;
-        if(spinner2.getId()==R.id.spinner2){
+        if(spinner2.getId()==R.id.spinner2) {
 
-        starttime=parent.getSelectedItem().toString();
-            Toast.makeText(this,
-                    starttime,
-                    Toast.LENGTH_LONG)
-                    .show();}
+            starttime = parent.getSelectedItem().toString();
+        }
 if (spinner3.getId()==R.id.spinner3){
 
     endtime=parent.getSelectedItem().toString();
@@ -224,12 +229,29 @@ if (spinner3.getId()==R.id.spinner3){
                         return false;
                     }
                 });}
+
+
+
+
+
         public void check1(View view){
-        url="http://192.168.1.21:8080/gameservervation/cegepgim/gamereservation/viewavailability&"+gsname+"&"+starttime+"&"+endtime+"&"+dayname+"&"+date1;
-            Toast.makeText(getApplicationContext(),
-                    url,
-                    Toast.LENGTH_LONG)
-                    .show();
+            String string = starttime;
+            String[] parts = string.split(":");
+
+            String part1 = parts[0];
+            String part2 = parts[1];
+            String h=part1+part2;
+            String string2 = endtime;
+            String[] parts2 = string2.split(":");
+
+            String part3 = parts2[0];
+            String part4 = parts2[1];
+            String g=part3+part4;
+
+
+            date1=editText.getText().toString();
+        url="http://192.168.1.21:8080/gameservervation/cegepgim/gamereservation/viewavailability&"+gsname+"&"+h+"&"+g+"&"+dayname+"&"+date1;
+            new MyTask().execute();
 
     }
 
@@ -283,12 +305,14 @@ if (spinner3.getId()==R.id.spinner3){
                          o3 = obj.getString("StartTime");
                          o4 = obj.getString("EndTime");
                          o5= obj.getString("Date");
-                    Intent intent=new Intent(getApplication(),updateprofile.class);
+                    String o6= obj.getString("Message");
+                    Intent intent=new Intent(getApplication(),availabilityresult.class);
                     intent.putExtra("Day",o1);
                     intent.putExtra("GameStation",o2);
                     intent.putExtra("StartTime",o3);
                     intent.putExtra("EndTime",o4);
                     intent.putExtra("Date",o5);
+                    intent.putExtra("Message",o6);
                     startActivity(intent);
 
                     }

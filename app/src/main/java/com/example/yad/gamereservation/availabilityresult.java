@@ -9,17 +9,43 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class availabilityresult extends AppCompatActivity {
-
+    String f,b,c,d,g,x;
+    TextView o1,o2,o3,o4,o5;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_grewal2);
+        setContentView(R.layout.activity_availabilityresult);
         setupNavigationView();
+        o1 = (TextView) findViewById(R.id.gamestation);
+        o2 = (TextView) findViewById(R.id.date);
+        o3 = (TextView) findViewById(R.id.day);
+        o4=(TextView) findViewById(R.id.starttime) ;
+        o5=(TextView) findViewById(R.id.endtime) ;
         ActionBar actionBar=getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
+        Intent intent=getIntent();
+        f= intent.getStringExtra("GameStation");
+        b=intent.getStringExtra("Date");
+        c=intent.getStringExtra("Day");
+        d=intent.getStringExtra("StartTime");
+        g=intent.getStringExtra("EndTime");
+        x=intent.getStringExtra("Message");
+        String string = d;
+        String[] parts = string.split(":");
 
+        String part1 = parts[0];
+        String part2 = parts[1];
+        String h=part1+part2;
+        o1.setText(f);
+        o2.setText(b);
+        o3.setText(c);
+        o4.setText(d);
+        o4.setText(g);
+        o5.setText(x);
         actionBar.setTitle("Grewal");
         setupNavigationView();
     }
