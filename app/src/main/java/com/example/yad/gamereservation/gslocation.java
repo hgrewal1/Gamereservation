@@ -2,7 +2,6 @@ package com.example.yad.gamereservation;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -13,14 +12,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,8 +24,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class gslocation extends AppCompatActivity {
 
@@ -110,7 +102,7 @@ setupNavigationView();
                                 startActivity(intent4);
                                 break;
                             case R.id.action_availabilties:
-                                Intent intent5=new Intent(getApplicationContext(),avialability.class);
+                                Intent intent5=new Intent(getApplicationContext(),availability.class);
                                 startActivity(intent5);
                                 break;
                         }

@@ -1,13 +1,10 @@
 package com.example.yad.gamereservation;
 
-import android.accounts.Account;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -23,9 +20,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -41,33 +35,32 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 
-public class avialability extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class availability extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private String TAG = avialability.class.getSimpleName();
+    private String TAG = availability.class.getSimpleName();
     ArrayAdapter<String> adapter;
     private ProgressDialog pDialog;
     ArrayList<String> arylist;
-    String a,b,r,url;
+    String gsname,dayname,starttime,endtime,date1,id,url,o1,o2,o3,o4,o5;
     EditText editText;
-    Spinner spinner2,spinner3;
+    Spinner spinner2,spinner3,spinner1,spinner4;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_avialability);
+        setContentView(R.layout.activity_availability);
         setupNavigationView();
         ActionBar actionBar=getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
+        spinner1=(Spinner) findViewById(R.id.spinner);
        spinner2=(Spinner) findViewById(R.id.spinner2);
         spinner3=(Spinner) findViewById(R.id.spinner3);
+        spinner4=(Spinner) findViewById(R.id.spinner4);
         editText=(EditText) findViewById(R.id.date);
-        arylist = new ArrayList<>();
+         date1=editText.getText().toString();
 
-        new MyTask().execute();
-
-        actionBar.setTitle("Availability");
+        actionBar.setTitle("Reservation");
         setupNavigationView();
         List<String> items= new ArrayList<String>();
         items.add("9:00 am");
@@ -80,42 +73,93 @@ public class avialability extends AppCompatActivity implements AdapterView.OnIte
         items.add("4:00 pm");
         items.add("5:00 pm");
         items.add("6:00 pm");
+        List<String> items2= new ArrayList<String>();
+        items2.add("FOOTABLL GROUND 1");
+        items2.add("FOOTBALL GROUND 2");
+        items2.add("PINGPONG TABLE 1");
+        items2.add("PINGPONGTABLE TABLE 2");
+        items2.add("FOOSBALL TABLE 1");
+        items2.add("BOWLING GAMESTATION 1");
+        items2.add("BOWLING GAMESTAION 2");
+        items2.add("SQUASH GAMESTATION ");
+        items2.add("VOLLEYBALL GROUND ");
+        items2.add("CRICKET GROUND 1");
+        items2.add("CRICKET GROUND 2");
+        items2.add("HOCKEY GROUND");
+        items2.add("ICEHOCKEY GROUND");
+        items2.add("LUDO TABLE 1");
+        items2.add("LUDO TABLE 2");
+        items2.add("BASKETBALL COURT 1");
+        items2.add("BASKETBALL COURT 2");
+        items2.add("CHESS TABLE 1");
+        items2.add("CHESS TABLE 2");
+        items2.add("BADMINTON COURT 1");
+        items2.add("BADMINTON COURT 2");
+        items2.add("CAROMBOARD TABLE 1");
+        items2.add("CAROMBOARD TABLE 2");
+        items2.add("BASEBALL GROUND");
+        List<String> items3= new ArrayList<String>();
+        items3.add("Sunday");
+        items3.add("Monday");
+        items3.add("Tuesday");
+        items3.add("Wednesday");
+        items3.add("Thursday");
+        items3.add("Friday");
+        items3.add("Saturday");
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner2.setAdapter(dataAdapter);
-        ArrayAdapter<String> dataAdapter2= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner3.setAdapter(dataAdapter);
+
+        ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items2);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner1.setAdapter(dataAdapter2);
+
+        ArrayAdapter<String> dataAdapter3 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items3);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner4.setAdapter(dataAdapter3);
+
         editText.setOnClickListener(new View.OnClickListener() {
 
 
             @Override
             public void onClick(View v) {
-                DialogFragment newFragment = new avialability.DatePickerFragment();
+                DialogFragment newFragment = new availability.DatePickerFragment();
                 newFragment.show(getFragmentManager(), "datePicker");
             }
 
         });
 
     }
-public  void available(View view){
-    url="http://http://144.217.163.57:8080/cegepgim/mobile/gamereservation/cegepgim/gamereservation/viewavailability"+r+"&"+a+"&"+b;
-    new MyTask2().execute();
-}
+
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         // On selecting a spinner item
+        spinner1=(Spinner)parent;
         spinner2=(Spinner)parent;
         spinner3=(Spinner)parent;
+        spinner4=(Spinner)parent;
         if(spinner2.getId()==R.id.spinner2){
 
-        a=parent.getSelectedItem().toString();}
+        starttime=parent.getSelectedItem().toString();
+            Toast.makeText(this,
+                    starttime,
+                    Toast.LENGTH_LONG)
+                    .show();}
 if (spinner3.getId()==R.id.spinner3){
 
-    b=parent.getSelectedItem().toString();
+    endtime=parent.getSelectedItem().toString();
 }
+        if (spinner1.getId()==R.id.spinner){
+
+            gsname=parent.getSelectedItem().toString();
+        }
+        if (spinner4.getId()==R.id.spinner4){
+
+            dayname=parent.getSelectedItem().toString();
+        }
     }
     public void onNothingSelected(AdapterView<?> arg0) {
         // TODO Auto-generated method stub
@@ -172,14 +216,21 @@ if (spinner3.getId()==R.id.spinner3){
                                 startActivity(intent4);
                                 break;
                             case R.id.action_availabilties:
-                                Intent intent5=new Intent(getApplicationContext(),avialability.class);
+                                Intent intent5=new Intent(getApplicationContext(),availability.class);
                                 startActivity(intent5);
                                 break;
                         }
 
                         return false;
                     }
-                });
+                });}
+        public void check1(View view){
+        url="http://192.168.1.21:8080/gameservervation/cegepgim/gamereservation/viewavailability&"+gsname+"&"+starttime+"&"+endtime+"&"+dayname+"&"+date1;
+            Toast.makeText(getApplicationContext(),
+                    url,
+                    Toast.LENGTH_LONG)
+                    .show();
+
     }
 
     private class MyTask extends AsyncTask<Void, Void, Void> {
@@ -188,7 +239,7 @@ if (spinner3.getId()==R.id.spinner3){
         protected void onPreExecute() {
             super.onPreExecute();
             // Showing progress dialog
-            pDialog = new ProgressDialog(avialability.this);
+            pDialog = new ProgressDialog(availability.this);
             pDialog.setMessage("Please wait...");
             pDialog.setCancelable(false);
             pDialog.show();
@@ -197,137 +248,12 @@ if (spinner3.getId()==R.id.spinner3){
 
         @Override
         protected Void doInBackground(Void... params) {
-            URL url = null;
-
-            Intent intent=getIntent();
-            String r=intent.getStringExtra("name");
-
-            try {
-                url = new URL("//http://144.217.163.57:8080/cegepgim/mobile/gamereservation/viewallgamestation");
-
-                HttpURLConnection client = null;
-                client = (HttpURLConnection) url.openConnection();
-                client.setRequestMethod("GET");
-                int responseCode = client.getResponseCode();
-                System.out.println("\n Sending 'GET' request to url:" + url);
-                System.out.println("\n Response code:" + responseCode);
-                InputStreamReader myInput = new InputStreamReader(client.getInputStream());
-                BufferedReader in = new BufferedReader(myInput);
-                String inputline;
-                StringBuffer response = new StringBuffer();
-
-
-                while ((inputline = in.readLine()) != null) {
-                    response.append(inputline);
-                }
-                in.close();
-
-
-
-                JSONObject obj = new JSONObject(response.toString());
-                String status=obj.getString("Status");
-                if (status.equals("ok")) {
-                    JSONArray ary = new JSONArray();
-                    ary = obj.getJSONArray("GameStations");
-                    adapter = new ArrayAdapter<String>(avialability.this, android.R.layout.simple_spinner_item);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    for (Integer i = 0; i < ary.length(); i++) {
-                        JSONObject obj1 = ary.getJSONObject(i);
-                        String o2 = obj1.getString("GameStationId");
-                        String o4 = obj1.getString("GameStation");
-                        String o5 = obj1.getString("LocationId");
-                        adapter.add(o4);
-
-                    }
-                }
-                else {
-                    Log.e(TAG, "Couldn't get json from server.");
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getApplicationContext(),
-                                    "Couldn't get json from server. Check LogCat for possible errors!",
-                                    Toast.LENGTH_LONG)
-                                    .show();
-                        }
-                    });
-
-                }
-            } catch (final JSONException e) {
-                Log.e(TAG, "Json parsing error: " + e.getMessage());
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(),
-                                "Json parsing error: " + e.getMessage(),
-                                Toast.LENGTH_LONG)
-                                .show();
-                    }
-                });
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-            // Dismiss the progress dialog
-            if (pDialog.isShowing())
-                pDialog.dismiss();
-            /**
-             * Updating parsed JSON data into ListView
-             * */
-            Spinner mySpinner = (Spinner) findViewById(R.id.spinner);
-
-            // Spinner adapter
-            mySpinner.setAdapter(adapter);
-
-            // Spinner on item click listener
-            mySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-                        @Override
-                        public void onItemSelected(AdapterView<?> parent,
-                                                   View arg1, int position, long arg3) {
-                            r=parent.getItemAtPosition(position).toString();
-
-                        }
-
-                        @Override
-                        public void onNothingSelected(AdapterView<?> arg0) {
-                            // TODO Auto-generated method stub
-                        }
-                    });
-        }
-        }
-    private class MyTask2 extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            // Showing progress dialog
-            pDialog = new ProgressDialog(avialability.this);
-            pDialog.setMessage("Please wait...");
-            pDialog.setCancelable(false);
-            pDialog.show();
-
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-
+           URL url1;
 
 
 
             try {
-                URL url1 = new URL(url);
+                url1 = new URL(url);
 
                 HttpURLConnection client = null;
                 client = (HttpURLConnection) url1.openConnection();
@@ -352,13 +278,21 @@ if (spinner3.getId()==R.id.spinner3){
                 String status=obj.getString("Status");
                 if (status.equals("ok")) {
 
-                        String o2 = obj.getString("GameStationId");
-
-
-              Intent intent=new Intent(getApplicationContext(),grewal.class);
+                         o1 = obj.getString("Day");
+                         o2 = obj.getString("GameStation");
+                         o3 = obj.getString("StartTime");
+                         o4 = obj.getString("EndTime");
+                         o5= obj.getString("Date");
+                    Intent intent=new Intent(getApplication(),updateprofile.class);
+                    intent.putExtra("Day",o1);
+                    intent.putExtra("GameStation",o2);
+                    intent.putExtra("StartTime",o3);
+                    intent.putExtra("EndTime",o4);
+                    intent.putExtra("Date",o5);
                     startActivity(intent);
 
-                }
+                    }
+
                 else {
                     Log.e(TAG, "Couldn't get json from server.");
                     runOnUiThread(new Runnable() {
@@ -403,7 +337,8 @@ if (spinner3.getId()==R.id.spinner3){
                 pDialog.dismiss();
 
         }
-    }
+        }
+
     public class DatePickerFragment  extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {
 

@@ -14,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -100,7 +99,7 @@ public class viewprofile extends AppCompatActivity {
                                 startActivity(intent4);
                                 break;
                             case R.id.action_availabilties:
-                                Intent intent5=new Intent(getApplicationContext(),avialability.class);
+                                Intent intent5=new Intent(getApplicationContext(),availability.class);
                                 startActivity(intent5);
                                 break;
                         }

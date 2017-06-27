@@ -73,7 +73,7 @@ public class grewal extends AppCompatActivity {
                                 startActivity(intent4);
                                 break;
                             case R.id.action_availabilties:
-                                Intent intent5=new Intent(getApplicationContext(),avialability.class);
+                                Intent intent5=new Intent(getApplicationContext(),availability.class);
                                 startActivity(intent5);
                                 break;
                         }

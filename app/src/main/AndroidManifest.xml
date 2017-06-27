@@ -25,7 +25,7 @@
             android:name=".Accounts"
             android:parentActivityName=".Home" />
         <activity android:name=".search" />
-        <activity android:name=".avialability" />
+        <activity android:name=".availability" />
         <activity
             android:name=".categories"
             android:exported="true" />
@@ -50,7 +50,8 @@
             android:exported="true" />
         <activity android:name=".grewal" />
         <activity android:name=".viewprofile" />
-        <activity android:name=".updateprofile"></activity>
+        <activity android:name=".updateprofile" />
+        <activity android:name=".availabilityresult"></activity>
     </application>
 
 </manifest>

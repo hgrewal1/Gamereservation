@@ -2,7 +2,6 @@ package com.example.yad.gamereservation;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -133,7 +132,7 @@ public class gamestation extends AppCompatActivity {
                                 startActivity(intent4);
                                 break;
                             case R.id.action_availabilties:
-                                Intent intent5=new Intent(getApplicationContext(),avialability.class);
+                                Intent intent5=new Intent(getApplicationContext(),availability.class);
                                 startActivity(intent5);
                                 break;
                         }
