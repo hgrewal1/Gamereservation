@@ -62,6 +62,16 @@
                 android:layout_marginTop="20dp"
                 android:layout_gravity="center"
                 android:background="@drawable/button"/>
+            <Button
+                android:id="@+id/deactivate"
+                android:layout_width="163dp"
+                android:layout_height="wrap_content"
+                android:text="deactivate account"
+                android:textColor="@color/white"
+                android:onClick="deactivate"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                android:background="@drawable/button"/>
         </LinearLayout>
     </FrameLayout>
 

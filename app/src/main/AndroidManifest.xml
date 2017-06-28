@@ -52,7 +52,8 @@
         <activity android:name=".viewprofile" />
         <activity android:name=".updateprofile" />
         <activity android:name=".availabilityresult" />
-        <activity android:name=".changepassword"></activity>
+        <activity android:name=".changepassword" />
+        <activity android:name=".deactivate"></activity>
     </application>
 
 </manifest>

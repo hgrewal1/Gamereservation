@@ -33,58 +33,49 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class changepassword extends AppCompatActivity {
+public class deactivate extends AppCompatActivity {
     final Context context = this;
     private Button button;
     String url;
 
 
     private ProgressDialog pDialog;
-    EditText password,newpassword,oldpassword;
+    EditText password;
     String o1,o2,g,o4,r,s,status;
-    private String TAG = changepassword.class.getSimpleName();
+    private String TAG = deactivate.class.getSimpleName();
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_changepassword);
-        password=(EditText)findViewById(R.id.confirmpass) ;
-        newpassword=(EditText)findViewById(R.id.newpass) ;
-        oldpassword=(EditText)findViewById(R.id.oldpass) ;
+        setContentView(R.layout.activity_deactivate);
+        password=(EditText)findViewById(R.id.pass) ;
 
         setupNavigationView();
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
         SharedPreferences sp1=getSharedPreferences("grewal",0);
-        g = sp1.getString("password", null);
         s = sp1.getString("username", null);
+        g = sp1.getString("password", null);
         actionBar.setTitle("Grewal");
         setupNavigationView(); // add button listener
     }
-            public void change(View view) {
-                r=password.getText().toString();
+    public void ok(View view) {
+        r=password.getText().toString();
 
-                url="http://144.217.163.57:8080/cegepgim/mobile/gamereservation/changepassword&"+s+"&"+r;
-                if(validateEmptyText()&&validpassword())
-                {new MyTask().execute();}
+        url="http://144.217.163.57:8080/cegepgim/mobile/gamereservation/deactivateaccount&"+s+"&"+r;
+        new MyTask().execute();
 
-            }
+    }
     private boolean validpassword() {
         boolean temp=true;
 
         String f=password.getText().toString();
-        String l=oldpassword.getText().toString();
-        String e=newpassword.getText().toString();
 
-
-        if(!g.equals(l)){
-            Toast.makeText(changepassword.this,"old password  is wrong",Toast.LENGTH_SHORT).show();
+        if(!g.equals(f)){
+            Toast.makeText(deactivate.this,"password  is wrong",Toast.LENGTH_SHORT).show();
             temp=false;
         }
-        if(!f.equals(e)){
-            Toast.makeText(changepassword.this," new password didn't match",Toast.LENGTH_SHORT).show();
-            temp=false;
-        }
+
 
 
 
@@ -94,28 +85,29 @@ public class changepassword extends AppCompatActivity {
         boolean temp=true;
 
         String f=password.getText().toString();
-        String l=oldpassword.getText().toString();
-        String e=newpassword.getText().toString();
 
 
-        if(l.matches("")){
-            Toast.makeText(changepassword.this,"old password field is empty",Toast.LENGTH_SHORT).show();
-            temp=false;
-        }
-        else if(e.matches("")){
-            Toast.makeText(changepassword.this,"new password field is empty",Toast.LENGTH_SHORT).show();
-            temp=false;
-        }
-        else if(f.matches("")){
-            Toast.makeText(changepassword.this,"confirm password field is empty",Toast.LENGTH_SHORT).show();
+        if(f.matches("")){
+            Toast.makeText(deactivate.this,"password field is empty",Toast.LENGTH_SHORT).show();
             temp=false;
         }
 
 
         return temp;
     }
-    public void back(View view) {
-       Intent intent=new Intent(this,Accounts.class);
+    public void deactive(View view){
+        if(validateEmptyText()&&validpassword())
+        {
+            final Dialog dialog = new Dialog(context);
+            dialog.setContentView(R.layout.dialog2);
+            dialog.setTitle("Confirmation");
+            TextView text = (TextView) dialog.findViewById(R.id.text);
+            text.setText("Press ok to confirm account deactivation");
+            dialog.show();}
+    }
+
+    public void cancel(View view) {
+        Intent intent=new Intent(this,Accounts.class);
         startActivity(intent);
 
     }
@@ -184,7 +176,7 @@ public class changepassword extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             // Showing progress dialog
-            pDialog = new ProgressDialog(changepassword.this);
+            pDialog = new ProgressDialog(deactivate.this);
             pDialog.setMessage("Please wait...");
             pDialog.setCancelable(false);
             pDialog.show();
@@ -194,7 +186,7 @@ public class changepassword extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
 
-                URL URL1=null;
+            URL URL1=null;
             try {
                 URL1 = new URL(url);
 
@@ -218,13 +210,9 @@ public class changepassword extends AppCompatActivity {
                 status=obj.getString("Status");
                 if (status.equals("ok")) {
                     o1 = obj.getString("Message");
-                    String j=password.getText().toString();
-                    SharedPreferences sp=getSharedPreferences("grewal", 0);
-                    SharedPreferences.Editor Ed=sp.edit();
+                    Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+                    startActivity(intent);
 
-                    Ed.putString("password",j);
-
-                    Ed.commit();
                 }
 
 
@@ -266,12 +254,11 @@ public class changepassword extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void result) {
+            Toast.makeText(getApplicationContext(),
+                    "Your account has succesfully deactivated",
+                    Toast.LENGTH_LONG)
+                    .show();
 
-                final Dialog dialog = new Dialog(context);
-                dialog.setContentView(R.layout.dialog);
-                TextView text = (TextView) dialog.findViewById(R.id.text);
-                text.setText("your password has succesfully changed");
-                dialog.show();
 
 
 

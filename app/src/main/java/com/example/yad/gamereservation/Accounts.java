@@ -36,6 +36,10 @@ public class Accounts extends AppCompatActivity {
         Intent intent = new Intent(this, changepassword.class);
         startActivity(intent);
     }
+    public void deactivate(View view) {
+        Intent intent = new Intent(this, deactivate.class);
+        startActivity(intent);
+    }
 
     private void setupNavigationView() {
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
