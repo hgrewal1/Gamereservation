@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 public class guestuser extends AppCompatActivity {
 
@@ -21,9 +23,14 @@ String s,g;
         setupNavigationView();
         ActionBar actionBar=getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
-
+        Button button=(Button) findViewById(R.id.button);
             actionBar.setTitle("GuestUser");
-
+        SharedPreferences sp1=getSharedPreferences("grewal",0);
+        s = sp1.getString("username", null);
+        g = sp1.getString("password", null);
+        if(s==null){
+            button.setVisibility(View.VISIBLE);
+        }
 
         setupNavigationView();
     }
