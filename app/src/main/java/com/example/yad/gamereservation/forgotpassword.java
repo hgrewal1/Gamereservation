@@ -37,9 +37,7 @@ import java.util.List;
          setContentView(R.layout.activity_forgotpassword);
 
      }
-    public void onNothingSelected(AdapterView<?> arg0) {
-        // TODO Auto-generated method stub
-    }
+
      public void onClick(View view) {
          s=(EditText)  findViewById(R.id.forgot);
          String r=s.getText().toString();

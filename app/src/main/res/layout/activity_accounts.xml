@@ -52,6 +52,16 @@
                 android:layout_marginTop="20dp"
                 android:layout_gravity="center"
                 android:background="@drawable/button"/>
+            <Button
+                android:id="@+id/chngepsswrd"
+                android:layout_width="163dp"
+                android:layout_height="wrap_content"
+                android:text="change password"
+                android:textColor="@color/white"
+                android:onClick="changepassword"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                android:background="@drawable/button"/>
         </LinearLayout>
     </FrameLayout>
 

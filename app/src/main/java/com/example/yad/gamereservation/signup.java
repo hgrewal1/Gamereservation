@@ -81,7 +81,10 @@ public class signup extends AppCompatActivity {
         y=dob.getText().toString();
 
         url="http://144.217.163.57:8080/cegepgim/mobile/gamereservation/signup&"+r+"&"+s+"&"+t+"&"+u+"&"+v+"&"+x+"&"+y;
-       if(validateEmptyText()&&emailvalidate(u)&&validpassword()&&isValidMobile(v)) {new MyTask().execute();}
+       if(validateEmptyText()&&emailvalidate(u)&&validpassword()&&isValidMobile(v))
+       {
+           new MyTask().execute();
+       }
     }
     private boolean isValidMobile(String phone) {
         boolean check=true;

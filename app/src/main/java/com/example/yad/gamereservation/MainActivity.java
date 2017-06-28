@@ -79,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
 
     private class MyTask extends AsyncTask<String, String, String> {
         String o1, o2, o3, o4,o5,o6,o7,o8;
-        JSONObject obj;
 
         @Override
         protected String doInBackground(String... params) {
@@ -104,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                     response.append(inputline);
                 }
                 in.close();
-                obj = new JSONObject(response.toString());
+                JSONObject obj = new JSONObject(response.toString());
                 o1 = obj.getString("Status");
                 if(o1.equals("ok")) {
                     o3 = obj.getString("FirstName");

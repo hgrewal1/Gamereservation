@@ -51,7 +51,8 @@
         <activity android:name=".grewal" />
         <activity android:name=".viewprofile" />
         <activity android:name=".updateprofile" />
-        <activity android:name=".availabilityresult"></activity>
+        <activity android:name=".availabilityresult" />
+        <activity android:name=".changepassword"></activity>
     </application>
 
 </manifest>
