@@ -72,6 +72,10 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent=new Intent(this,signup.class);
                     startActivity(intent);
                 }
+    public void guest(View view){
+        Intent intent=new Intent(this,guestuser.class);
+        startActivity(intent);
+    }
     public void showDatePickerDialog(View v) {
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getFragmentManager(), "datePicker");

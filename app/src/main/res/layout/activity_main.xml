@@ -91,7 +91,7 @@
             android:textSize="24dp" />
 
         <Button
-            android:onClick="showDatePickerDialog"
+            android:onClick="guest"
             android:id="@+id/guestuser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -10,31 +10,31 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.TextView;
 
-public class Home extends AppCompatActivity {
+public class guestuser extends AppCompatActivity {
+
+String s,g;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_guestuser);
         setupNavigationView();
-        TextView textView=(TextView) findViewById(R.id.firstname);
-        Intent intent=getIntent();
-        String a=intent.getStringExtra("name");
-        textView.setText(a);
         ActionBar actionBar=getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
 
-        actionBar.setTitle(a);
+            actionBar.setTitle("GuestUser");
+
+
         setupNavigationView();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         SharedPreferences sp1=getSharedPreferences("grewal",0);
-        String s = sp1.getString("username", null);
+        s = sp1.getString("username", null);
+        g = sp1.getString("password", null);
         if(s==null){
-            MenuInflater inflater = getMenuInflater();
-            inflater.inflate(R.menu.guest, menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.guest, menu);
         }else {
             MenuInflater inflater = getMenuInflater();
             inflater.inflate(R.menu.menu_main, menu);
@@ -64,10 +64,10 @@ public class Home extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
     private void setupNavigationView() {
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
         Menu menu = bottomNavigationView.getMenu();
-
         MenuItem menuItem=menu.getItem(2);
         menuItem.setChecked(true);
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);

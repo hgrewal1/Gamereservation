@@ -1,6 +1,7 @@
 package com.example.yad.gamereservation;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.ActionBar;
@@ -24,6 +25,9 @@ public class Accounts extends AppCompatActivity {
     }
 
     public void logout(View view) {
+        SharedPreferences sp1=getSharedPreferences("grewal",0);
+        SharedPreferences.Editor Ed=sp1.edit();
+        Ed.clear().commit();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }

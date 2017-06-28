@@ -53,7 +53,8 @@
         <activity android:name=".updateprofile" />
         <activity android:name=".availabilityresult" />
         <activity android:name=".changepassword" />
-        <activity android:name=".deactivate"></activity>
+        <activity android:name=".deactivate" />
+        <activity android:name=".guestuser"></activity>
     </application>
 
 </manifest>

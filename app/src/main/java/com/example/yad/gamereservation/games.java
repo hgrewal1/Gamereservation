@@ -2,6 +2,7 @@ package com.example.yad.gamereservation;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -85,8 +86,15 @@ public class games extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
+        SharedPreferences sp1=getSharedPreferences("grewal",0);
+        String s = sp1.getString("username", null);
+        if(s==null){
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.guest, menu);
+        }else {
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.menu_main, menu);
+        }
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -97,6 +105,14 @@ public class games extends AppCompatActivity {
             case R.id.account:
                 Intent intent=new Intent(getApplicationContext(),Accounts.class);
                 startActivity(intent);
+                return true;
+            case R.id.login:
+                Intent intent2=new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(intent2);
+                return true;
+            case R.id.signup:
+                Intent intent3=new Intent(getApplicationContext(),signup.class);
+                startActivity(intent3);
                 return true;
 
 
