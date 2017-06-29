@@ -50,11 +50,13 @@
             android:exported="true" />
         <activity android:name=".grewal" />
         <activity android:name=".viewprofile" />
-        <activity android:name=".updateprofile" />
+        <activity android:name=".updateprofile"/>
         <activity android:name=".availabilityresult" />
         <activity android:name=".changepassword" />
         <activity android:name=".deactivate" />
-        <activity android:name=".guestuser"></activity>
+        <activity android:name=".guestuser" />
+        <activity android:name=".viewreservations" />
+        <activity android:name=".cancelreservation" android:exported="true"></activity>
     </application>
 
 </manifest>
