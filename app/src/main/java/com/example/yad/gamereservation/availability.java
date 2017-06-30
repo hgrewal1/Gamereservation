@@ -24,7 +24,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -34,13 +33,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-
-import static android.R.attr.path;
 
 public class availability extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -83,7 +78,7 @@ public class availability extends AppCompatActivity implements AdapterView.OnIte
         items.add("17:00");
         items.add("18:00");
         List<String> items2= new ArrayList<String>();
-        items2.add("FOOTABLL GROUND 1");
+        items2.add("FOOTBALL GROUND 1");
         items2.add("FOOTBALL GROUND 2");
         items2.add("PINGPONG TABLE 1");
         items2.add("PINGPONGTABLE TABLE 2");
@@ -251,22 +246,11 @@ if (spinner3.getId()==R.id.spinner3){
 
 
         public void check1(View view){
-            String string = starttime;
-            String[] parts = string.split(":");
 
-            String part1 = parts[0];
-            String part2 = parts[1];
-            String h=part1+part2;
-            String string2 = endtime;
-            String[] parts2 = string2.split(":");
-
-            String part3 = parts2[0];
-            String part4 = parts2[1];
-            String g=part3+part4;
 
 
             date1=editText.getText().toString();
-        url="http://192.168.1.21:8080/gameservervation/cegepgim/gamereservation/viewavailability&"+gsname+"&"+h+"&"+g+"&"+dayname+"&"+date1;
+        url="http://192.168.1.9:8080/gameservervation/cegepgim/gamereservation/viewavailability&"+gsname+"&"+starttime+"&"+endtime+"&"+dayname+"&"+date1;
             new MyTask().execute();
 
     }
@@ -322,7 +306,7 @@ if (spinner3.getId()==R.id.spinner3){
                          o4 = obj.getString("EndTime");
                          o5= obj.getString("Date");
                     String o6= obj.getString("Message");
-                    Intent intent=new Intent(getApplication(),availabilityresult.class);
+                    Intent intent=new Intent(getApplication(),newreservation.class);
                     intent.putExtra("Day",o1);
                     intent.putExtra("GameStation",o2);
                     intent.putExtra("StartTime",o3);
@@ -334,12 +318,13 @@ if (spinner3.getId()==R.id.spinner3){
                     }
 
                 else {
+                    o5= obj.getString("Message");
                     Log.e(TAG, "Couldn't get json from server.");
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             Toast.makeText(getApplicationContext(),
-                                    "Couldn't get json from server. Check LogCat for possible errors!",
+                                    o5,
                                     Toast.LENGTH_LONG)
                                     .show();
                         }

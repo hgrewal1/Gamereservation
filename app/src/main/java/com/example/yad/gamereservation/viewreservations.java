@@ -90,8 +90,8 @@ public class viewreservations extends AppCompatActivity {
 
                 i.putExtra("date",g);
                 i.putExtra("day", h);
-                i.putExtra("start", time(k));
-                i.putExtra("end", time(j));
+                i.putExtra("start", k);
+                i.putExtra("end", j);
                 i.putExtra("gs", f);
 
                 startActivity(i);
@@ -172,22 +172,7 @@ public class viewreservations extends AppCompatActivity {
                     }
                 });
     }
-public String time(String g){
-    SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    java.util.Date date = null;
-    try
-    {
-        date = form.parse(g);
-    }
-    catch (ParseException e)
-    {
 
-        e.printStackTrace();
-    }
-    SimpleDateFormat postFormater = new SimpleDateFormat("HH:mm");
-    String newDateStr = postFormater.format(date);
-    return newDateStr;
-}
 
 
     private class MyTask extends AsyncTask<Void, Void, Void> {
@@ -211,7 +196,7 @@ public String time(String g){
             String r=sp1.getString("username", null);
 
             try {
-                url = new URL("http://192.168.1.11:8080/gameservervation/cegepgim/gamereservation/viewreservations&"+r);
+                url = new URL("http://192.168.1.9:8080/gameservervation/cegepgim/gamereservation/viewreservations&"+r);
 
                 HttpURLConnection client = null;
                 client = (HttpURLConnection) url.openConnection();

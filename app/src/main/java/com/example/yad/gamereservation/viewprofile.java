@@ -139,7 +139,7 @@ public class viewprofile extends AppCompatActivity {
             String s = sp1.getString("password", null);
 
             try {
-                url = new URL("http://192.168.1.21:8080/gameservervation/cegepgim/gamereservation/viewprofile&"+r+"&"+s);
+                url = new URL("http://192.168.1.9:8080/gameservervation/cegepgim/gamereservation/viewprofile&"+r+"&"+s);
 
                 HttpURLConnection client = null;
                 client = (HttpURLConnection) url.openConnection();

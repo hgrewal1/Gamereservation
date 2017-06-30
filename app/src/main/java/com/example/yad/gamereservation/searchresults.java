@@ -1,14 +1,13 @@
 package com.example.yad.gamereservation;
 
+import android.app.DialogFragment;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,10 +16,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -35,102 +36,45 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
-public class cancelreservation extends AppCompatActivity {
-
-    private String TAG = categories.class.getSimpleName();
-
-    private ProgressDialog pDialog;
+public class searchresults extends AppCompatActivity {
+    Spinner spinner1;
+    private String TAG = searchresults.class.getSimpleName();
     private ListView lv;
-    String s,g;
-    ListAdapter adapter;
+
+
     // URL to get contacts JSON
 
 
     ArrayList<HashMap<String, String>> arylist;
-    String gs,date,day,start,end,url;
+    private ProgressDialog pDialog;
+    String a,url,o1,o2,o3,o4,o5,h,g;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cancelreservation);
-
+        setContentView(R.layout.activity_searchresults);
+        setupNavigationView();
+        setupNavigationView();
         arylist = new ArrayList<>();
 
         lv = (ListView) findViewById(R.id.list);
-        ActionBar actionBar=getSupportActionBar();
+
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
 
+        actionBar.setTitle("Search Results");
 
-        actionBar.setTitle("Cancel Reservation");
-        setupNavigationView();
-        Intent intent=getIntent();
-       gs= intent.getStringExtra("gs");
-        day= intent.getStringExtra("day");
-        date= intent.getStringExtra("date");
-        start= intent.getStringExtra("start");
-        end= intent.getStringExtra("end");
+        Intent intent =getIntent();
+        h=intent.getStringExtra("spinner");
+        g=intent.getStringExtra("search");
 
-        HashMap<String, String> contact = new HashMap<>();
-
-        // adding each child node to HashMap key => value
-        contact.put("g", gs);
-        contact.put("r", day);
-        contact.put("e", date);
-        contact.put("w", start);
-        contact.put("a", end);
-
-
-
-        // adding Array values to Array list
-        arylist.add(contact);
-
-        adapter = new SimpleAdapter(
-                cancelreservation.this, arylist,
-                R.layout.list_item3, new String[]{"g","r","e","w","a"}, new int[]{R.id.edittext1,R.id.edittext2,R.id.edittext3,R.id.edittext4,R.id.edittext5});
-
-        lv.setAdapter(adapter);
-
-
-        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            // setting onItemLongClickListener and passing the position to the function
-            @Override
-            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-                                           int position, long arg3) {
-                removeItemFromList(position);
-
-                return true;
-            }
-        });
-    }
-    protected void removeItemFromList(int position) {
-
-        AlertDialog.Builder alert = new AlertDialog.Builder(
-                cancelreservation.this);
-
-        alert.setTitle("Delete");
-        alert.setMessage("Do you want delete this item?");
-        alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                SharedPreferences sp1=getSharedPreferences("grewal",0);
-
-                String id=sp1.getString("username", null);
-                url="http://192.168.1.9:8080/gameservervation/cegepgim/gamereservation/cancelreservations&"+date+"&"+id+"&"+gs+"&"+start+"&"+end+"&"+day;
-                new MyTask().execute();
-
-            }
-        });
-        alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // TODO Auto-generated method stub
-                dialog.dismiss();
-            }
-        });
-
-        alert.show();
-
+       if(h.equals("Category")){
+            url="http://192.168.1.9:8080/gameservervation/cegepgim/gamereservation/searchcategory&"+g;
+        }else{
+            url="http://192.168.1.9:8080/gameservervation/cegepgim/gamereservation/viewlocation&"+g;
+        }
+new MyTask().execute();
     }
 
     @Override
@@ -172,7 +116,7 @@ public class cancelreservation extends AppCompatActivity {
     private void setupNavigationView() {
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
         Menu menu = bottomNavigationView.getMenu();
-        MenuItem menuItem=menu.getItem(1);
+        MenuItem menuItem=menu.getItem(0);
         menuItem.setChecked(true);
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(
@@ -207,14 +151,13 @@ public class cancelreservation extends AppCompatActivity {
                 });
     }
 
-
     private class MyTask extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             // Showing progress dialog
-            pDialog = new ProgressDialog(cancelreservation.this);
+            pDialog = new ProgressDialog(searchresults.this);
             pDialog.setMessage("Please wait...");
             pDialog.setCancelable(true);
             pDialog.show();
@@ -251,12 +194,25 @@ public class cancelreservation extends AppCompatActivity {
                 JSONObject obj = new JSONObject(response.toString());
                 String status=obj.getString("Status");
                 if (status.equals("ok")) {
+                    JSONArray ary = new JSONArray();
+                    ary = obj.getJSONArray("Gamestations");
+                    for (Integer i = 0; i < ary.length(); i++) {
+                        JSONObject obj1 = ary.getJSONObject(i);
+                        String o3 = obj1.getString("Gamestation");
 
-                        String o5 = obj.getString("Message");
+                        HashMap<String, String> contact = new HashMap<>();
 
-                   Intent intent=new Intent(getApplicationContext(),viewreservations.class);
-                    startActivity(intent);
+                        // adding each child node to HashMap key => value
 
+                        contact.put("GameStation", o3);
+
+
+
+
+
+                        // adding Array values to Array list
+                        arylist.add(contact);
+                    }
                 }
                 else {
                     Log.e(TAG, "Couldn't get json from server.");
@@ -264,7 +220,7 @@ public class cancelreservation extends AppCompatActivity {
                         @Override
                         public void run() {
                             Toast.makeText(getApplicationContext(),
-                                    url,
+                                    "Couldn't get json from server. Check LogCat for possible errors!"+url,
                                     Toast.LENGTH_LONG)
                                     .show();
                         }
@@ -303,14 +259,15 @@ public class cancelreservation extends AppCompatActivity {
             /**
              * Updating parsed JSON data into ListView
              * */
-            Toast.makeText(getApplicationContext(),
-                    "reservation has succesfully canceled",
-                    Toast.LENGTH_LONG)
-                    .show();
+            ListAdapter adapter = new SimpleAdapter(
+                    searchresults.this, arylist,
+                    R.layout.list_item3, new String[]{"GameStation"
+            }, new int[]{R.id.edittext1});
+
+            lv.setAdapter(adapter);
         }
 
 
     }
 
 }
-

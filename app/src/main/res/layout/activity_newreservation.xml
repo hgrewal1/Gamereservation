@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.yad.gamereservation.availabilityresult">
+    tools:context="com.example.yad.gamereservation.newreservation">
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="0dp"
@@ -94,15 +94,15 @@
 
 
             <Button
-                android:id="@+id/savechanges"
+                android:id="@+id/reserve"
                 android:layout_width="152dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
                 android:layout_marginTop="15dp"
                 android:layout_gravity="center"
                 android:background="@drawable/button"
+                android:onClick="confirmation"
                 android:textColor="@color/white"
-                android:text="button" />
+                android:text="reservation" />
 
 
 

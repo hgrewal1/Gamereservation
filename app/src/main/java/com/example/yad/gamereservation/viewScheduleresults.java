@@ -1,26 +1,21 @@
 package com.example.yad.gamereservation;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -33,26 +28,29 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class cancelreservation extends AppCompatActivity {
+public class viewScheduleresults extends AppCompatActivity {
 
-    private String TAG = categories.class.getSimpleName();
+
+    private String TAG = viewScheduleresults.class.getSimpleName();
 
     private ProgressDialog pDialog;
     private ListView lv;
-    String s,g;
-    ListAdapter adapter;
+    String s,url;
+    Date dt;
+
     // URL to get contacts JSON
 
 
     ArrayList<HashMap<String, String>> arylist;
-    String gs,date,day,start,end,url;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cancelreservation);
+        setContentView(R.layout.activity_viewschedule_results);
 
         arylist = new ArrayList<>();
 
@@ -61,75 +59,14 @@ public class cancelreservation extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(false);
 
 
-        actionBar.setTitle("Cancel Reservation");
+        actionBar.setTitle("Schedule");
+        new MyTask().execute();
         setupNavigationView();
-        Intent intent=getIntent();
-       gs= intent.getStringExtra("gs");
-        day= intent.getStringExtra("day");
-        date= intent.getStringExtra("date");
-        start= intent.getStringExtra("start");
-        end= intent.getStringExtra("end");
 
-        HashMap<String, String> contact = new HashMap<>();
-
-        // adding each child node to HashMap key => value
-        contact.put("g", gs);
-        contact.put("r", day);
-        contact.put("e", date);
-        contact.put("w", start);
-        contact.put("a", end);
-
-
-
-        // adding Array values to Array list
-        arylist.add(contact);
-
-        adapter = new SimpleAdapter(
-                cancelreservation.this, arylist,
-                R.layout.list_item3, new String[]{"g","r","e","w","a"}, new int[]{R.id.edittext1,R.id.edittext2,R.id.edittext3,R.id.edittext4,R.id.edittext5});
-
-        lv.setAdapter(adapter);
-
-
-        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            // setting onItemLongClickListener and passing the position to the function
-            @Override
-            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-                                           int position, long arg3) {
-                removeItemFromList(position);
-
-                return true;
-            }
-        });
-    }
-    protected void removeItemFromList(int position) {
-
-        AlertDialog.Builder alert = new AlertDialog.Builder(
-                cancelreservation.this);
-
-        alert.setTitle("Delete");
-        alert.setMessage("Do you want delete this item?");
-        alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                SharedPreferences sp1=getSharedPreferences("grewal",0);
-
-                String id=sp1.getString("username", null);
-                url="http://192.168.1.9:8080/gameservervation/cegepgim/gamereservation/cancelreservations&"+date+"&"+id+"&"+gs+"&"+start+"&"+end+"&"+day;
-                new MyTask().execute();
-
-            }
-        });
-        alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // TODO Auto-generated method stub
-                dialog.dismiss();
-            }
-        });
-
-        alert.show();
+Intent intent=getIntent();
+        String dname=intent.getStringExtra("dayname");
+        String gname=intent.getStringExtra("gsname");
+        url="http://192.168.1.9:8080/gameservervation/cegepgim/gamereservation/viewschedule&"+gname+"&"+dname;
 
     }
 
@@ -208,13 +145,14 @@ public class cancelreservation extends AppCompatActivity {
     }
 
 
+
     private class MyTask extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             // Showing progress dialog
-            pDialog = new ProgressDialog(cancelreservation.this);
+            pDialog = new ProgressDialog(viewScheduleresults.this);
             pDialog.setMessage("Please wait...");
             pDialog.setCancelable(true);
             pDialog.show();
@@ -251,12 +189,28 @@ public class cancelreservation extends AppCompatActivity {
                 JSONObject obj = new JSONObject(response.toString());
                 String status=obj.getString("Status");
                 if (status.equals("ok")) {
+                    JSONArray ary = new JSONArray();
+                    String o2 = obj.getString("GameStation");
+                    String o3 = obj.getString("Day");
+                    ary = obj.getJSONArray("TimeSlots");
+                    for (Integer i = 0; i < ary.length(); i++) {
+                        JSONObject obj1 = ary.getJSONObject(i);
+                        String o4 = obj1.getString("StartTime");
+                        String o5 = obj1.getString("EndTime");
 
-                        String o5 = obj.getString("Message");
+                        HashMap<String, String> contact = new HashMap<>();
 
-                   Intent intent=new Intent(getApplicationContext(),viewreservations.class);
-                    startActivity(intent);
+                        // adding each child node to HashMap key => value
 
+                        contact.put("StartTime", o4);
+                        contact.put("EndTime", o5);
+
+
+
+
+                        // adding Array values to Array list
+                        arylist.add(contact);
+                    }
                 }
                 else {
                     Log.e(TAG, "Couldn't get json from server.");
@@ -264,7 +218,7 @@ public class cancelreservation extends AppCompatActivity {
                         @Override
                         public void run() {
                             Toast.makeText(getApplicationContext(),
-                                    url,
+                                    "Couldn't get json from server. Check LogCat for possible errors!",
                                     Toast.LENGTH_LONG)
                                     .show();
                         }
@@ -303,10 +257,12 @@ public class cancelreservation extends AppCompatActivity {
             /**
              * Updating parsed JSON data into ListView
              * */
-            Toast.makeText(getApplicationContext(),
-                    "reservation has succesfully canceled",
-                    Toast.LENGTH_LONG)
-                    .show();
+            ListAdapter adapter = new SimpleAdapter(
+                    viewScheduleresults.this, arylist,
+                    R.layout.list_item4, new String[]{"StartTime","EndTime"
+            }, new int[]{R.id.edittext1,R.id.edittext2});
+
+            lv.setAdapter(adapter);
         }
 
 

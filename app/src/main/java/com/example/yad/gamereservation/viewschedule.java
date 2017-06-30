@@ -1,56 +1,133 @@
 package com.example.yad.gamereservation;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Spinner;
+import android.widget.Toast;
 
-public class availabilityresult extends AppCompatActivity {
-    String f,b,c,d,g,x;
-    TextView o1,o2,o3,o4,o5;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
+public class viewschedule extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+
+    String gsname,dayname;
+    Spinner spinner2,spinner1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_availabilityresult);
+        setContentView(R.layout.activity_viewschedule);
         setupNavigationView();
-        o1 = (TextView) findViewById(R.id.gamestation);
-        o2 = (TextView) findViewById(R.id.date);
-        o3 = (TextView) findViewById(R.id.day);
-        o4=(TextView) findViewById(R.id.starttime) ;
-        o5=(TextView) findViewById(R.id.endtime) ;
         ActionBar actionBar=getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
+        spinner1=(Spinner) findViewById(R.id.spinner);
+        spinner2=(Spinner) findViewById(R.id.spinner2);
 
-        Intent intent=getIntent();
-        f= intent.getStringExtra("GameStation");
-        b=intent.getStringExtra("Date");
-        c=intent.getStringExtra("Day");
-        d=intent.getStringExtra("StartTime");
-        g=intent.getStringExtra("EndTime");
-        x=intent.getStringExtra("Message");
-        String string = d;
-        String[] parts = string.split(":");
+        spinner1.setOnItemSelectedListener(this);
+        spinner2.setOnItemSelectedListener(this);
 
-        String part1 = parts[0];
-        String part2 = parts[1];
-        String h=part1+part2;
-        o1.setText(f);
-        o2.setText(b);
-        o3.setText(c);
-        o4.setText(d);
-        o4.setText(g);
-        o5.setText(x);
-        actionBar.setTitle("Grewal");
+
+        actionBar.setTitle("Search");
         setupNavigationView();
+
+        List<String> items2= new ArrayList<String>();
+        items2.add("FOOTBALL GROUND 1");
+        items2.add("FOOTBALL GROUND 2");
+        items2.add("PINGPONG TABLE 1");
+        items2.add("PINGPONGTABLE TABLE 2");
+        items2.add("FOOSBALL TABLE 1");
+        items2.add("BOWLING GAMESTATION 1");
+        items2.add("BOWLING GAMESTAION 2");
+        items2.add("SQUASH GAMESTATION ");
+        items2.add("VOLLEYBALL GROUND ");
+        items2.add("CRICKET GROUND 1");
+        items2.add("CRICKET GROUND 2");
+        items2.add("HOCKEY GROUND");
+        items2.add("ICEHOCKEY GROUND");
+        items2.add("LUDO TABLE 1");
+        items2.add("LUDO TABLE 2");
+        items2.add("BASKETBALL COURT 1");
+        items2.add("BASKETBALL COURT 2");
+        items2.add("CHESS TABLE 1");
+        items2.add("CHESS TABLE 2");
+        items2.add("BADMINTON COURT 1");
+        items2.add("BADMINTON COURT 2");
+        items2.add("CAROMBOARD TABLE 1");
+        items2.add("CAROMBOARD TABLE 2");
+        items2.add("BASEBALL GROUND");
+        List<String> items3= new ArrayList<String>();
+        items3.add("Sunday");
+        items3.add("Monday");
+        items3.add("Tuesday");
+        items3.add("Wednesday");
+        items3.add("Thursday");
+        items3.add("Friday");
+        items3.add("Saturday");
+
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items2);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner1.setAdapter(dataAdapter);
+        ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items3);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner2.setAdapter(dataAdapter1);
+
+
+
+
     }
+
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        // On selecting a spinner item
+        spinner1=(Spinner)parent;
+        spinner2=(Spinner)parent;
+
+        if(spinner2.getId()==R.id.spinner2) {
+
+            dayname = parent.getSelectedItem().toString();
+        }
+
+        if (spinner1.getId()==R.id.spinner){
+
+            gsname=parent.getSelectedItem().toString();
+        }
+
+    }
+    public void onNothingSelected(AdapterView<?> arg0) {
+        // TODO Auto-generated method stub
+    }
+
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         SharedPreferences sp1=getSharedPreferences("grewal",0);
@@ -122,6 +199,19 @@ public class availabilityresult extends AppCompatActivity {
 
                         return false;
                     }
-                });
+                });}
+
+
+
+
+
+    public void check1(View view){
+Intent intent=new Intent(this,viewScheduleresults.class);
+        intent.putExtra("dayname",dayname);
+        intent.putExtra("gsname",gsname);
+startActivity(intent);
     }
+
+
 }
+

@@ -14,26 +14,58 @@
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintBottom_creator="1"
         app:layout_constraintBottom_toTopOf="@+id/navigation"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="0dp"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="0dp"
         tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="0dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
         android:background="@drawable/background">
-        <ListView
-            android:id="@+id/list"
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:layout_editor_absoluteX="89dp"
-            tools:layout_editor_absoluteY="89dp"
+            android:orientation="vertical">
 
-            android:layout_weight="0.88" />
+            <Spinner
 
+                android:layout_marginTop="10dp"
+                android:layout_gravity="top"
+                android:popupBackground="#d6d1d1"
+                android:popupTheme="@color/colorPrimary"
+                android:id="@+id/spinner"
+                style="@android:style/Widget.Spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:spinnerMode="dropdown"
+                />
+
+
+
+            <EditText
+                android:id="@+id/date"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/shape1"
+                android:hint="search gamestation"
+                android:inputType="text"
+                android:textAlignment="center"
+                android:textColor="@color/text"
+                android:textSize="16dp" />
+
+            <Button
+                android:id="@+id/search"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button"
+                android:onClick="check1"
+                android:text="search gamestation"
+                android:textColor="@color/white" />
+
+
+
+
+        </LinearLayout>
     </FrameLayout>
 
     <android.support.design.widget.BottomNavigationView
@@ -43,14 +75,9 @@
         app:menu="@menu/bottomnavigation"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintBottom_creator="1"
-        android:layout_marginStart="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginEnd="0dp"
         app:layout_constraintRight_toRightOf="parent"
         tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="0dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp" />
+        app:layout_constraintLeft_toLeftOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
