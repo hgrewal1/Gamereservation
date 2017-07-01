@@ -116,7 +116,7 @@ public class cancelreservation extends AppCompatActivity {
                 SharedPreferences sp1=getSharedPreferences("grewal",0);
 
                 String id=sp1.getString("username", null);
-                url="http://192.168.1.9:8080/gameservervation/cegepgim/gamereservation/cancelreservations&"+date+"&"+id+"&"+gs+"&"+start+"&"+end+"&"+day;
+                url="http://192.168.1.8:8080/gameservervation/cegepgim/gamereservation/cancelreservations&"+date+"&"+id+"&"+gs+"&"+start+"&"+end+"&"+day;
                 new MyTask().execute();
 
             }

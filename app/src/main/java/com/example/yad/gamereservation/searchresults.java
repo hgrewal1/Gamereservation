@@ -43,7 +43,7 @@ public class searchresults extends AppCompatActivity {
     Spinner spinner1;
     private String TAG = searchresults.class.getSimpleName();
     private ListView lv;
-TextView out1,out2;
+TextView out1,out2,out3;
 
     // URL to get contacts JSON
 
@@ -62,6 +62,7 @@ TextView out1,out2;
         lv = (ListView) findViewById(R.id.list);
         out1=(TextView) findViewById(R.id.text1);
         out2=(TextView) findViewById(R.id.text2);
+        out3=(TextView) findViewById(R.id.text3);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
 
@@ -72,9 +73,9 @@ TextView out1,out2;
         g=intent.getStringExtra("search");
 
        if(h.equals("Category")){
-            url="http://192.168.56.1:8080/gameservervation/cegepgim/gamereservation/searchcategory&"+g;
+            url="http://192.168.1.8:8080/gameservervation/cegepgim/gamereservation/searchcategory&"+g;
         }else{
-            url="http://192.168.56.1:8080/gameservervation/cegepgim/gamereservation/viewlocation&"+g;
+            url="http://192.168.1.8:8080/gameservervation/cegepgim/gamereservation/viewlocation&"+g;
         }
 new MyTask().execute();
     }
@@ -217,19 +218,9 @@ new MyTask().execute();
                     }
                 }
                 else {
-                    o1=obj.getString("Message");
-                    Log.e(TAG, "Couldn't get json from server.");
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getApplicationContext(),
-                                    "Couldn't get json from server. Check LogCat for possible errors!",
-                                    Toast.LENGTH_LONG)
-                                    .show();
-                        }
-                    });
+                    o2=obj.getString("Message");
 
-                }
+                        }
             } catch (final JSONException e) {
                 Log.e(TAG, "Json parsing error: " + e.getMessage());
                 runOnUiThread(new Runnable() {
@@ -262,9 +253,10 @@ new MyTask().execute();
             /**
              * Updating parsed JSON data into ListView
              * */
-            out2.setText(h);
-            out1.setText(g);
-            out2.setText(o1);
+            out1.setText(h);
+            out2.setText(g);
+            out3.setText("Gamestations");
+
             ListAdapter adapter = new SimpleAdapter(
                     searchresults.this, arylist,
                     R.layout.list_item5, new String[]{"GameStation"

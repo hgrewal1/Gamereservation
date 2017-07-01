@@ -65,9 +65,31 @@ public class MainActivity extends AppCompatActivity {
                 r=username.getText().toString();
                 s=password.getText().toString();
                 url="http://144.217.163.57:8080/cegepgim/mobile/gamereservation/login&"+r+"&"+s;
-                    new MyTask().execute();
+                if(validateEmptyText()){
+                    new MyTask().execute();}
                 }
+    private boolean validateEmptyText() {
+        boolean temp=true;
+        String e=password.getText().toString();
+        String u=username.getText().toString();
+if(e.matches("")&&u.matches("")){
+            Toast.makeText(MainActivity.this,"Username and Password field is empty",Toast.LENGTH_SHORT).show();
+            temp=false;
+        }
 
+        else if(u.matches("")){
+            Toast.makeText(MainActivity.this,"Username field is empty",Toast.LENGTH_SHORT).show();
+            temp=false;
+        }
+        else if(e.matches("")){
+            Toast.makeText(MainActivity.this,"Password field is empty",Toast.LENGTH_SHORT).show();
+            temp=false;
+        }
+
+
+
+        return temp;
+    }
                 public void signup1(View view){
                     Intent intent=new Intent(this,signup.class);
                     startActivity(intent);
@@ -76,10 +98,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent=new Intent(this,guestuser.class);
         startActivity(intent);
     }
-    public void showDatePickerDialog(View v) {
-        DialogFragment newFragment = new DatePickerFragment();
-        newFragment.show(getFragmentManager(), "datePicker");
-    }
+
 
     private class MyTask extends AsyncTask<String, String, String> {
         String o1, o2, o3, o4,o5,o6,o7,o8;
@@ -116,8 +135,6 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra("name",o3);
                     SharedPreferences sp=getSharedPreferences("grewal", 0);
                     SharedPreferences.Editor Ed=sp.edit();
-
-                    Ed.putString("FirstName",o3);
                     Ed.putString("username",r);
                     Ed.putString("password",s);
 
@@ -159,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Toast.makeText(getApplicationContext(),
-                                "password incorrect",
+                                "MalformedIOException",
                                 Toast.LENGTH_LONG)
                                 .show();
                     }

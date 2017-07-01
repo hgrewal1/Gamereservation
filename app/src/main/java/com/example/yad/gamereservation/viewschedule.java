@@ -200,18 +200,12 @@ public class viewschedule extends AppCompatActivity implements AdapterView.OnIte
                         return false;
                     }
                 });}
-
-
-
-
-
     public void check1(View view){
 Intent intent=new Intent(this,viewScheduleresults.class);
         intent.putExtra("dayname",dayname);
         intent.putExtra("gsname",gsname);
 startActivity(intent);
     }
-
 
 }
 

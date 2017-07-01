@@ -41,7 +41,7 @@ public class viewScheduleresults extends AppCompatActivity {
     TextView out1,out2;
     private ProgressDialog pDialog;
     private ListView lv;
-    String s,url,o1,o2;
+    String s,url,o1,o2,error;
     Date dt;
 
     // URL to get contacts JSON
@@ -63,14 +63,14 @@ public class viewScheduleresults extends AppCompatActivity {
 
 
         actionBar.setTitle("Schedule");
-        new MyTask().execute();
+
         setupNavigationView();
 
 Intent intent=getIntent();
         String dname=intent.getStringExtra("dayname");
         String gname=intent.getStringExtra("gsname");
         url="http://192.168.56.1:8080/gameservervation/cegepgim/gamereservation/viewschedule&"+gname+"&"+dname;
-
+        new MyTask().execute();
     }
 
     @Override
@@ -216,7 +216,7 @@ Intent intent=getIntent();
                     }
                 }
                 else {
-                    o2=obj.getString("Message");
+                    error=obj.getString("Message");
                     Log.e(TAG, "Couldn't get json from server.");
                     runOnUiThread(new Runnable() {
                         @Override
@@ -263,6 +263,7 @@ Intent intent=getIntent();
              * */
             out1.setText(o1);
             out2.setText(o2);
+            out2.setText(error);
             ListAdapter adapter = new SimpleAdapter(
                     viewScheduleresults.this, arylist,
                     R.layout.list_item4, new String[]{"StartTime","EndTime"

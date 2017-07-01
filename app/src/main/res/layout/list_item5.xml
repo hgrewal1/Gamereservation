@@ -7,7 +7,7 @@
     >
 
     <LinearLayout
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -22,9 +22,9 @@
             <TextView
                 android:id="@+id/edittext1"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="36dp"
                 android:layout_marginLeft="20dp"
-                android:layout_weight="0.24"
+                android:layout_weight="0.23"
                 android:paddingTop="5dp"
                 android:textAlignment="viewStart"
                 android:textSize="18dp"

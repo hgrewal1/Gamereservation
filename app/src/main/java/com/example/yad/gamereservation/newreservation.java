@@ -41,7 +41,7 @@ public class newreservation extends AppCompatActivity {
     String f,b,c,d,g,x,url;
     final Context context = this;
     String message;
-    TextView o1,o2,o3,o4,o5;
+    TextView o1,o2,o3,o4,o5,o6;
     private String TAG = newreservation.class.getSimpleName();
 
     private ProgressDialog pDialog;
@@ -56,6 +56,7 @@ public class newreservation extends AppCompatActivity {
         o3 = (TextView) findViewById(R.id.day);
         o4=(TextView) findViewById(R.id.starttime) ;
         o5=(TextView) findViewById(R.id.endtime) ;
+        o6=(TextView) findViewById(R.id.message) ;
         ActionBar actionBar=getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
 
@@ -72,6 +73,7 @@ public class newreservation extends AppCompatActivity {
         o3.setText(c);
         o4.setText(d);
         o5.setText(g);
+        o6.setText(x);
         actionBar.setTitle("Availability results");
         setupNavigationView();}
 
@@ -158,24 +160,38 @@ public class newreservation extends AppCompatActivity {
                     }
                 });
     }
-
-    public void ok(View view) {
-
-        SharedPreferences sp1=getSharedPreferences("grewal",0);
-
-        String id=sp1.getString("username", null);
-        url="http://192.168.1.9:8080/gameservervation/cegepgim/gamereservation/newreservations&"+b+"&"+id+"&"+f+"&"+d+"&"+g+"&"+c;
-        new MyTask().execute();
-
+    public void reserve(View view){
+        message();
     }
-    public void confirmation(View view){
 
-            final Dialog dialog = new Dialog(context);
-            dialog.setContentView(R.layout.dialog2);
-            dialog.setTitle("Confirmation");
-            TextView text = (TextView) dialog.findViewById(R.id.text);
-            text.setText("Are you wanna reserve this");
-            dialog.show();
+
+    protected void message() {
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(
+                newreservation.this);
+        alert.setTitle("Reserve");
+        alert.setMessage("Do you want to reserve this?");
+        alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                SharedPreferences sp1=getSharedPreferences("grewal",0);
+
+                String id=sp1.getString("username", null);
+                url="http://192.168.1.8:8080/gameservervation/cegepgim/gamereservation/newreservations&"+b+"&"+id+"&"+f+"&"+d+"&"+g+"&"+c;
+                new MyTask().execute();
+
+            }
+        });
+        alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // TODO Auto-generated method stub
+                dialog.dismiss();
+            }
+        });
+
+        alert.show();
+
     }
 private class MyTask extends AsyncTask<Void, Void, Void> {
 

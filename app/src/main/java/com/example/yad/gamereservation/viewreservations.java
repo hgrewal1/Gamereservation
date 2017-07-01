@@ -196,7 +196,7 @@ public class viewreservations extends AppCompatActivity {
             String r=sp1.getString("username", null);
 
             try {
-                url = new URL("http://192.168.1.9:8080/gameservervation/cegepgim/gamereservation/viewreservations&"+r);
+                url = new URL("http://192.168.1.8:8080/gameservervation/cegepgim/gamereservation/viewreservations&"+r);
 
                 HttpURLConnection client = null;
                 client = (HttpURLConnection) url.openConnection();

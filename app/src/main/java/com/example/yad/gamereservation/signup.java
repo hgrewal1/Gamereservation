@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.DatePicker;
@@ -52,24 +53,21 @@ public class signup extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
 
-
-
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
         firstname = (EditText) findViewById(R.id.firstname);
         lastname = (EditText) findViewById(R.id.lastname);
         email = (EditText) findViewById(R.id.email);
         c_password = (EditText) findViewById(R.id.confrimpassword);
-        phonenumber=(EditText) findViewById(R.id.phonenumber) ;
+        phonenumber = (EditText) findViewById(R.id.phonenumber);
         dob = (EditText) findViewById(R.id.dob);
-        onset=(Button)findViewById(R.id.setdate) ;}
-
-    public void showDatePickerDialog(View v) {
-        DialogFragment newFragment = new DatePickerFragment();
-        newFragment.show(getFragmentManager(), "datePicker");
     }
 
 
+    public void date(View v) {
+        DialogFragment newFragment = new signup.DatePickerFragment();
+        newFragment.show(getFragmentManager(), "datePicker");
+    }
     public void onClick(View view) {
         r=firstname.getText().toString();
         s=lastname.getText().toString();
@@ -81,7 +79,7 @@ public class signup extends AppCompatActivity {
         y=dob.getText().toString();
 
         url="http://144.217.163.57:8080/cegepgim/mobile/gamereservation/signup&"+r+"&"+s+"&"+t+"&"+u+"&"+v+"&"+x+"&"+y;
-       if(validateEmptyText()&&emailvalidate(u)&&validpassword()&&isValidMobile(v))
+       if(validateEmptyText()&&validateString(r)&&validateString(s)&&validateString(t)&&emailvalidate(u)&&validpassword()&&datevalidate(y)&&isValidMobile(v))
        {
            new MyTask().execute();
        }
@@ -92,7 +90,7 @@ public class signup extends AppCompatActivity {
             if(phone.length()<10|| phone.length() > 10) {
 
                 check = false;
-                Toast.makeText(signup.this,"phonenumber must contain 10 digits",Toast.LENGTH_SHORT).show();
+                Toast.makeText(signup.this,"Phone number must contain 10 digits",Toast.LENGTH_SHORT).show();
             }
         return check;
     }
@@ -115,9 +113,13 @@ public class signup extends AppCompatActivity {
         String l=lastname.getText().toString();
         String e=email.getText().toString();
         String u=username.getText().toString();
+        String d=dob.getText().toString();
+        if(f.matches("")&&l.matches("")&&e.matches("")&&u.matches("")){
+            Toast.makeText(signup.this,"Required fields are empty",Toast.LENGTH_SHORT).show();
+            temp=false;
+        }
 
-
-        if(f.matches("")){
+        else if(f.matches("")){
             Toast.makeText(signup.this,"Firstname field is empty",Toast.LENGTH_SHORT).show();
             temp=false;
         }
@@ -133,17 +135,40 @@ public class signup extends AppCompatActivity {
             Toast.makeText(signup.this,"username field is empty",Toast.LENGTH_SHORT).show();
             temp=false;
         }
+        else if(d.matches("")){
+            Toast.makeText(signup.this,"Date of Birth field is empty",Toast.LENGTH_SHORT).show();
+            temp=false;
+        }
 
         return temp;
     }
     private boolean  datevalidate(String registerdate) {
         boolean temp = true;
-        String r = "^(0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])[-](19|20)\\d{2}$";
+        String r = "^(0[1-9]|[12][0-9]|3[01])[-](0[1-9]|1[012])[-](19|20)\\d{2}$";
+        String s = "^([1-9]|[12][0-9]|3[01])[-]([1-9]|1[012])[-](19|20)\\d{2}$";
+        String t = "^([1-9]|[12][0-9]|3[01])[-](0[1-9]|1[012])[-](19|20)\\d{2}$";
+        String u = "^(0[1-9]|[12][0-9]|3[01])[-]([1-9]|1[012])[-](19|20)\\d{2}$";
         Matcher matcherObj = Pattern.compile(r).matcher(registerdate);
-        if (matcherObj.matches()) {
+        Matcher matcherObj2 = Pattern.compile(s).matcher(registerdate);
+        Matcher matcherObj3 = Pattern.compile(t).matcher(registerdate);
+        Matcher matcherObj4 = Pattern.compile(u).matcher(registerdate);
+        if (matcherObj.matches()||matcherObj2.matches()||matcherObj3.matches()||matcherObj4.matches()) {
             temp = true;
         } else {
             Toast.makeText(signup.this,"Date must be like DD-MM-YYYY",Toast.LENGTH_SHORT).show();
+            temp = false;
+        }
+        return temp;
+    }
+    private boolean  validateString(String a) {
+        boolean temp = true;
+        String r = "^[A-Za-z]+$";
+
+        Matcher matcherObj = Pattern.compile(r).matcher(a);
+        if (matcherObj.matches()) {
+            temp = true;
+        } else {
+            Toast.makeText(signup.this,"Firstname, Lastname and Username must contain only Letters",Toast.LENGTH_SHORT).show();
             temp = false;
         }
         return temp;
@@ -212,7 +237,7 @@ private boolean emailvalidate(String email2){
                         @Override
                         public void run() {
                             Toast.makeText(getApplicationContext(),
-                                    "UserName and Email Must be Unique",
+                                    "UserName Must be Unique",
                                     Toast.LENGTH_LONG)
                                     .show();
                         }
@@ -265,7 +290,10 @@ private boolean emailvalidate(String email2){
 
         @Override
         protected void onPostExecute(String result) {
-
+            Toast.makeText(getApplicationContext(),
+                    "Your Account has successfully created, please Login to your Account",
+                    Toast.LENGTH_LONG)
+                    .show();
             super.onPostExecute(result);
 
 

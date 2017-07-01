@@ -36,6 +36,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class availability extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -242,16 +244,42 @@ if (spinner3.getId()==R.id.spinner3){
                 });}
 
 
+    private boolean validateEmptyText() {
+        boolean temp=true;
+        String e=editText.getText().toString();
+        if(e.matches("")){
+            Toast.makeText(availability.this,"Please choose a Date",Toast.LENGTH_SHORT).show();
+            temp=false;
+        }
 
-
+        return temp;
+    }
+    private boolean  datevalidate(String registerdate) {
+        boolean temp = true;
+        String r = "^(0[1-9]|[12][0-9]|3[01])[-](0[1-9]|1[012])[-](19|20)\\d{2}$";
+        String s = "^([1-9]|[12][0-9]|3[01])[-]([1-9]|1[012])[-](19|20)\\d{2}$";
+        String t = "^([1-9]|[12][0-9]|3[01])[-](0[1-9]|1[012])[-](19|20)\\d{2}$";
+        String u = "^(0[1-9]|[12][0-9]|3[01])[-]([1-9]|1[012])[-](19|20)\\d{2}$";
+        Matcher matcherObj = Pattern.compile(r).matcher(registerdate);
+        Matcher matcherObj2 = Pattern.compile(s).matcher(registerdate);
+        Matcher matcherObj3 = Pattern.compile(t).matcher(registerdate);
+        Matcher matcherObj4 = Pattern.compile(u).matcher(registerdate);
+        if (matcherObj.matches()||matcherObj2.matches()||matcherObj3.matches()||matcherObj4.matches()) {
+            temp = true;
+        } else {
+            Toast.makeText(availability.this,"Date must be like DD-MM-YYYY",Toast.LENGTH_SHORT).show();
+            temp = false;
+        }
+        return temp;
+    }
 
         public void check1(View view){
 
 
 
             date1=editText.getText().toString();
-        url="http://192.168.1.9:8080/gameservervation/cegepgim/gamereservation/viewavailability&"+gsname+"&"+starttime+"&"+endtime+"&"+dayname+"&"+date1;
-            new MyTask().execute();
+        url="http://192.168.1.8:8080/gameservervation/cegepgim/gamereservation/viewavailability&"+gsname+"&"+starttime+"&"+endtime+"&"+dayname+"&"+date1;
+           if(validateEmptyText()&&datevalidate(date1)){ new MyTask().execute();}
 
     }
 
