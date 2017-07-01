@@ -13,9 +13,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -36,10 +38,10 @@ public class viewScheduleresults extends AppCompatActivity {
 
 
     private String TAG = viewScheduleresults.class.getSimpleName();
-
+    TextView out1,out2;
     private ProgressDialog pDialog;
     private ListView lv;
-    String s,url;
+    String s,url,o1,o2;
     Date dt;
 
     // URL to get contacts JSON
@@ -53,7 +55,8 @@ public class viewScheduleresults extends AppCompatActivity {
         setContentView(R.layout.activity_viewschedule_results);
 
         arylist = new ArrayList<>();
-
+       out1=(TextView) findViewById(R.id.GAMESTATION) ;
+        out2=(TextView) findViewById(R.id.DAY) ;
         lv = (ListView) findViewById(R.id.list);
         ActionBar actionBar=getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
@@ -66,7 +69,7 @@ public class viewScheduleresults extends AppCompatActivity {
 Intent intent=getIntent();
         String dname=intent.getStringExtra("dayname");
         String gname=intent.getStringExtra("gsname");
-        url="http://192.168.1.9:8080/gameservervation/cegepgim/gamereservation/viewschedule&"+gname+"&"+dname;
+        url="http://192.168.56.1:8080/gameservervation/cegepgim/gamereservation/viewschedule&"+gname+"&"+dname;
 
     }
 
@@ -190,8 +193,8 @@ Intent intent=getIntent();
                 String status=obj.getString("Status");
                 if (status.equals("ok")) {
                     JSONArray ary = new JSONArray();
-                    String o2 = obj.getString("GameStation");
-                    String o3 = obj.getString("Day");
+                     o1 = obj.getString("GameStation");
+                    o2 = obj.getString("Day");
                     ary = obj.getJSONArray("TimeSlots");
                     for (Integer i = 0; i < ary.length(); i++) {
                         JSONObject obj1 = ary.getJSONObject(i);
@@ -213,6 +216,7 @@ Intent intent=getIntent();
                     }
                 }
                 else {
+                    o2=obj.getString("Message");
                     Log.e(TAG, "Couldn't get json from server.");
                     runOnUiThread(new Runnable() {
                         @Override
@@ -257,6 +261,8 @@ Intent intent=getIntent();
             /**
              * Updating parsed JSON data into ListView
              * */
+            out1.setText(o1);
+            out2.setText(o2);
             ListAdapter adapter = new SimpleAdapter(
                     viewScheduleresults.this, arylist,
                     R.layout.list_item4, new String[]{"StartTime","EndTime"
