@@ -60,7 +60,7 @@ public class search extends AppCompatActivity  implements AdapterView.OnItemSele
         setupNavigationView();
         setupNavigationView();
         arylist = new ArrayList<>();
-
+        editText=(EditText) findViewById(R.id.edittext1) ;
         lv = (ListView) findViewById(R.id.list);
 
         ActionBar actionBar = getSupportActionBar();
@@ -91,9 +91,10 @@ public class search extends AppCompatActivity  implements AdapterView.OnItemSele
         // TODO Auto-generated method stub
     }
 
+
     public void search(View view) {
 
-        String h=editText.getText().toString();
+        String h=editText.getText().toString().toUpperCase();
 
        Intent intent=new Intent(this,searchresults.class);
         intent.putExtra("spinner",a);

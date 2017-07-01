@@ -22,6 +22,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -42,7 +43,7 @@ public class searchresults extends AppCompatActivity {
     Spinner spinner1;
     private String TAG = searchresults.class.getSimpleName();
     private ListView lv;
-
+TextView out1,out2;
 
     // URL to get contacts JSON
 
@@ -59,7 +60,8 @@ public class searchresults extends AppCompatActivity {
         arylist = new ArrayList<>();
 
         lv = (ListView) findViewById(R.id.list);
-
+        out1=(TextView) findViewById(R.id.text1);
+        out2=(TextView) findViewById(R.id.text2);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
 
@@ -70,9 +72,9 @@ public class searchresults extends AppCompatActivity {
         g=intent.getStringExtra("search");
 
        if(h.equals("Category")){
-            url="http://192.168.1.9:8080/gameservervation/cegepgim/gamereservation/searchcategory&"+g;
+            url="http://192.168.56.1:8080/gameservervation/cegepgim/gamereservation/searchcategory&"+g;
         }else{
-            url="http://192.168.1.9:8080/gameservervation/cegepgim/gamereservation/viewlocation&"+g;
+            url="http://192.168.56.1:8080/gameservervation/cegepgim/gamereservation/viewlocation&"+g;
         }
 new MyTask().execute();
     }
@@ -198,13 +200,13 @@ new MyTask().execute();
                     ary = obj.getJSONArray("Gamestations");
                     for (Integer i = 0; i < ary.length(); i++) {
                         JSONObject obj1 = ary.getJSONObject(i);
-                        String o3 = obj1.getString("Gamestation");
+                        o1 = obj1.getString("Gamestation");
 
                         HashMap<String, String> contact = new HashMap<>();
 
                         // adding each child node to HashMap key => value
 
-                        contact.put("GameStation", o3);
+                        contact.put("GameStation", o1);
 
 
 
@@ -215,12 +217,13 @@ new MyTask().execute();
                     }
                 }
                 else {
+                    o1=obj.getString("Message");
                     Log.e(TAG, "Couldn't get json from server.");
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             Toast.makeText(getApplicationContext(),
-                                    "Couldn't get json from server. Check LogCat for possible errors!"+url,
+                                    "Couldn't get json from server. Check LogCat for possible errors!",
                                     Toast.LENGTH_LONG)
                                     .show();
                         }
@@ -259,9 +262,12 @@ new MyTask().execute();
             /**
              * Updating parsed JSON data into ListView
              * */
+            out2.setText(h);
+            out1.setText(g);
+            out2.setText(o1);
             ListAdapter adapter = new SimpleAdapter(
                     searchresults.this, arylist,
-                    R.layout.list_item3, new String[]{"GameStation"
+                    R.layout.list_item5, new String[]{"GameStation"
             }, new int[]{R.id.edittext1});
 
             lv.setAdapter(adapter);

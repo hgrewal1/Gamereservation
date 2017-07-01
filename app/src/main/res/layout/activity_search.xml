@@ -41,7 +41,7 @@
 
 
             <EditText
-                android:id="@+id/date"
+                android:id="@+id/edittext1"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@drawable/shape1"
@@ -58,7 +58,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/button"
-                android:onClick="check1"
+                android:onClick="search"
                 android:text="search gamestation"
                 android:textColor="@color/white" />
 
