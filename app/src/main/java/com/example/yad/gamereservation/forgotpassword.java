@@ -3,6 +3,7 @@ package com.example.yad.gamereservation;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,7 +36,9 @@ import java.util.List;
     protected void onCreate(Bundle savedInstanceState) {
          super.onCreate(savedInstanceState);
          setContentView(R.layout.activity_forgotpassword);
-
+         ActionBar actionBar=getSupportActionBar();
+         actionBar.setDisplayHomeAsUpEnabled(true);
+         actionBar.setTitle("Forgot Password");
      }
 
      public void onClick(View view) {

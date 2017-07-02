@@ -66,7 +66,7 @@ public class availability extends AppCompatActivity implements AdapterView.OnIte
         spinner4.setOnItemSelectedListener(this);
 
 
-        actionBar.setTitle("Reservation");
+        actionBar.setTitle("Availability");
         setupNavigationView();
         List<String> items= new ArrayList<String>();
         items.add("9:00");

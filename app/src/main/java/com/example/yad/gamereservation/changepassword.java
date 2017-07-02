@@ -60,7 +60,7 @@ public class changepassword extends AppCompatActivity {
         SharedPreferences sp1=getSharedPreferences("grewal",0);
         g = sp1.getString("password", null);
         s = sp1.getString("username", null);
-        actionBar.setTitle("Grewal");
+        actionBar.setTitle("Chnage Password");
         setupNavigationView(); // add button listener
     }
             public void change(View view) {

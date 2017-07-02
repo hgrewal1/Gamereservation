@@ -56,7 +56,7 @@ public class deactivate extends AppCompatActivity {
         SharedPreferences sp1=getSharedPreferences("grewal",0);
         s = sp1.getString("username", null);
         g = sp1.getString("password", null);
-        actionBar.setTitle("Grewal");
+        actionBar.setTitle("Deactivate Account");
         setupNavigationView(); // add button listener
     }
     public void ok(View view) {

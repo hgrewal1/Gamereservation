@@ -80,7 +80,7 @@ public class newreservation extends AppCompatActivity {
         o4.setText(d);
         o5.setText(g);
         o6.setText(x);
-        actionBar.setTitle("Availability results");
+        actionBar.setTitle("Reservation");
         setupNavigationView();}
 
 

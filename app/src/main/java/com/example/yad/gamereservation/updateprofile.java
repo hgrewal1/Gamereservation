@@ -44,7 +44,7 @@ public class updateprofile extends AppCompatActivity {
         ActionBar actionBar=getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        actionBar.setTitle("Profile");
+        actionBar.setTitle("Update Profile");
         setupNavigationView();
         fname = (EditText) findViewById(R.id.firstname);
         lname = (EditText) findViewById(R.id.lastname);
