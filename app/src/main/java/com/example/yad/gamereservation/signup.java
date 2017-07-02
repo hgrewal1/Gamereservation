@@ -79,7 +79,7 @@ public class signup extends AppCompatActivity {
         y=dob.getText().toString();
 
         url="http://144.217.163.57:8080/cegepgim/mobile/gamereservation/signup&"+r+"&"+s+"&"+t+"&"+u+"&"+v+"&"+x+"&"+y;
-       if(validateEmptyText()&&validateString(r)&&validateString(s)&&validateString(t)&&emailvalidate(u)&&validpassword()&&datevalidate(y)&&isValidMobile(v))
+       if(validateEmptyText()&&validateString(r)&&validateString(s)&&validateString(t)&&emailvalidate(u)&&validpassword()&&isValidPassword(x)&&datevalidate(y)&&isValidMobile(v))
        {
            new MyTask().execute();
        }
@@ -140,6 +140,22 @@ public class signup extends AppCompatActivity {
             temp=false;
         }
 
+        return temp;
+    }    public boolean isValidPassword(final String password) {
+        boolean temp=true;
+        Pattern pattern;
+        Matcher matcher;
+
+        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$";
+
+        pattern = Pattern.compile(PASSWORD_PATTERN);
+        matcher = pattern.matcher(password);
+        if (matcher.matches()) {
+            temp = true;
+        } else {
+            Toast.makeText(signup.this,"Your Password  must be Six character long and must contain at least one Uppercase letter, one lowercase letter and one special characters. ",Toast.LENGTH_SHORT).show();
+            temp = false;
+        }
         return temp;
     }
     private boolean  datevalidate(String registerdate) {

@@ -39,7 +39,7 @@ public class viewprofile extends AppCompatActivity {
         setContentView(R.layout.activity_viewprofile);
         setupNavigationView();
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         actionBar.setTitle("Profile");
         setupNavigationView();

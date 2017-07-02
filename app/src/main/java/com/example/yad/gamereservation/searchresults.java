@@ -64,7 +64,7 @@ TextView out1,out2,out3;
         out2=(TextView) findViewById(R.id.text2);
         out3=(TextView) findViewById(R.id.text3);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         actionBar.setTitle("Search Results");
 

@@ -26,6 +26,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class updateprofile extends AppCompatActivity {
 
@@ -40,7 +42,7 @@ public class updateprofile extends AppCompatActivity {
         setContentView(R.layout.activity_updateprofile);
         setupNavigationView();
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         actionBar.setTitle("Profile");
         setupNavigationView();
@@ -127,6 +129,7 @@ public class updateprofile extends AppCompatActivity {
                     }
                 });
     }
+
     private class MyTask extends AsyncTask<Void, Void, Void> {
 
         @Override

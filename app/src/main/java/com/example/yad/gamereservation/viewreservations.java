@@ -60,7 +60,7 @@ public class viewreservations extends AppCompatActivity {
 
         lv = (ListView) findViewById(R.id.list);
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
 
         actionBar.setTitle("Reservations");
@@ -68,19 +68,11 @@ public class viewreservations extends AppCompatActivity {
         setupNavigationView();
 
 
-        /**
-         * Listview item click listener
-         * TrackListActivity will be lauched by passing album id
-         * */
         lv.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, android.view.View view, int arg2,
                                     long arg3) {
-                // on selecting a single album
-                // TrackListActivity will be launched to show tracks inside the album
                 Intent i = new Intent(getApplicationContext(), cancelreservation.class);
-
-                // send album id to tracklist activity to get list of songs under that album
                 String f= ((TextView) view.findViewById(R.id.edittext1)).getText().toString();
                 String g= ((TextView) view.findViewById(R.id.edittext2)).getText().toString();
                 String h= ((TextView) view.findViewById(R.id.edittext3)).getText().toString();

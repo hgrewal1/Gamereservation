@@ -52,7 +52,7 @@ public class deactivate extends AppCompatActivity {
 
         setupNavigationView();
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(true);
         SharedPreferences sp1=getSharedPreferences("grewal",0);
         s = sp1.getString("username", null);
         g = sp1.getString("password", null);

@@ -48,7 +48,7 @@ public class viewschedule extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_viewschedule);
         setupNavigationView();
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(true);
         spinner1=(Spinner) findViewById(R.id.spinner);
         spinner2=(Spinner) findViewById(R.id.spinner2);
 

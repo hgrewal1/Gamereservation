@@ -59,7 +59,7 @@ public class viewScheduleresults extends AppCompatActivity {
         out2=(TextView) findViewById(R.id.DAY) ;
         lv = (ListView) findViewById(R.id.list);
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
 
         actionBar.setTitle("Schedule");

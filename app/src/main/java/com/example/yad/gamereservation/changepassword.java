@@ -32,6 +32,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class changepassword extends AppCompatActivity {
     final Context context = this;
@@ -54,7 +56,7 @@ public class changepassword extends AppCompatActivity {
 
         setupNavigationView();
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(true);
         SharedPreferences sp1=getSharedPreferences("grewal",0);
         g = sp1.getString("password", null);
         s = sp1.getString("username", null);
@@ -65,11 +67,10 @@ public class changepassword extends AppCompatActivity {
                 r=password.getText().toString();
 
                 url="http://144.217.163.57:8080/cegepgim/mobile/gamereservation/changepassword&"+s+"&"+r;
-                if(validateEmptyText()&&validpassword())
+                if(validateEmptyText()&&matchpassword()&&isValidPassword(r))
                 {new MyTask().execute();}
-
             }
-    private boolean validpassword() {
+    private boolean matchpassword() {
         boolean temp=true;
 
         String f=password.getText().toString();
@@ -177,6 +178,23 @@ public class changepassword extends AppCompatActivity {
                         return false;
                     }
                 });
+    }
+    public boolean isValidPassword(final String password) {
+        boolean temp=true;
+        Pattern pattern;
+        Matcher matcher;
+
+        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$";
+
+        pattern = Pattern.compile(PASSWORD_PATTERN);
+        matcher = pattern.matcher(password);
+        if (matcher.matches()) {
+            temp = true;
+        } else {
+            Toast.makeText(changepassword.this,"Your Password must be Six character long and must contain at least one Uppercase letter, one lowercase letter and one special characters. ",Toast.LENGTH_LONG).show();
+            temp = false;
+        }
+return temp;
     }
     private class MyTask extends AsyncTask<Void, Void, Void> {
 

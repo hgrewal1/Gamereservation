@@ -41,30 +41,43 @@
             android:parentActivityName=".games" />
         <activity
             android:name=".gslocation"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".gamestation"/>
         <activity
             android:name=".signup"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".forgotpassword"
+
             android:exported="true" />
         <activity android:name=".grewal" />
-        <activity android:name=".viewprofile" />
-        <activity android:name=".updateprofile" />
-        <activity android:name=".newreservation" />
-        <activity android:name=".changepassword" />
-        <activity android:name=".deactivate" />
-        <activity android:name=".viewreservations" />
+        <activity android:name=".viewprofile"
+            android:parentActivityName=".Accounts"/>
+        <activity android:name=".updateprofile"
+            android:parentActivityName=".viewprofile"/>
+        <activity android:name=".newreservation"
+            android:parentActivityName=".availability"/>
+        <activity android:name=".changepassword"
+            android:parentActivityName=".Accounts"/>
+        <activity android:name=".deactivate"
+            android:parentActivityName=".Accounts"/>
+        <activity android:name=".viewreservations"
+            android:parentActivityName=".Accounts"/>
         <activity
             android:name=".cancelreservation"
+            android:parentActivityName=".newreservation"
             android:exported="true" />
         <activity
             android:name=".searchresults"
-            android:exported="true" />
+            android:exported="true" android:parentActivityName=".search" />
         <activity
-            android:name=".viewScheduleresults"
+            android:name=".viewScheduleresults" android:parentActivityName=".viewschedule"
              />
-        <activity android:name=".viewschedule"></activity>
+        <activity android:name=".viewschedule"
+            android:parentActivityName=".Home">
+            p
+        </activity>
     </application>
 
 </manifest>

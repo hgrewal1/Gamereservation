@@ -59,7 +59,7 @@ public class newreservation extends AppCompatActivity {
         o6=(TextView) findViewById(R.id.message) ;
         button=(Button) findViewById(R.id.reserve);
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(true);
        SharedPreferences sp1=getSharedPreferences("grewal",0);
         String s = sp1.getString("username", null);
         if(s==null){
