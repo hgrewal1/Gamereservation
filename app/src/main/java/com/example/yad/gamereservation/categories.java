@@ -62,19 +62,12 @@ String s,g,message;
         setupNavigationView();
 
 
-        /**
-         * Listview item click listener
-         * TrackListActivity will be lauched by passing album id
-         * */
+
         lv.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, android.view.View view, int arg2,
                                     long arg3) {
-                // on selecting a single album
-                // TrackListActivity will be launched to show tracks inside the album
                 Intent i = new Intent(getApplicationContext(), games.class);
-
-                // send album id to tracklist activity to get list of songs under that album
                 String tut_name = ((TextView) view.findViewById(R.id.name)).getText().toString();
                 i.putExtra("name", tut_name);
 
@@ -189,13 +182,11 @@ String s,g,message;
                 BufferedReader in = new BufferedReader(myInput);
                 String inputline;
                 StringBuffer response = new StringBuffer();
-
-
                 while ((inputline = in.readLine()) != null) {
                     response.append(inputline);
                 }
                 in.close();
-
+                myInput.close();
 
 
                 JSONObject obj = new JSONObject(response.toString());
@@ -235,6 +226,7 @@ String s,g,message;
                     });
 
                 }
+                client.disconnect();
             } catch (final JSONException e) {
                 Log.e(TAG, "Json parsing error: " + e.getMessage());
                 runOnUiThread(new Runnable() {

@@ -163,6 +163,7 @@ setupNavigationView();
                     response.append(inputline);
                 }
                 in.close();
+                myInput.close();
                 JSONObject obj = new JSONObject(response.toString());
                 String status=obj.getString("Status");
                 if (status.equals("ok")) {
@@ -187,6 +188,7 @@ setupNavigationView();
                     });
 
                 }
+                client.disconnect();
             } catch (final JSONException e) {
                 Log.e(TAG, "Json parsing error: " + e.getMessage());
                 runOnUiThread(new Runnable() {

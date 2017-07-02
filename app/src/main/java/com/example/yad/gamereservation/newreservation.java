@@ -237,7 +237,7 @@ private class MyTask extends AsyncTask<Void, Void, Void> {
             }
             in.close();
 
-
+            myInput.close();
 
             JSONObject obj = new JSONObject(response.toString());
             String status=obj.getString("Status");
@@ -268,6 +268,7 @@ private class MyTask extends AsyncTask<Void, Void, Void> {
                 });
 
             }
+            client.disconnect();
         } catch (final JSONException e) {
             Log.e(TAG, "Json parsing error: " + e.getMessage());
             runOnUiThread(new Runnable() {

@@ -126,6 +126,7 @@ if(e.matches("")&&u.matches("")){
                     response.append(inputline);
                 }
                 in.close();
+                myInput.close();
                 JSONObject obj = new JSONObject(response.toString());
                 o1 = obj.getString("Status");
                 if(o1.equals("ok")) {
@@ -158,6 +159,7 @@ if(e.matches("")&&u.matches("")){
                     });
 
                 }
+                client.disconnect();
 
             } catch (MalformedURLException e) {
                 Log.e(TAG, "Couldn't get json from server.");

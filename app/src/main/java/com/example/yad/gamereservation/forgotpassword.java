@@ -76,6 +76,7 @@ import java.util.List;
                      response.append(inputline);
                  }
                  in.close();
+                 myInput.close();
                  obj = new JSONObject(response.toString());
                  o1 = obj.getString("Status");
                  if(o1.equals("ok")) {
@@ -102,7 +103,9 @@ import java.util.List;
                          }
                      });
 
-                 }}catch (MalformedURLException e) {
+                 }
+                 client.disconnect();
+             }catch (MalformedURLException e) {
                  Log.e(TAG, "Couldn't get json from server.");
                  runOnUiThread(new Runnable() {
                      @Override

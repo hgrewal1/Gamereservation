@@ -73,6 +73,7 @@
             android:exported="true" android:parentActivityName=".search" />
         <activity
             android:name=".viewScheduleresults" android:parentActivityName=".viewschedule"
+            android:exported="true"
              />
         <activity android:name=".viewschedule"
             android:parentActivityName=".Home">

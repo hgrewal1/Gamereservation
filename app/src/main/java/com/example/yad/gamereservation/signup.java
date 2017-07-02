@@ -230,6 +230,7 @@ private boolean emailvalidate(String email2){
                     response.append(inputline);
                 }
                 in.close();
+                myInput.close();
                 obj = new JSONObject(response.toString());
                 o1 = obj.getString("Status");
                 if(o1.equals("ok")) {
@@ -262,6 +263,7 @@ private boolean emailvalidate(String email2){
                     });
 
                 }
+                client.disconnect();
 
             } catch (MalformedURLException e) {
                 Log.e(TAG, "Couldn't get json from server.");

@@ -321,7 +321,7 @@ if (spinner3.getId()==R.id.spinner3){
                     response.append(inputline);
                 }
                 in.close();
-
+                myInput.close();
 
 
                 JSONObject obj = new JSONObject(response.toString());

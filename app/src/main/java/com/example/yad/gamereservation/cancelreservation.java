@@ -17,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -48,17 +49,18 @@ public class cancelreservation extends AppCompatActivity {
 
 
     ArrayList<HashMap<String, String>> arylist;
+    Button button;
     String gs,date,day,start,end,url;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cancelreservation);
-
+        button=(Button)findViewById(R.id.cancel) ;
         arylist = new ArrayList<>();
 
         lv = (ListView) findViewById(R.id.list);
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
 
         actionBar.setTitle("Cancel Reservation");
@@ -90,25 +92,25 @@ public class cancelreservation extends AppCompatActivity {
 
         lv.setAdapter(adapter);
 
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                removeItemFromList();
 
-        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            // setting onItemLongClickListener and passing the position to the function
-            @Override
-            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-                                           int position, long arg3) {
-                removeItemFromList(position);
 
-                return true;
             }
         });
     }
-    protected void removeItemFromList(int position) {
+
+
+
+
+    protected void removeItemFromList() {
 
         AlertDialog.Builder alert = new AlertDialog.Builder(
                 cancelreservation.this);
 
-        alert.setTitle("Delete");
-        alert.setMessage("Do you want delete this item?");
+        alert.setTitle("Cancel Reservation");
+        alert.setMessage("Do you want to Cancel this Reservation?");
         alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -121,7 +123,7 @@ public class cancelreservation extends AppCompatActivity {
 
             }
         });
-        alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+        alert.setNegativeButton("NO", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // TODO Auto-generated method stub
@@ -242,7 +244,7 @@ public class cancelreservation extends AppCompatActivity {
                     response.append(inputline);
                 }
                 in.close();
-
+                myInput.close();
 
 
                 JSONObject obj = new JSONObject(response.toString());
@@ -269,6 +271,7 @@ public class cancelreservation extends AppCompatActivity {
                     });
 
                 }
+                client.disconnect();
             } catch (final JSONException e) {
                 Log.e(TAG, "Json parsing error: " + e.getMessage());
                 runOnUiThread(new Runnable() {

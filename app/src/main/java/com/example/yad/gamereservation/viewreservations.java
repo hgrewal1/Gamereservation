@@ -60,7 +60,7 @@ public class viewreservations extends AppCompatActivity {
 
         lv = (ListView) findViewById(R.id.list);
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(false);
 
 
         actionBar.setTitle("Reservations");
@@ -207,7 +207,7 @@ public class viewreservations extends AppCompatActivity {
                 }
                 in.close();
 
-
+                myInput.close();
 
                 JSONObject obj = new JSONObject(response.toString());
                 String status=obj.getString("Status");
@@ -252,6 +252,7 @@ public class viewreservations extends AppCompatActivity {
                     });
 
                 }
+                client.disconnect();
             } catch (final JSONException e) {
                 Log.e(TAG, "Json parsing error: " + e.getMessage());
                 runOnUiThread(new Runnable() {
