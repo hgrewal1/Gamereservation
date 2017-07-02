@@ -278,7 +278,7 @@ if (spinner3.getId()==R.id.spinner3){
 
 
             date1=editText.getText().toString();
-        url="http://192.168.1.8:8080/gameservervation/cegepgim/gamereservation/viewavailability&"+gsname+"&"+starttime+"&"+endtime+"&"+dayname+"&"+date1;
+        url="http://144.217.163.57:8080/cegepgim/mobile/gamereservation/viewavailability&"+gsname+"&"+starttime+"&"+endtime+"&"+dayname+"&"+date1;
            if(validateEmptyText()&&datevalidate(date1)){ new MyTask().execute();}
 
     }

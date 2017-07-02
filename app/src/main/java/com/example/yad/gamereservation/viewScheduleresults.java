@@ -69,7 +69,7 @@ public class viewScheduleresults extends AppCompatActivity {
 Intent intent=getIntent();
         String dname=intent.getStringExtra("dayname");
         String gname=intent.getStringExtra("gsname");
-        url="http://192.168.56.1:8080/gameservervation/cegepgim/gamereservation/viewschedule&"+gname+"&"+dname;
+        url="http://144.217.163.57:8080/cegepgim/mobile/gamereservation/viewschedule&"+gname+"&"+dname;
         new MyTask().execute();
     }
 

@@ -183,7 +183,7 @@ public class newreservation extends AppCompatActivity {
                 SharedPreferences sp1=getSharedPreferences("grewal",0);
 
                 String id=sp1.getString("username", null);
-                url="http://192.168.1.8:8080/gameservervation/cegepgim/gamereservation/newreservations&"+b+"&"+id+"&"+f+"&"+d+"&"+g+"&"+c;
+                url="http://144.217.163.57:8080/cegepgim/mobile/gamereservation/newreservations&"+b+"&"+id+"&"+f+"&"+d+"&"+g+"&"+c;
                 new MyTask().execute();
 
             }

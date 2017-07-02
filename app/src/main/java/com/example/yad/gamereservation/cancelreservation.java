@@ -60,7 +60,7 @@ public class cancelreservation extends AppCompatActivity {
 
         lv = (ListView) findViewById(R.id.list);
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(false);
 
 
         actionBar.setTitle("Cancel Reservation");
@@ -118,7 +118,7 @@ public class cancelreservation extends AppCompatActivity {
                 SharedPreferences sp1=getSharedPreferences("grewal",0);
 
                 String id=sp1.getString("username", null);
-                url="http://192.168.1.8:8080/gameservervation/cegepgim/gamereservation/cancelreservations&"+date+"&"+id+"&"+gs+"&"+start+"&"+end+"&"+day;
+                url="http://144.217.163.57:8080/cegepgim/mobile/gamereservation/cancelreservations&"+date+"&"+id+"&"+gs+"&"+start+"&"+end+"&"+day;
                 new MyTask().execute();
 
             }

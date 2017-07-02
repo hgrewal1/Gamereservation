@@ -79,7 +79,7 @@ public class signup extends AppCompatActivity {
         y=dob.getText().toString();
 
         url="http://144.217.163.57:8080/cegepgim/mobile/gamereservation/signup&"+r+"&"+s+"&"+t+"&"+u+"&"+v+"&"+x+"&"+y;
-       if(validateEmptyText()&&validateString(r)&&validateString(s)&&validateString(t)&&emailvalidate(u)&&validpassword()&&isValidPassword(x)&&datevalidate(y)&&isValidMobile(v))
+       if(validateEmptyText()&&validateString(r)&&validateString(s)&&emailvalidate(u)&&validpassword()&&isValidPassword(x)&&datevalidate(y)&&isValidMobile(v))
        {
            new MyTask().execute();
        }
@@ -146,14 +146,14 @@ public class signup extends AppCompatActivity {
         Pattern pattern;
         Matcher matcher;
 
-        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$";
+        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{4,}$";
 
         pattern = Pattern.compile(PASSWORD_PATTERN);
         matcher = pattern.matcher(password);
         if (matcher.matches()) {
             temp = true;
         } else {
-            Toast.makeText(signup.this,"Your Password  must be Six character long and must contain at least one Uppercase letter, one lowercase letter and one special characters. ",Toast.LENGTH_SHORT).show();
+            Toast.makeText(signup.this,"Your Password  must be Six character long and must contain at least one Uppercase letter, lowercase letter and digit . ",Toast.LENGTH_SHORT).show();
             temp = false;
         }
         return temp;
@@ -184,7 +184,7 @@ public class signup extends AppCompatActivity {
         if (matcherObj.matches()) {
             temp = true;
         } else {
-            Toast.makeText(signup.this,"Firstname, Lastname and Username must contain only Letters",Toast.LENGTH_SHORT).show();
+            Toast.makeText(signup.this,"Firstname and Lastname must contain only Letters",Toast.LENGTH_SHORT).show();
             temp = false;
         }
         return temp;

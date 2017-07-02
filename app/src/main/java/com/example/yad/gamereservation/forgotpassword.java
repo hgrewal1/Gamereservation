@@ -29,7 +29,7 @@ import java.util.List;
 
  public class forgotpassword extends AppCompatActivity {
      String a,r,message;
-     EditText s;
+     EditText s,u;
      String url;
      private String TAG = MainActivity.class.getSimpleName();
      @Override
@@ -43,11 +43,13 @@ import java.util.List;
 
      public void onClick(View view) {
          s=(EditText)  findViewById(R.id.forgot);
+         u=(EditText)  findViewById(R.id.username);
          String r=s.getText().toString();
+         String h=u.getText().toString();
 
-             url = "http://144.217.163.57:8080/cegepgim/mobile/gamereservation/forgotpasswordemail&"+r;
+             url = "http://144.217.163.57:8080/cegepgim/mobile/gamereservation/forgotpasswordemail&"+r+"&"+h;
 
-
+new MyTask().execute();
      }
 
 
@@ -128,7 +130,7 @@ import java.util.List;
                      @Override
                      public void run() {
                          Toast.makeText(getApplicationContext(),
-                                 "password incorrect",
+                                 "json error"+url,
                                  Toast.LENGTH_LONG)
                                  .show();
                      }
@@ -142,7 +144,7 @@ import java.util.List;
                      @Override
                      public void run() {
                          Toast.makeText(getApplicationContext(),
-                                 "json error",
+                                 "please enter your email",
                                  Toast.LENGTH_LONG)
                                  .show();
                      }

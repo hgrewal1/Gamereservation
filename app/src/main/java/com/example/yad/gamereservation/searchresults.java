@@ -73,9 +73,9 @@ TextView out1,out2,out3;
         g=intent.getStringExtra("search");
 
        if(h.equals("Category")){
-            url="http://192.168.1.8:8080/gameservervation/cegepgim/gamereservation/searchcategory&"+g;
+            url="http://172.24.15.29:8080/gameservervation/cegepgim/gamereservation/searchcategory&"+g;
         }else{
-            url="http://192.168.1.8:8080/gameservervation/cegepgim/gamereservation/viewlocation&"+g;
+            url="http://144.217.163.57:8080/cegepgim/mobile/gamereservation/viewlocation&"+g;
         }
 new MyTask().execute();
     }
