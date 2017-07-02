@@ -54,7 +54,6 @@
         <activity android:name=".newreservation" />
         <activity android:name=".changepassword" />
         <activity android:name=".deactivate" />
-        <activity android:name=".guestuser" />
         <activity android:name=".viewreservations" />
         <activity
             android:name=".cancelreservation"

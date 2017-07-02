@@ -25,8 +25,7 @@ public class Home extends AppCompatActivity {
         textView.setText(a);
         ActionBar actionBar=getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
-
-        actionBar.setTitle(a);
+        actionBar.setTitle("Home");
         setupNavigationView();
     }
     @Override

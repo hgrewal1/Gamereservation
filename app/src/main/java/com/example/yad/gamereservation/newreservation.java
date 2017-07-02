@@ -43,7 +43,7 @@ public class newreservation extends AppCompatActivity {
     String message;
     TextView o1,o2,o3,o4,o5,o6;
     private String TAG = newreservation.class.getSimpleName();
-
+    Button button;
     private ProgressDialog pDialog;
     Button lv;
     @Override
@@ -57,9 +57,15 @@ public class newreservation extends AppCompatActivity {
         o4=(TextView) findViewById(R.id.starttime) ;
         o5=(TextView) findViewById(R.id.endtime) ;
         o6=(TextView) findViewById(R.id.message) ;
+        button=(Button) findViewById(R.id.reserve);
         ActionBar actionBar=getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
+       SharedPreferences sp1=getSharedPreferences("grewal",0);
+        String s = sp1.getString("username", null);
+        if(s==null){
+            button.setVisibility(View.GONE);
 
+        }
         Intent intent=getIntent();
         f= intent.getStringExtra("GameStation");
         b=intent.getStringExtra("Date");

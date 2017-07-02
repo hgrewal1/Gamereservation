@@ -123,7 +123,7 @@ public class games extends AppCompatActivity {
     private void setupNavigationView() {
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
         Menu menu = bottomNavigationView.getMenu();
-        MenuItem menuItem=menu.getItem(0);
+        MenuItem menuItem=menu.getItem(1);
         menuItem.setChecked(true);
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(

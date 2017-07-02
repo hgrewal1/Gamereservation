@@ -53,7 +53,7 @@ public class location extends AppCompatActivity {
         ActionBar actionBar=getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
 
-        actionBar.setTitle("GameStations");
+        actionBar.setTitle("Locations");
         arylist = new ArrayList<>();
 
         lv = (ListView) findViewById(R.id.list);

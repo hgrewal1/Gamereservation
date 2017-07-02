@@ -102,7 +102,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="0dp"
         android:layout_marginRight="0dp"
-
-        />
+        app:itemIconTint="@color/drawer_items2"
+        android:backgroundTintMode="add"
+        app:itemTextColor="@color/drawer_items2"/>
 
 </android.support.constraint.ConstraintLayout>

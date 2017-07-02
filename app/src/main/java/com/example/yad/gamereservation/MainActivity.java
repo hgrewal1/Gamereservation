@@ -95,7 +95,7 @@ if(e.matches("")&&u.matches("")){
                     startActivity(intent);
                 }
     public void guest(View view){
-        Intent intent=new Intent(this,guestuser.class);
+        Intent intent=new Intent(this,Home.class);
         startActivity(intent);
     }
 
