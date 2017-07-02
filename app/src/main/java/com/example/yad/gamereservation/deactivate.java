@@ -36,7 +36,7 @@ import java.net.URL;
 public class deactivate extends AppCompatActivity {
     final Context context = this;
     private Button button;
-    String url;
+    String url,message;
 
 
     private ProgressDialog pDialog;
@@ -209,7 +209,7 @@ public class deactivate extends AppCompatActivity {
                 JSONObject obj = new JSONObject(response.toString());
                 status=obj.getString("Status");
                 if (status.equals("ok")) {
-                    o1 = obj.getString("Message");
+                    message = obj.getString("Message");
                     Intent intent=new Intent(getApplicationContext(),MainActivity.class);
                     startActivity(intent);
 
@@ -217,12 +217,13 @@ public class deactivate extends AppCompatActivity {
 
 
                 else {
+                    message=obj.getString("Message");
                     Log.e(TAG, "Couldn't get json from server.");
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             Toast.makeText(getApplicationContext(),
-                                    "Couldn't get json from server. Check LogCat for possible errors!"+url,
+                                    message,
                                     Toast.LENGTH_LONG)
                                     .show();
                         }
@@ -255,7 +256,7 @@ public class deactivate extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void result) {
             Toast.makeText(getApplicationContext(),
-                    "Your account has succesfully deactivated",
+                    message,
                     Toast.LENGTH_LONG)
                     .show();
 

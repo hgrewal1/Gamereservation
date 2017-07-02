@@ -42,7 +42,7 @@ public class cancelreservation extends AppCompatActivity {
 
     private ProgressDialog pDialog;
     private ListView lv;
-    String s,g;
+    String s,g,message;
     ListAdapter adapter;
     // URL to get contacts JSON
 
@@ -171,9 +171,6 @@ public class cancelreservation extends AppCompatActivity {
     }
     private void setupNavigationView() {
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
-        Menu menu = bottomNavigationView.getMenu();
-        MenuItem menuItem=menu.getItem(1);
-        menuItem.setChecked(true);
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -252,19 +249,20 @@ public class cancelreservation extends AppCompatActivity {
                 String status=obj.getString("Status");
                 if (status.equals("ok")) {
 
-                        String o5 = obj.getString("Message");
+                    message = obj.getString("Message");
 
                    Intent intent=new Intent(getApplicationContext(),viewreservations.class);
                     startActivity(intent);
 
                 }
                 else {
+                    message=obj.getString("Message");
                     Log.e(TAG, "Couldn't get json from server.");
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             Toast.makeText(getApplicationContext(),
-                                    url,
+                                    message,
                                     Toast.LENGTH_LONG)
                                     .show();
                         }
@@ -303,10 +301,14 @@ public class cancelreservation extends AppCompatActivity {
             /**
              * Updating parsed JSON data into ListView
              * */
-            Toast.makeText(getApplicationContext(),
-                    "reservation has succesfully canceled",
-                    Toast.LENGTH_LONG)
-                    .show();
+
+                        Toast.makeText(getApplicationContext(),
+                                message,
+                                Toast.LENGTH_LONG)
+                                .show();
+
+
+
         }
 
 

@@ -50,7 +50,7 @@ public class search extends AppCompatActivity  implements AdapterView.OnItemSele
 
     ArrayList<HashMap<String, String>> arylist;
     private ProgressDialog pDialog;
-    String a, url, o1, o2, o3, o4, o5;
+    String a, url, o1, o2, o3, o4, o5,message;
     EditText editText;
 
     @Override

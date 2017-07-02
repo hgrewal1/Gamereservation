@@ -36,7 +36,7 @@ import java.net.URL;
 public class changepassword extends AppCompatActivity {
     final Context context = this;
     private Button button;
-    String url;
+    String url,message;
 
 
     private ProgressDialog pDialog;
@@ -217,7 +217,7 @@ public class changepassword extends AppCompatActivity {
                 JSONObject obj = new JSONObject(response.toString());
                 status=obj.getString("Status");
                 if (status.equals("ok")) {
-                    o1 = obj.getString("Message");
+                    message = obj.getString("Message");
                     String j=password.getText().toString();
                     SharedPreferences sp=getSharedPreferences("grewal", 0);
                     SharedPreferences.Editor Ed=sp.edit();
@@ -229,12 +229,13 @@ public class changepassword extends AppCompatActivity {
 
 
                 else {
+                    message=obj.getString("Message");
                     Log.e(TAG, "Couldn't get json from server.");
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             Toast.makeText(getApplicationContext(),
-                                    "Couldn't get json from server. Check LogCat for possible errors!"+url,
+                                    message,
                                     Toast.LENGTH_LONG)
                                     .show();
                         }
@@ -270,7 +271,7 @@ public class changepassword extends AppCompatActivity {
                 final Dialog dialog = new Dialog(context);
                 dialog.setContentView(R.layout.dialog);
                 TextView text = (TextView) dialog.findViewById(R.id.text);
-                text.setText("your password has succesfully changed");
+                text.setText(message);
                 dialog.show();
 
 

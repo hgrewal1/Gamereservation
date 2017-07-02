@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
  public class forgotpassword extends AppCompatActivity {
-     String a,r;
+     String a,r,message;
      EditText s;
      String url;
      private String TAG = MainActivity.class.getSimpleName();
@@ -82,7 +82,7 @@ import java.util.List;
                      o2 = obj.getString("UserName");
 
                      o4 = obj.getString("Password");
-
+                     message = obj.getString("Message");
 
                      Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                      startActivity(intent);
@@ -90,19 +90,19 @@ import java.util.List;
                  }
 
                  else {
+                     message=obj.getString("Message");
                      Log.e(TAG, "Couldn't get json from server.");
                      runOnUiThread(new Runnable() {
                          @Override
                          public void run() {
                              Toast.makeText(getApplicationContext(),
-                                     "Email or Phonenumber is not found",
+                                     message,
                                      Toast.LENGTH_LONG)
                                      .show();
                          }
                      });
-                 }
 
-             } catch (MalformedURLException e) {
+                 }}catch (MalformedURLException e) {
                  Log.e(TAG, "Couldn't get json from server.");
                  runOnUiThread(new Runnable() {
                      @Override
@@ -148,7 +148,10 @@ import java.util.List;
 
          @Override
          protected void onPostExecute(String result) {
-
+             Toast.makeText(getApplicationContext(),
+                     message,
+                     Toast.LENGTH_LONG)
+                     .show();
              super.onPostExecute(result);
 
 

@@ -41,7 +41,7 @@ public class viewScheduleresults extends AppCompatActivity {
     TextView out1,out2;
     private ProgressDialog pDialog;
     private ListView lv;
-    String s,url,o1,o2,error;
+    String s,url,o1,o2,message;
     Date dt;
 
     // URL to get contacts JSON
@@ -216,7 +216,7 @@ Intent intent=getIntent();
                     }
                 }
                 else {
-                    error=obj.getString("Message");
+                    message=obj.getString("Message");
                     Log.e(TAG, "Couldn't get json from server.");
                     runOnUiThread(new Runnable() {
                         @Override
@@ -263,7 +263,7 @@ Intent intent=getIntent();
              * */
             out1.setText(o1);
             out2.setText(o2);
-            out2.setText(error);
+            out2.setText(message);
             ListAdapter adapter = new SimpleAdapter(
                     viewScheduleresults.this, arylist,
                     R.layout.list_item4, new String[]{"StartTime","EndTime"

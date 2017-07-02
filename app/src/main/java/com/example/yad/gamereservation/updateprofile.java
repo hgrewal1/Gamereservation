@@ -33,7 +33,7 @@ public class updateprofile extends AppCompatActivity {
     URL url = null;
     private ProgressDialog pDialog;
     EditText fname,lname,emailid,phone;
-    String o1,o2,o3,o4,o5,f,b,c,d;
+    String o1,o2,o3,o4,o5,f,b,c,d,message;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -174,18 +174,19 @@ public class updateprofile extends AppCompatActivity {
                 JSONObject obj = new JSONObject(response.toString());
                 String status=obj.getString("Status");
                 if (status.equals("ok")) {
-                    o5 = obj.getString("Message");
+                    message = obj.getString("Message");
 
                     Intent intent=new Intent(getApplicationContext(),viewprofile.class);
                     startActivity(intent);
                 }
                 else {
+                    message=obj.getString("Message");
                     Log.e(TAG, "Couldn't get json from server.");
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             Toast.makeText(getApplicationContext(),
-                                    "Couldn't get json from server. Check LogCat for possible errors!"+url,
+                                    message,
                                     Toast.LENGTH_LONG)
                                     .show();
                         }
@@ -221,7 +222,10 @@ public class updateprofile extends AppCompatActivity {
             // Dismiss the progress dialog
             if (pDialog.isShowing())
                 pDialog.dismiss();
-
+            Toast.makeText(getApplicationContext(),
+                    message,
+                    Toast.LENGTH_LONG)
+                    .show();
             super.onPostExecute(result);
         }
 

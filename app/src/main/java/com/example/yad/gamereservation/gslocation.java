@@ -32,7 +32,7 @@ public class gslocation extends AppCompatActivity {
 
     private ProgressDialog pDialog;
     TextView out1,out2,out3,out4,out5;
-    String r,o1,o2,o3,o4,o5,url1;
+    String r,o1,o2,o3,o4,o5,url1,message;
 
 
     @Override
@@ -93,9 +93,6 @@ setupNavigationView();
     }
     private void setupNavigationView() {
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
-        Menu menu = bottomNavigationView.getMenu();
-        MenuItem menuItem=menu.getItem(0);
-        menuItem.setChecked(true);
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -177,12 +174,13 @@ setupNavigationView();
 
                 }
                 else {
+                    message=obj.getString("Message");
                     Log.e(TAG, "Couldn't get json from server.");
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             Toast.makeText(getApplicationContext(),
-                                    "Couldn't get json from server. Check LogCat for possible errors!",
+                                    message,
                                     Toast.LENGTH_LONG)
                                     .show();
                         }

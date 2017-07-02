@@ -41,7 +41,7 @@ public class games extends AppCompatActivity {
     private ProgressDialog pDialog;
     private ListView lv;
 
-
+String message;
     // URL to get contacts JSON
 
 
@@ -122,9 +122,7 @@ public class games extends AppCompatActivity {
     }
     private void setupNavigationView() {
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
-        Menu menu = bottomNavigationView.getMenu();
-        MenuItem menuItem=menu.getItem(1);
-        menuItem.setChecked(true);
+
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -228,12 +226,13 @@ public class games extends AppCompatActivity {
                     }
                 }
                 else {
+                    message=obj.getString("Message");
                     Log.e(TAG, "Couldn't get json from server.");
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             Toast.makeText(getApplicationContext(),
-                                    "Couldn't get json from server. Check LogCat for possible errors!",
+                                    message,
                                     Toast.LENGTH_LONG)
                                     .show();
                         }

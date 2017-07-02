@@ -50,7 +50,7 @@ TextView out1,out2,out3;
 
     ArrayList<HashMap<String, String>> arylist;
     private ProgressDialog pDialog;
-    String a,url,o1,o2,o3,o4,o5,h,g;
+    String a,url,o1,o2,o3,o4,o5,h,g,message;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -218,9 +218,19 @@ new MyTask().execute();
                     }
                 }
                 else {
-                    o2=obj.getString("Message");
-
+                    message=obj.getString("Message");
+                    Log.e(TAG, "Couldn't get json from server.");
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(),
+                                    message,
+                                    Toast.LENGTH_LONG)
+                                    .show();
                         }
+                    });
+
+                }
             } catch (final JSONException e) {
                 Log.e(TAG, "Json parsing error: " + e.getMessage());
                 runOnUiThread(new Runnable() {

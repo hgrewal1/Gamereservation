@@ -38,7 +38,7 @@ public class categories extends AppCompatActivity {
 
     private ProgressDialog pDialog;
     private ListView lv;
-String s,g;
+String s,g,message;
 
     // URL to get contacts JSON
 
@@ -222,12 +222,13 @@ String s,g;
                     }
                 }
                 else {
+                    message=obj.getString("Message");
                     Log.e(TAG, "Couldn't get json from server.");
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             Toast.makeText(getApplicationContext(),
-                                    "Couldn't get json from server. Check LogCat for possible errors!",
+                                    message,
                                     Toast.LENGTH_LONG)
                                     .show();
                         }

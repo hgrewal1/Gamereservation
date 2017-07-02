@@ -33,7 +33,7 @@ import java.net.URL;
 public class MainActivity extends AppCompatActivity {
     EditText username,password;
     StringBuffer response;
-    String r,s;
+    String r,s,message;
     String url = null;
     String TAG_SUCCESS ;
 
@@ -130,6 +130,7 @@ if(e.matches("")&&u.matches("")){
                 o1 = obj.getString("Status");
                 if(o1.equals("ok")) {
                     o3 = obj.getString("FirstName");
+                    message = obj.getString("Message");
 
                     Intent intent = new Intent(getApplicationContext(), Home.class);
                     intent.putExtra("name",o3);
@@ -144,16 +145,18 @@ if(e.matches("")&&u.matches("")){
                 }
 
                 else {
+                    message=obj.getString("Message");
                     Log.e(TAG, "Couldn't get json from server.");
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             Toast.makeText(getApplicationContext(),
-                                    "UserName or password incorrect",
+                                    message,
                                     Toast.LENGTH_LONG)
                                     .show();
                         }
                     });
+
                 }
 
             } catch (MalformedURLException e) {
@@ -202,7 +205,10 @@ if(e.matches("")&&u.matches("")){
 
         @Override
         protected void onPostExecute(String result) {
-
+            Toast.makeText(getApplicationContext(),
+                    message,
+                    Toast.LENGTH_LONG)
+                    .show();
             super.onPostExecute(result);
 
 

@@ -40,7 +40,7 @@ public class signup extends AppCompatActivity {
     DatePickerDialog datePickerDialog;
 
     private int year, month, day;
-    String r,s,t,u,v,x,y,z,a;
+    String r,s,t,u,v,x,y,z,a,message;
     String url = null;
 
 
@@ -219,6 +219,7 @@ private boolean emailvalidate(String email2){
                 if(o1.equals("ok")) {
 
                     o3 = obj.getString("FirstName");
+                    message = obj.getString("Message");
 
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     intent.putExtra("firstname",o3);
@@ -232,16 +233,18 @@ private boolean emailvalidate(String email2){
                 }
 
                 else {
-                    Log.e(TAG, "UserName and Email Must be Unique");
+                    message=obj.getString("Message");
+                    Log.e(TAG, "Couldn't get json from server.");
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             Toast.makeText(getApplicationContext(),
-                                    "UserName Must be Unique",
+                                    message,
                                     Toast.LENGTH_LONG)
                                     .show();
                         }
                     });
+
                 }
 
             } catch (MalformedURLException e) {
@@ -291,7 +294,7 @@ private boolean emailvalidate(String email2){
         @Override
         protected void onPostExecute(String result) {
             Toast.makeText(getApplicationContext(),
-                    "Your Account has successfully created, please Login to your Account",
+                    message,
                     Toast.LENGTH_LONG)
                     .show();
             super.onPostExecute(result);

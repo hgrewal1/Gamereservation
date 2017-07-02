@@ -32,7 +32,7 @@ public class viewprofile extends AppCompatActivity {
     URL url = null;
     private ProgressDialog pDialog;
     TextView firstname,lastname,email,phonenumber;
-    String o1,o2,o3,o4,url1,url2;
+    String o1,o2,o3,o4,url1,message;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -167,12 +167,13 @@ public class viewprofile extends AppCompatActivity {
 
                 }
                 else {
+                    message=obj.getString("Message");
                     Log.e(TAG, "Couldn't get json from server.");
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             Toast.makeText(getApplicationContext(),
-                                    "Couldn't get json from server. Check LogCat for possible errors!"+url,
+                                    message,
                                     Toast.LENGTH_LONG)
                                     .show();
                         }

@@ -41,6 +41,7 @@ public class viewschedule extends AppCompatActivity implements AdapterView.OnIte
 
     String gsname,dayname;
     Spinner spinner2,spinner1;
+    String message;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
