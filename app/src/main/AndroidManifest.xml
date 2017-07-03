@@ -51,7 +51,6 @@
             android:name=".forgotpassword"
 
             android:exported="true" />
-        <activity android:name=".grewal" />
         <activity android:name=".viewprofile"
             android:parentActivityName=".Accounts"/>
         <activity android:name=".updateprofile"
@@ -68,9 +67,6 @@
             android:name=".cancelreservation"
             android:parentActivityName=".newreservation"
             android:exported="true" />
-        <activity
-            android:name=".searchresults"
-            android:exported="true" android:parentActivityName=".search" />
         <activity
             android:name=".viewScheduleresults" android:parentActivityName=".viewschedule"
             android:exported="true"

@@ -79,11 +79,15 @@ public class changepassword extends AppCompatActivity {
 
 
         if(!g.equals(l)){
-            Toast.makeText(changepassword.this,"old password  is wrong",Toast.LENGTH_SHORT).show();
+            Toast.makeText(changepassword.this,"Old password  is wrong",Toast.LENGTH_SHORT).show();
             temp=false;
         }
         if(!f.equals(e)){
-            Toast.makeText(changepassword.this," new password didn't match",Toast.LENGTH_SHORT).show();
+            Toast.makeText(changepassword.this," New password didn't match",Toast.LENGTH_SHORT).show();
+            temp=false;
+        }
+        if(l.equals(e)){
+            Toast.makeText(changepassword.this," New password and old password can't be same",Toast.LENGTH_SHORT).show();
             temp=false;
         }
 
@@ -184,14 +188,14 @@ public class changepassword extends AppCompatActivity {
         Pattern pattern;
         Matcher matcher;
 
-        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{4,}$";
+        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{6,}$";
 
         pattern = Pattern.compile(PASSWORD_PATTERN);
         matcher = pattern.matcher(password);
         if (matcher.matches()) {
             temp = true;
         } else {
-            Toast.makeText(changepassword.this,"Your Password  must be Six character long and must contain at least one Uppercase letter , lowercase letter and digit . ",Toast.LENGTH_SHORT).show();
+            Toast.makeText(changepassword.this,"Your Password  must be Six character long and must contain at least one Uppercase letter , lowercase letter and digit . ",Toast.LENGTH_LONG).show();
             temp = false;
         }
         return temp;

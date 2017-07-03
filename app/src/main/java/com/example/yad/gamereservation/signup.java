@@ -79,7 +79,7 @@ public class signup extends AppCompatActivity {
         y=dob.getText().toString();
 
         url="http://144.217.163.57:8080/cegepgim/mobile/gamereservation/signup&"+r+"&"+s+"&"+t+"&"+u+"&"+v+"&"+x+"&"+y;
-       if(validateEmptyText()&&validateString(r)&&validateString(s)&&emailvalidate(u)&&validpassword()&&isValidPassword(x)&&datevalidate(y)&&isValidMobile(v))
+       if(validateEmptyText()&&validafirstname(r)&&validatelastname(s)&&validateusername(t)&&emailvalidate(u)&&isValidPassword(x)&&validpassword()&&datevalidate(y)&&isValidMobile(v))
        {
            new MyTask().execute();
        }
@@ -146,14 +146,14 @@ public class signup extends AppCompatActivity {
         Pattern pattern;
         Matcher matcher;
 
-        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{4,}$";
+        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{6,}$";
 
         pattern = Pattern.compile(PASSWORD_PATTERN);
         matcher = pattern.matcher(password);
         if (matcher.matches()) {
             temp = true;
         } else {
-            Toast.makeText(signup.this,"Your Password  must be Six character long and must contain at least one Uppercase letter, lowercase letter and digit . ",Toast.LENGTH_SHORT).show();
+            Toast.makeText(signup.this,"Your Password  must be Six character long and must contain at least one Uppercase letter, lowercase letter and digit without any space. ",Toast.LENGTH_LONG).show();
             temp = false;
         }
         return temp;
@@ -176,7 +176,7 @@ public class signup extends AppCompatActivity {
         }
         return temp;
     }
-    private boolean  validateString(String a) {
+    private boolean  validafirstname(String a) {
         boolean temp = true;
         String r = "^[A-Za-z]+$";
 
@@ -184,7 +184,33 @@ public class signup extends AppCompatActivity {
         if (matcherObj.matches()) {
             temp = true;
         } else {
-            Toast.makeText(signup.this,"Firstname and Lastname must contain only Letters",Toast.LENGTH_SHORT).show();
+            Toast.makeText(signup.this,"Firstname must contain only Letters without any space",Toast.LENGTH_LONG).show();
+            temp = false;
+        }
+        return temp;
+    }
+    private boolean  validatelastname(String a) {
+        boolean temp = true;
+        String r = "^[A-Za-z]+$";
+
+        Matcher matcherObj = Pattern.compile(r).matcher(a);
+        if (matcherObj.matches()) {
+            temp = true;
+        } else {
+            Toast.makeText(signup.this,"Lastname must contain only Letters without any space",Toast.LENGTH_LONG).show();
+            temp = false;
+        }
+        return temp;
+    }
+    private boolean  validateusername(String a) {
+        boolean temp = true;
+        String r = "^[0-9a-zA-Z]+$";
+
+        Matcher matcherObj = Pattern.compile(r).matcher(a);
+        if (matcherObj.matches()) {
+            temp = true;
+        } else {
+            Toast.makeText(signup.this,"Username must contain only Letters and digits without any space",Toast.LENGTH_LONG).show();
             temp = false;
         }
         return temp;
@@ -251,16 +277,8 @@ private boolean emailvalidate(String email2){
 
                 else {
                     message=obj.getString("Message");
-                    Log.e(TAG, "Couldn't get json from server.");
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getApplicationContext(),
-                                    message,
-                                    Toast.LENGTH_LONG)
-                                    .show();
-                        }
-                    });
+
+
 
                 }
                 client.disconnect();
@@ -311,10 +329,21 @@ private boolean emailvalidate(String email2){
 
         @Override
         protected void onPostExecute(String result) {
-            Toast.makeText(getApplicationContext(),
-                    message,
-                    Toast.LENGTH_LONG)
-                    .show();
+
+
+            if(o1.equals("Eroor"))
+            {
+                Toast.makeText(getApplicationContext(),
+                        "UserName Must be unique",
+                        Toast.LENGTH_LONG)
+                        .show();
+            }
+            else if(o1.equals("wrong")||o1.equals("ok")){
+                Toast.makeText(getApplicationContext(),
+                        message,
+                        Toast.LENGTH_LONG)
+                        .show();
+            }
             super.onPostExecute(result);
 
 

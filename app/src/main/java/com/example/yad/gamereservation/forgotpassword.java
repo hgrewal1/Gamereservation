@@ -46,14 +46,40 @@ import java.util.List;
          u=(EditText)  findViewById(R.id.username);
          String r=s.getText().toString();
          String h=u.getText().toString();
-
+         if (validateEmptyText()&&emailvalidate(r))
+         {
              url = "http://144.217.163.57:8080/cegepgim/mobile/gamereservation/forgotpasswordemail&"+r+"&"+h;
 
-new MyTask().execute();
+new MyTask().execute();}
      }
+     private boolean emailvalidate(String email2){
+         boolean temp=true;
 
-
-
+         if(android.util.Patterns.EMAIL_ADDRESS.matcher(email2).matches()){
+             temp = true;
+         }
+         else{
+             Toast.makeText(getApplicationContext(),"Not a Valid email",Toast.LENGTH_SHORT).show();
+             temp = false;
+         }
+         return temp;
+     }
+     private boolean validateEmptyText() {
+         boolean temp = true;
+         String e = s.getText().toString();
+         String f = u.getText().toString();
+         if (e.matches("") && f.matches("")) {
+             Toast.makeText(forgotpassword.this, "Username and Email field are empty", Toast.LENGTH_SHORT).show();
+             temp = false;
+         } else if (f.matches("")) {
+             Toast.makeText(forgotpassword.this, "Username field is empty", Toast.LENGTH_SHORT).show();
+             temp = false;
+         } else if (e.matches("")) {
+             Toast.makeText(forgotpassword.this, "Email field is empty", Toast.LENGTH_SHORT).show();
+             temp = false;
+         }
+return temp;
+     }
      private class MyTask extends AsyncTask<String, String, String> {
          String o1, o2, o3, o4,o5,o6,o7,o8;
          JSONObject obj;
@@ -96,13 +122,13 @@ new MyTask().execute();
                  }
 
                  else {
-                     message=obj.getString("Message");
+
                      Log.e(TAG, "Couldn't get json from server.");
                      runOnUiThread(new Runnable() {
                          @Override
                          public void run() {
                              Toast.makeText(getApplicationContext(),
-                                     message,
+                                     "Email Id or Username is incorrect",
                                      Toast.LENGTH_LONG)
                                      .show();
                          }

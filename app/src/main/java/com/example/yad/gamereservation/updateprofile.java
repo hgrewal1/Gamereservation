@@ -31,7 +31,7 @@ import java.util.regex.Pattern;
 
 public class updateprofile extends AppCompatActivity {
 
-    private String TAG = gslocation.class.getSimpleName();
+    private String TAG = updateprofile.class.getSimpleName();
     URL url = null;
     private ProgressDialog pDialog;
     EditText fname,lname,emailid,phone;
@@ -61,10 +61,16 @@ public class updateprofile extends AppCompatActivity {
         phone.setText(d);
 
     }
+
     public void update(View view)
     {
+        String h=emailid.getText().toString();
+        String g=phone.getText().toString();
+        String f=fname.getText().toString();
+        String l=lname.getText().toString();
+        if(validateEmptyText()&&validafirstname(f)&&validatelastname(l)&&emailvalidate(h)&&isValidMobile(g)){
 
-        new MyTask().execute();
+        new MyTask().execute();}
     }
     public void cancel(View view)
     {
@@ -128,6 +134,86 @@ public class updateprofile extends AppCompatActivity {
                         return false;
                     }
                 });
+    }
+    private boolean  validafirstname(String a) {
+        boolean temp = true;
+        String r = "^[A-Za-z]+$";
+
+        Matcher matcherObj = Pattern.compile(r).matcher(a);
+        if (matcherObj.matches()) {
+            temp = true;
+        } else {
+            Toast.makeText(updateprofile.this,"Firstname must contain only Letters without any space",Toast.LENGTH_SHORT).show();
+            temp = false;
+        }
+        return temp;
+    }
+    private boolean  validatelastname(String a) {
+        boolean temp = true;
+        String r = "^[A-Za-z]+$";
+
+        Matcher matcherObj = Pattern.compile(r).matcher(a);
+        if (matcherObj.matches()) {
+            temp = true;
+        } else {
+            Toast.makeText(updateprofile.this,"Lastname must contain only Letters without any space",Toast.LENGTH_SHORT).show();
+            temp = false;
+        }
+        return temp;
+    }
+    private boolean emailvalidate(String email2){
+        boolean temp=true;
+
+        if(android.util.Patterns.EMAIL_ADDRESS.matcher(email2).matches()){
+            temp = true;
+        }
+        else{
+            Toast.makeText(getApplicationContext(),"Not a Valid email",Toast.LENGTH_SHORT).show();
+            temp = false;
+        }
+        return temp;
+    }
+    private boolean isValidMobile(String phone) {
+        boolean check=true;
+
+        if(phone.length()<10|| phone.length() > 10) {
+
+            check = false;
+            Toast.makeText(updateprofile.this,"Phone number must contain 10 digits",Toast.LENGTH_SHORT).show();
+        }
+        return check;
+    }
+    private boolean validateEmptyText() {
+        boolean temp=true;
+        String e=fname.getText().toString();
+        String u=lname.getText().toString();
+        String w=emailid.getText().toString();
+        String y=phone.getText().toString();
+        if(e.matches("")&&u.matches("")&&w.matches("")&&y.matches("")){
+            Toast.makeText(updateprofile.this,"Required fields are empty",Toast.LENGTH_SHORT).show();
+            temp=false;
+        }
+
+        else if(e.matches("")){
+            Toast.makeText(updateprofile.this,"Firstname field is empty",Toast.LENGTH_SHORT).show();
+            temp=false;
+        }
+        else if(u.matches("")){
+            Toast.makeText(updateprofile.this,"Lastname field is empty",Toast.LENGTH_SHORT).show();
+            temp=false;
+        }
+        else if(w.matches("")){
+            Toast.makeText(updateprofile.this,"Email field is empty",Toast.LENGTH_SHORT).show();
+            temp=false;
+        }
+        else if(y.matches("")){
+            Toast.makeText(updateprofile.this,"Phone field is empty",Toast.LENGTH_SHORT).show();
+            temp=false;
+        }
+
+
+
+        return temp;
     }
 
     private class MyTask extends AsyncTask<Void, Void, Void> {
