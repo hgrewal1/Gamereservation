@@ -222,7 +222,7 @@ Intent intent=getIntent();
                         @Override
                         public void run() {
                             Toast.makeText(getApplicationContext(),
-                                    "Couldn't get json from server. Check LogCat for possible errors!",
+                                    message,
                                     Toast.LENGTH_LONG)
                                     .show();
                         }
@@ -264,7 +264,6 @@ Intent intent=getIntent();
              * */
             out1.setText(o1);
             out2.setText(o2);
-            out2.setText(message);
             ListAdapter adapter = new SimpleAdapter(
                     viewScheduleresults.this, arylist,
                     R.layout.list_item4, new String[]{"StartTime","EndTime"

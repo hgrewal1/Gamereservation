@@ -63,7 +63,7 @@ public class viewschedule extends AppCompatActivity implements AdapterView.OnIte
         items2.add("FOOTBALL GROUND 1");
         items2.add("FOOTBALL GROUND 2");
         items2.add("PINGPONG TABLE 1");
-        items2.add("PINGPONGTABLE TABLE 2");
+        items2.add("PINGPONG TABLE 2");
         items2.add("FOOSBALL TABLE 1");
         items2.add("BOWLING GAMESTATION 1");
         items2.add("BOWLING GAMESTAION 2");

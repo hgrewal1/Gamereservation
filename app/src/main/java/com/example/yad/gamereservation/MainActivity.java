@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     String r,s,message;
     String url = null;
     String TAG_SUCCESS ;
+    private ProgressDialog pDialog;
 
     private ProgressDialog nDialog;
 
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                 r=username.getText().toString();
                 s=password.getText().toString();
                 url="http://144.217.163.57:8080/cegepgim/mobile/gamereservation/login&"+r+"&"+s;
-                if(validateEmptyText()){
+                if(validateEmptyText()&&usernamelength(r)&&passwordlength(s)){
                     new MyTask().execute();}
                 }
     private boolean validateEmptyText() {
@@ -90,6 +91,26 @@ if(e.matches("")&&u.matches("")){
 
         return temp;
     }
+    private boolean usernamelength(String user) {
+        boolean check=true;
+
+        if(user.length() > 20) {
+
+            check = false;
+            Toast.makeText(MainActivity.this,"Username is too long",Toast.LENGTH_SHORT).show();
+        }
+        return check;
+    }
+    private boolean passwordlength(String pass) {
+        boolean check=true;
+
+        if(pass.length() > 20) {
+
+            check = false;
+            Toast.makeText(MainActivity.this,"Password is too long",Toast.LENGTH_SHORT).show();
+        }
+        return check;
+    }
                 public void signup1(View view){
                     Intent intent=new Intent(this,signup.class);
                     startActivity(intent);
@@ -102,7 +123,16 @@ if(e.matches("")&&u.matches("")){
 
     private class MyTask extends AsyncTask<String, String, String> {
         String o1, o2, o3, o4,o5,o6,o7,o8;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // Showing progress dialog
+            pDialog = new ProgressDialog(MainActivity.this);
+            pDialog.setMessage("Please wait...");
+            pDialog.setCancelable(true);
+            pDialog.show();
 
+        }
         @Override
         protected String doInBackground(String... params) {
 
@@ -207,6 +237,8 @@ if(e.matches("")&&u.matches("")){
 
         @Override
         protected void onPostExecute(String result) {
+            if (pDialog.isShowing())
+                pDialog.dismiss();
             Toast.makeText(getApplicationContext(),
                     message,
                     Toast.LENGTH_LONG)

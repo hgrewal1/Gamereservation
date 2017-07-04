@@ -37,7 +37,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/shape1"
                 android:hint="Password"
-                android:inputType="textPersonName"
+                android:inputType="textPassword"
                 android:textColor="@color/text"
                 android:textSize="20dp" />
 

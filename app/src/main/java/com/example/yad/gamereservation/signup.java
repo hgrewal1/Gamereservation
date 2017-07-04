@@ -38,7 +38,7 @@ public class signup extends AppCompatActivity {
     StringBuffer response;
     Button onset;
     DatePickerDialog datePickerDialog;
-
+    private ProgressDialog pDialog;
     private int year, month, day;
     String r,s,t,u,v,x,y,z,a,message;
     String url = null;
@@ -79,7 +79,7 @@ public class signup extends AppCompatActivity {
         y=dob.getText().toString();
 
         url="http://144.217.163.57:8080/cegepgim/mobile/gamereservation/signup&"+r+"&"+s+"&"+t+"&"+u+"&"+v+"&"+x+"&"+y;
-       if(validateEmptyText()&&validafirstname(r)&&validatelastname(s)&&validateusername(t)&&emailvalidate(u)&&isValidPassword(x)&&validpassword()&&datevalidate(y)&&isValidMobile(v))
+       if(validateEmptyText()&&validafirstname(r)&&validateFirstnameLength(r)&&validateLastnameLength(s)&&validatelastname(s)&&usernamelength(t)&&validateusername(t)&&emailvalidate(u)&&emaillength(u)&&passwordlength(x)&&isValidPassword(x)&&validpassword()&&datevalidate(y)&&isValidMobile(v))
        {
            new MyTask().execute();
        }
@@ -215,6 +215,56 @@ public class signup extends AppCompatActivity {
         }
         return temp;
     }
+    private boolean validateFirstnameLength(String user) {
+        boolean check=true;
+
+        if(user.length() > 20) {
+
+            check = false;
+            Toast.makeText(signup.this,"Firstname is too long",Toast.LENGTH_SHORT).show();
+        }
+        return check;
+    }
+    private boolean validateLastnameLength(String user) {
+        boolean check=true;
+
+        if(user.length() > 20) {
+
+            check = false;
+            Toast.makeText(signup.this,"Lastname is too long",Toast.LENGTH_SHORT).show();
+        }
+        return check;
+    }
+    private boolean emaillength(String email) {
+        boolean check=true;
+
+        if(email.length() > 20) {
+
+            check = false;
+            Toast.makeText(signup.this,"Email is too long",Toast.LENGTH_SHORT).show();
+        }
+        return check;
+    }
+    private boolean usernamelength(String user) {
+        boolean check=true;
+
+        if(user.length() > 20) {
+
+            check = false;
+            Toast.makeText(signup.this,"Username is too long",Toast.LENGTH_SHORT).show();
+        }
+        return check;
+    }
+    private boolean passwordlength(String pass) {
+        boolean check=true;
+
+        if(pass.length() > 20) {
+
+            check = false;
+            Toast.makeText(signup.this,"Password is too long",Toast.LENGTH_SHORT).show();
+        }
+        return check;
+    }
 
 private boolean emailvalidate(String email2){
     boolean temp=true;
@@ -232,6 +282,16 @@ private boolean emailvalidate(String email2){
     private class MyTask extends AsyncTask<String, String, String> {
         String o1, o2, o3, o4,o5,o6,o7,o8;
         JSONObject obj;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // Showing progress dialog
+            pDialog = new ProgressDialog(signup.this);
+            pDialog.setMessage("Please wait...");
+            pDialog.setCancelable(false);
+            pDialog.show();
+
+        }
 
         @Override
         protected String doInBackground(String... params) {
@@ -331,6 +391,8 @@ private boolean emailvalidate(String email2){
         protected void onPostExecute(String result) {
 
 
+            if (pDialog.isShowing())
+                pDialog.dismiss();
             if(o1.equals("Eroor"))
             {
                 Toast.makeText(getApplicationContext(),

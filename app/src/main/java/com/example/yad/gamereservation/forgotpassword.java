@@ -1,5 +1,6 @@
 package com.example.yad.gamereservation;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -30,8 +31,9 @@ import java.util.List;
  public class forgotpassword extends AppCompatActivity {
      String a,r,message;
      EditText s,u;
+     private ProgressDialog pDialog;
      String url;
-     private String TAG = MainActivity.class.getSimpleName();
+     private String TAG = forgotpassword.class.getSimpleName();
      @Override
     protected void onCreate(Bundle savedInstanceState) {
          super.onCreate(savedInstanceState);
@@ -48,7 +50,7 @@ import java.util.List;
          String h=u.getText().toString();
          if (validateEmptyText()&&emailvalidate(r))
          {
-             url = "http://144.217.163.57:8080/cegepgim/mobile/gamereservation/forgotpasswordemail&"+r+"&"+h;
+             url = "http://192.168.1.8:8080/gameservervation/cegepgim/gamereservation/forgotpasswordemail&"+r+"&"+h;
 
 new MyTask().execute();}
      }
@@ -83,6 +85,16 @@ return temp;
      private class MyTask extends AsyncTask<String, String, String> {
          String o1, o2, o3, o4,o5,o6,o7,o8;
          JSONObject obj;
+         @Override
+         protected void onPreExecute() {
+             super.onPreExecute();
+             // Showing progress dialog
+             pDialog = new ProgressDialog(forgotpassword.this);
+             pDialog.setMessage("Please wait...");
+             pDialog.setCancelable(true);
+             pDialog.show();
+
+         }
 
          @Override
          protected String doInBackground(String... params) {
@@ -122,17 +134,7 @@ return temp;
                  }
 
                  else {
-
-                     Log.e(TAG, "Couldn't get json from server.");
-                     runOnUiThread(new Runnable() {
-                         @Override
-                         public void run() {
-                             Toast.makeText(getApplicationContext(),
-                                     "Email Id or Username is incorrect",
-                                     Toast.LENGTH_LONG)
-                                     .show();
-                         }
-                     });
+                     message = obj.getString("Message");
 
                  }
                  client.disconnect();
@@ -156,7 +158,7 @@ return temp;
                      @Override
                      public void run() {
                          Toast.makeText(getApplicationContext(),
-                                 "json error"+url,
+                                 "json error",
                                  Toast.LENGTH_LONG)
                                  .show();
                      }
@@ -170,7 +172,7 @@ return temp;
                      @Override
                      public void run() {
                          Toast.makeText(getApplicationContext(),
-                                 "please enter your email",
+                                 "json error",
                                  Toast.LENGTH_LONG)
                                  .show();
                      }
@@ -182,6 +184,9 @@ return temp;
 
          @Override
          protected void onPostExecute(String result) {
+
+             if (pDialog.isShowing())
+                 pDialog.dismiss();
              Toast.makeText(getApplicationContext(),
                      message,
                      Toast.LENGTH_LONG)

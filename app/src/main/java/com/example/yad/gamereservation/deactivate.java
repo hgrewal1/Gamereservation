@@ -257,6 +257,9 @@ public class deactivate extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void result) {
+
+            if (pDialog.isShowing())
+                pDialog.dismiss();
             Toast.makeText(getApplicationContext(),
                     message,
                     Toast.LENGTH_LONG)
@@ -265,8 +268,6 @@ public class deactivate extends AppCompatActivity {
 
 
 
-            if (pDialog.isShowing())
-                pDialog.dismiss();
 
         }
     }}

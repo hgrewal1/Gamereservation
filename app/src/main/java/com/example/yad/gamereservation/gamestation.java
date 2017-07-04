@@ -36,7 +36,7 @@ import java.util.HashMap;
 public class gamestation extends AppCompatActivity {
 
 
-    private String TAG = search.class.getSimpleName();
+    private String TAG = gamestation.class.getSimpleName();
 
     private ProgressDialog pDialog;
     private ListView lv;

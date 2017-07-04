@@ -28,7 +28,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class viewprofile extends AppCompatActivity {
-    private String TAG = gslocation.class.getSimpleName();
+    private String TAG = viewprofile.class.getSimpleName();
     URL url = null;
     private ProgressDialog pDialog;
     TextView firstname,lastname,email,phonenumber;

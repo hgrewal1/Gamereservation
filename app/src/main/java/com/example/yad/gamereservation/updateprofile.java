@@ -68,7 +68,7 @@ public class updateprofile extends AppCompatActivity {
         String g=phone.getText().toString();
         String f=fname.getText().toString();
         String l=lname.getText().toString();
-        if(validateEmptyText()&&validafirstname(f)&&validatelastname(l)&&emailvalidate(h)&&isValidMobile(g)){
+        if(validateEmptyText()&&validafirstname(f)&&validateFirstnameLength(f)&&validatelastname(l)&&validateLastnameLength(l)&&emailvalidate(h)&&emaillength(h)&&isValidMobile(g)){
 
         new MyTask().execute();}
     }
@@ -183,6 +183,36 @@ public class updateprofile extends AppCompatActivity {
         }
         return check;
     }
+    private boolean validateFirstnameLength(String user) {
+        boolean check=true;
+
+        if(user.length() > 20) {
+
+            check = false;
+            Toast.makeText(updateprofile.this,"Firstname is too long",Toast.LENGTH_SHORT).show();
+        }
+        return check;
+    }
+    private boolean validateLastnameLength(String user) {
+        boolean check=true;
+
+        if(user.length() > 20) {
+
+            check = false;
+            Toast.makeText(updateprofile.this,"Lastname is too long",Toast.LENGTH_SHORT).show();
+        }
+        return check;
+    }
+    private boolean emaillength(String email) {
+        boolean check=true;
+
+        if(email.length() > 20) {
+
+            check = false;
+            Toast.makeText(updateprofile.this,"Email is too long",Toast.LENGTH_SHORT).show();
+        }
+        return check;
+    }
     private boolean validateEmptyText() {
         boolean temp=true;
         String e=fname.getText().toString();
@@ -242,7 +272,7 @@ public class updateprofile extends AppCompatActivity {
             o4=phone.getText().toString();
 
             try {
-                url = new URL("http://144.217.163.57:8080/cegepgim/mobile/gamereservation/updateprofile&"+o1+"&"+o2+"&"+o3+"&"+o4+"&"+r+"&"+s);
+                url = new URL("http://192.168.1.8:8080/gameservervation/cegepgim/gamereservation/updateprofile&"+o1+"&"+o2+"&"+o3+"&"+o4+"&"+r+"&"+s);
 
                 HttpURLConnection client = null;
                 client = (HttpURLConnection) url.openConnection();

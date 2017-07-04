@@ -103,6 +103,7 @@
                 android:layout_marginLeft="3dp"
                 android:background="@drawable/shape1"
                 android:hint=" DD-MM-YYYY"
+                android:inputType="date"
                 android:textColor="@color/text" />
 
             <ImageView

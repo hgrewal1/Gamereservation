@@ -67,7 +67,7 @@ public class changepassword extends AppCompatActivity {
                 r=password.getText().toString();
 
                 url="http://144.217.163.57:8080/cegepgim/mobile/gamereservation/changepassword&"+s+"&"+r;
-                if(validateEmptyText()&&matchpassword()&&isValidPassword(r))
+                if(validateEmptyText()&&passwordlength(r)&&matchpassword()&&isValidPassword(r))
                 {new MyTask().execute();}
             }
     private boolean matchpassword() {
@@ -94,6 +94,16 @@ public class changepassword extends AppCompatActivity {
 
 
         return temp;
+    }
+    private boolean passwordlength(String pass) {
+        boolean check=true;
+
+        if(pass.length() > 20) {
+
+            check = false;
+            Toast.makeText(changepassword.this,"Password is too long",Toast.LENGTH_SHORT).show();
+        }
+        return check;
     }
     private boolean validateEmptyText() {
         boolean temp=true;
@@ -291,7 +301,8 @@ public class changepassword extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void result) {
-
+            if (pDialog.isShowing())
+                pDialog.dismiss();
                 final Dialog dialog = new Dialog(context);
                 dialog.setContentView(R.layout.dialog);
                 TextView text = (TextView) dialog.findViewById(R.id.text);
@@ -300,8 +311,7 @@ public class changepassword extends AppCompatActivity {
 
 
 
-            if (pDialog.isShowing())
-                pDialog.dismiss();
+
 
         }
     }}
