@@ -218,7 +218,7 @@ public class changepassword extends AppCompatActivity {
             // Showing progress dialog
             pDialog = new ProgressDialog(changepassword.this);
             pDialog.setMessage("Please wait...");
-            pDialog.setCancelable(false);
+            pDialog.setCancelable(true);
             pDialog.show();
 
         }

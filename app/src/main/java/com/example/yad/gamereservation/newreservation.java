@@ -40,7 +40,7 @@ import java.util.HashMap;
 public class newreservation extends AppCompatActivity {
     String f,b,c,d,g,x,url;
     final Context context = this;
-    String message;
+    String message,status;
     TextView o1,o2,o3,o4,o5,o6;
     private String TAG = newreservation.class.getSimpleName();
     Button button;
@@ -240,7 +240,7 @@ private class MyTask extends AsyncTask<Void, Void, Void> {
             myInput.close();
 
             JSONObject obj = new JSONObject(response.toString());
-            String status=obj.getString("Status");
+            status=obj.getString("Status");
 
             if (status.equals("ok")) {
 
@@ -256,16 +256,7 @@ private class MyTask extends AsyncTask<Void, Void, Void> {
             }
             else {
                 message=obj.getString("Message");
-                Log.e(TAG, "Couldn't get json from server.");
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(),
-                                message,
-                                Toast.LENGTH_LONG)
-                                .show();
-                    }
-                });
+
 
             }
             client.disconnect();
@@ -298,10 +289,19 @@ private class MyTask extends AsyncTask<Void, Void, Void> {
         // Dismiss the progress dialog
         if (pDialog.isShowing())
             pDialog.dismiss();
-        Toast.makeText(getApplicationContext(),
-                message,
-                Toast.LENGTH_LONG)
-                .show();
+        if(status.equals("ERROR"))
+        {
+            Toast.makeText(getApplicationContext(),
+                    "You Can't reserve this Gamestation anymore, because you already canceled this reservation. ",
+                    Toast.LENGTH_LONG)
+                    .show();
+        }
+        else if(status.equals("wrong")||o1.equals("ok")){
+            Toast.makeText(getApplicationContext(),
+                    message,
+                    Toast.LENGTH_LONG)
+                    .show();
+        }
 
 }
 

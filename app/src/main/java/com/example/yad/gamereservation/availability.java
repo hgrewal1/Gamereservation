@@ -291,7 +291,7 @@ if (spinner3.getId()==R.id.spinner3){
             // Showing progress dialog
             pDialog = new ProgressDialog(availability.this);
             pDialog.setMessage("Please wait...");
-            pDialog.setCancelable(false);
+            pDialog.setCancelable(true);
             pDialog.show();
 
         }

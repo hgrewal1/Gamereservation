@@ -178,7 +178,7 @@ public class deactivate extends AppCompatActivity {
             // Showing progress dialog
             pDialog = new ProgressDialog(deactivate.this);
             pDialog.setMessage("Please wait...");
-            pDialog.setCancelable(false);
+            pDialog.setCancelable(true);
             pDialog.show();
 
         }

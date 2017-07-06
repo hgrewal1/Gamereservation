@@ -156,7 +156,7 @@ String message;
             // Showing progress dialog
             pDialog = new ProgressDialog(gamestation.this);
             pDialog.setMessage("Please wait...");
-            pDialog.setCancelable(false);
+            pDialog.setCancelable(true);
             pDialog.show();
 
         }

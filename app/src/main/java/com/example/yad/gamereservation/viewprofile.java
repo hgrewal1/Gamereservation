@@ -125,7 +125,7 @@ public class viewprofile extends AppCompatActivity {
             // Showing progress dialog
             pDialog = new ProgressDialog(viewprofile.this);
             pDialog.setMessage("Please wait...");
-            pDialog.setCancelable(false);
+            pDialog.setCancelable(true);
             pDialog.show();
 
         }
