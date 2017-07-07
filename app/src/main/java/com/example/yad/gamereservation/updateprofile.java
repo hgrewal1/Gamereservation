@@ -272,7 +272,7 @@ public class updateprofile extends AppCompatActivity {
             o4=phone.getText().toString();
 
             try {
-                url = new URL("http://192.168.1.8:8080/gameservervation/cegepgim/gamereservation/updateprofile&"+o1+"&"+o2+"&"+o3+"&"+o4+"&"+r+"&"+s);
+                url = new URL("http://144.217.163.57:8080/cegepgim/mobile/gamereservation/updateprofile&"+o1+"&"+o2+"&"+o3+"&"+o4+"&"+r+"&"+s);
 
                 HttpURLConnection client = null;
                 client = (HttpURLConnection) url.openConnection();

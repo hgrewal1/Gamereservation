@@ -50,7 +50,7 @@ import java.util.List;
          String h=u.getText().toString();
          if (validateEmptyText()&&emailvalidate(r))
          {
-             url = "http://192.168.1.8:8080/gameservervation/cegepgim/gamereservation/forgotpasswordemail&"+r+"&"+h;
+             url = "http://144.217.163.57:8080/cegepgim/mobile/gamereservation/forgotpasswordemail&"+r+"&"+h;
 
 new MyTask().execute();}
      }
