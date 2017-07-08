@@ -42,39 +42,48 @@
         <activity
             android:name=".gslocation"
             android:exported="true"
-            android:parentActivityName=".gamestation"/>
+            android:parentActivityName=".gamestation" />
         <activity
             android:name=".signup"
             android:exported="true"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".forgotpassword"
-
             android:exported="true" />
-        <activity android:name=".viewprofile"
-            android:parentActivityName=".Accounts"/>
-        <activity android:name=".updateprofile"
-            android:parentActivityName=".viewprofile"/>
-        <activity android:name=".newreservation"
-            android:parentActivityName=".availability"/>
-        <activity android:name=".changepassword"
-            android:parentActivityName=".Accounts"/>
-        <activity android:name=".deactivate"
-            android:parentActivityName=".Accounts"/>
-        <activity android:name=".viewreservations"
-            android:parentActivityName=".Accounts"/>
+        <activity
+            android:name=".viewprofile"
+            android:parentActivityName=".Accounts" />
+        <activity
+            android:name=".updateprofile"
+            android:parentActivityName=".viewprofile" />
+        <activity
+            android:name=".newreservation"
+            android:parentActivityName=".availability" />
+        <activity
+            android:name=".changepassword"
+            android:parentActivityName=".Accounts" />
+        <activity
+            android:name=".deactivate"
+            android:parentActivityName=".Accounts" />
+        <activity
+            android:name=".viewreservations"
+            android:parentActivityName=".Accounts" />
         <activity
             android:name=".cancelreservation"
-            android:parentActivityName=".newreservation"
-            android:exported="true" />
-        <activity
-            android:name=".viewScheduleresults" android:parentActivityName=".viewschedule"
             android:exported="true"
-             />
-        <activity android:name=".viewschedule"
+            android:parentActivityName=".newreservation" />
+        <activity
+            android:name=".viewScheduleresults"
+            android:exported="true"
+            android:parentActivityName=".viewschedule" />
+        <activity
+            android:name=".viewschedule"
             android:parentActivityName=".Home">
             p
         </activity>
+        <activity
+            android:name=".Main2Activity"
+            android:label="@string/title_activity_main2"></activity>
     </application>
 
 </manifest>
